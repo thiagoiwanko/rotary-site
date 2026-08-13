@@ -1,0 +1,72 @@
+{
+  "_comment": "English version of site-data.json. Edit this file to update the English content of the site.",
+  "clube": {
+    "nome": "Rotary Club of Porto União – União da Vitória",
+    "numero": "9015",
+    "distrito": "4740",
+    "fundacao": "09/27/1949",
+    "reuniao": "Wednesdays, 12pm",
+    "temaAno": "Create Lasting Impact",
+    "temaAnoOriginal": "Create Lasting Impact",
+    "anoRotario": "2026-2027",
+    "presidenteRI": "Olayinka H. Babalola",
+    "descricaoCurta": "Uniting Porto União (SC) and União da Vitória (PR) since 1949 through service, leadership and social transformation.",
+    "sobre": "Founded in 1949, the Rotary Club of Porto União – União da Vitória brings together leaders and volunteers from both banks of the Iguaçu River — Santa Catarina and Paraná — around a single purpose: to serve. For more than seven decades, the club has carried out projects in social impact, health, education and the environment, integrated with District 4740 and the worldwide Rotary International network.",
+    "historia": "On September 27, 1949, in one of the halls of the Cruz Hotel, on Praça Hercílio Luz in Porto União, the Rotary Club of Porto União – União da Vitória was officially chartered, under the presidency of fellow Rotarian José Moura Júnior and with district governor Arnaldo Suarez Cuneo in attendance. At that session, 19 Rotarians became the club's founding members, born with a clear purpose: to unite both banks of the Iguaçu River — Porto União (SC) and União da Vitória (PR) — around the ideal of service. That same night, the first board was elected, with Euclides Taborda Ribas as the first elected president. More than seven decades later, that same commitment endures."
+  },
+  "fundadores": [
+    "Urbano Pereira Rey", "Francisco Bertagnolli Júnior", "Jacyr Rangel Tarlé",
+    "Norberto de Miranda Ramos", "Valdir Z. Zaular", "Ivan Germano S. Hildenbrand",
+    "José Moura Júnior", "Alcides Ferreira e Souza", "Eugênio Fischer",
+    "Carlos Evaldo Untersteil", "João Guilherme Russo", "Roberto Ciro Corrêa",
+    "Horácio Ricardo dos Santos", "Euclides Taborda Ribas", "Cid Cesar Ferreira",
+    "Anibal Khury", "Walter Suki", "Nataniel Hirsch", "José Ferreira Gringo"
+  ],
+  "primeiraDiretoria": [
+    { "cargo": "President", "nome": "Euclides Taborda Ribas" },
+    { "cargo": "Vice President", "nome": "José Moura Júnior" },
+    { "cargo": "Secretary", "nome": "Ari Hilis" },
+    { "cargo": "Treasurer", "nome": "Jacyr Rangel Tarlé" }
+  ],
+  "contato": {
+    "email": "rotary9015@gmail.com",
+    "telefone": "+55 42 98855-4141",
+    "whatsapp": "5542988554141",
+    "endereco": "Porto União (SC) / União da Vitória (PR)",
+    "localReuniao": "Suprema Grill Restaurant — Rua Ipiranga, 56, Centro, União da Vitória (PR)"
+  },
+  "redesSociais": {
+    "instagram": "https://www.instagram.com/rotaryclubportouniao/",
+    "facebook": "",
+    "beholdFeedId": "iKi8CMRjF5nEQoNsVtWj",
+    "site_distrital": "https://www.rotaryportouniaodavitoria.org.br/home-clube",
+    "rotary_org": "https://www.rotary.org/en"
+  },
+  "estatisticas": [
+    { "numero": "1949", "rotulo": "Year founded" },
+    { "numero": "77+", "rotulo": "Years of service" },
+    { "numero": "4740", "rotulo": "Rotary District" },
+    { "numero": "2", "rotulo": "Cities united" }
+  ],
+  "diretoria": [
+    { "cargo": "President", "nome": "Dr. Stefan Grube Kolb", "foto": "" },
+    { "cargo": "Vice President", "nome": "Germano José Hobi Goncho", "foto": "" },
+    { "cargo": "Secretary", "nome": "Ione Carla Jorge da Costa", "foto": "" },
+    { "cargo": "Treasurer", "nome": "Gabriel Rengel Jackiw", "foto": "" },
+    { "cargo": "Protocol", "nome": "Suely Masnik Martini", "foto": "" },
+    { "cargo": "Projects Director", "nome": "Carlos Humberto Topolski", "foto": "" },
+    { "cargo": "Rotary Foundation Director", "nome": "Thiago Jorge Iwanko", "foto": "" },
+    { "cargo": "Membership Director (DQA)", "nome": "Adriana Cristina de Lima", "foto": "" },
+    { "cargo": "Public Image Director", "nome": "Daniela Bochnia Iwanko", "foto": "" },
+    { "cargo": "Past President", "nome": "Thiago Jorge Iwanko", "foto": "" }
+  ],
+  "areasDeFoco": [
+    { "titulo": "Peacebuilding and conflict prevention", "icone": "peace" },
+    { "titulo": "Disease prevention and treatment", "icone": "health" },
+    { "titulo": "Water, sanitation and hygiene", "icone": "water" },
+    { "titulo": "Maternal and child health", "icone": "mother" },
+    { "titulo": "Basic education and literacy", "icone": "education" },
+    { "titulo": "Community economic development", "icone": "growth" },
+    { "titulo": "Environment", "icone": "environment" }
+  ]
+}

@@ -2,6 +2,7 @@
    Rotary Club Porto União – União da Vitória
    Site estático data-driven: lê os JSON em assets/data/ e monta a página.
    Para atualizar conteúdo, edite os arquivos JSON — não é preciso mexer aqui.
+   Idioma: pt (padrão) / en — ver LANG_KEY / assets/data/i18n.json.
    =================================================================== */
 
 const ICONS = {
@@ -14,16 +15,43 @@ const ICONS = {
   environment: '<path d="M12 3C7 3 4 7 4 11c0 5 4 9 8 10 4-1 8-5 8-10 0-4-3-8-8-8z"/><path d="M12 21V11"/><path d="M12 11c0-3 2-5 5-5"/>'
 };
 
-const NEWS_TAG_LABEL = { ri: 'Rotary International', distrito: 'Distrito 4740', clube: 'Nosso Clube' };
+const LANG_KEY = 'rcpu-lang';
+const LANG_META = {
+  pt: { flag: '🇧🇷', code: 'PT', htmlLang: 'pt-BR' },
+  en: { flag: '🇺🇸', code: 'EN', htmlLang: 'en' }
+};
+
+let i18nDict = null;
+
+function getLang() {
+  const saved = localStorage.getItem(LANG_KEY);
+  return saved === 'en' ? 'en' : 'pt';
+}
+
+function setLang(lang) {
+  localStorage.setItem(LANG_KEY, lang);
+}
+
+function t(key, lang) {
+  const dict = (i18nDict && i18nDict[lang]) || {};
+  return dict[key] !== undefined ? dict[key] : key;
+}
+
+function newsTagLabel(fonte, lang) {
+  const map = { ri: 'noticias.tab.ri', distrito: 'noticias.tab.distrito', clube: 'noticias.tab.clube' };
+  return map[fonte] ? t(map[fonte], lang) : '';
+}
 
 function getField(obj, path) {
   return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : ''), obj);
 }
 
-function fmtDate(iso) {
+function fmtDate(iso, lang) {
   if (!iso) return '';
   const [y, m, d] = iso.split('-');
-  const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  const mesesPt = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  const mesesEn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const meses = lang === 'en' ? mesesEn : mesesPt;
   return `${parseInt(d)} ${meses[parseInt(m)-1]} ${y}`;
 }
 
@@ -46,171 +74,224 @@ function socialIcon(name) {
   return icons[name] || '';
 }
 
+// ---------------- i18n: textos estáticos da UI ----------------
+function applyI18n(lang) {
+  if (!i18nDict) return;
+  document.documentElement.lang = (LANG_META[lang] || LANG_META.pt).htmlLang;
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.getAttribute('data-i18n'), lang);
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    el.innerHTML = t(el.getAttribute('data-i18n-html'), lang);
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    el.placeholder = t(el.getAttribute('data-i18n-placeholder'), lang);
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+    el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'), lang));
+  });
+
+  document.querySelectorAll('[data-lang-flag]').forEach(el => {
+    el.textContent = (LANG_META[lang] || LANG_META.pt).flag;
+  });
+  document.querySelectorAll('[data-lang-code]').forEach(el => {
+    el.textContent = (LANG_META[lang] || LANG_META.pt).code;
+  });
+  document.querySelectorAll('[data-lang-btn]').forEach(el => {
+    el.setAttribute('aria-label', t('lang.aria', lang));
+  });
+}
+
+// ---------------- Conteúdo dinâmico (site-data.json + news.json) ----------------
+let currentNews = [];
+let currentTab = 'clube';
+
+function renderSiteData(siteData, lang) {
+  if (!siteData) return;
+
+  document.querySelectorAll('[data-field]').forEach(el => {
+    const val = getField(siteData, el.getAttribute('data-field'));
+    if (val) el.textContent = val;
+  });
+
+  const statsWrap = document.querySelector('[data-stats]');
+  if (statsWrap && siteData.estatisticas) {
+    statsWrap.innerHTML = siteData.estatisticas.map(s => `
+      <div class="stat">
+        <div class="stat-num">${s.numero}</div>
+        <div class="stat-label">${s.rotulo}</div>
+      </div>`).join('');
+  }
+
+  const focusCarousel = document.querySelector('[data-focus-carousel]');
+  if (focusCarousel && siteData.areasDeFoco) {
+    const cardHTML = a => `
+      <div class="focus-card">
+        <div class="focus-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[a.icone] || ''}</svg></div>
+        <h4>${a.titulo}</h4>
+      </div>`;
+    const once = siteData.areasDeFoco.map(cardHTML).join('');
+    focusCarousel.innerHTML = once + once; // duplicado: a animação translada -50% e reinicia sem corte
+  }
+
+  const teamGrid = document.querySelector('[data-team-grid]');
+  if (teamGrid && siteData.diretoria) {
+    teamGrid.innerHTML = siteData.diretoria.map(m => {
+      const initials = (m.nome && m.nome !== 'A definir')
+        ? m.nome.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase()
+        : '?';
+      return `
+      <div class="team-card stagger-item">
+        <div class="team-avatar">${initials}</div>
+        <h4>${m.nome}</h4>
+        <div class="role">${m.cargo}</div>
+      </div>`;
+    }).join('');
+  }
+
+  const rs = siteData.redesSociais || {};
+  const socialLinks = [
+    rs.instagram ? { name: 'instagram', url: rs.instagram } : null,
+    rs.facebook ? { name: 'facebook', url: rs.facebook } : null
+  ].filter(Boolean);
+
+  const topbarSocial = document.querySelector('[data-social-topbar]');
+  const cardSocial = document.querySelector('[data-social-card]');
+  const socialHTML = socialLinks.map(s => `<a href="${s.url}" target="_blank" rel="noopener" aria-label="${s.name}"><svg viewBox="0 0 24 24" stroke-width="1.8">${socialIcon(s.name)}</svg></a>`).join('');
+  if (topbarSocial) topbarSocial.innerHTML = socialHTML || '';
+  if (cardSocial) cardSocial.innerHTML = socialHTML || '';
+
+  const footerFocus = document.querySelector('[data-footer-focus]');
+  if (footerFocus && siteData.areasDeFoco) {
+    footerFocus.innerHTML = siteData.areasDeFoco.map(a => `
+      <span title="${a.titulo}"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[a.icone] || ''}</svg></span>`).join('');
+  }
+
+  const wa = (siteData.contato || {}).whatsapp;
+  if (wa) {
+    const waMsgTxt = lang === 'en'
+      ? `Hello! I'd like to talk to ${getField(siteData, 'clube.nome')}.`
+      : `Olá! Gostaria de falar com o ${getField(siteData, 'clube.nome')}.`;
+    const waMsg = encodeURIComponent(waMsgTxt);
+    document.querySelectorAll('[data-whatsapp-link]').forEach(el => {
+      el.href = `https://wa.me/${wa}?text=${waMsg}`;
+    });
+  }
+
+  const boardWrap = document.querySelector('[data-primeira-diretoria]');
+  if (boardWrap && siteData.primeiraDiretoria) {
+    boardWrap.innerHTML = siteData.primeiraDiretoria.map(m => `
+      <li><span class="role">${m.cargo}</span><span class="name">${m.nome}</span></li>`).join('');
+  }
+  const foundersWrap = document.querySelector('[data-fundadores]');
+  if (foundersWrap && siteData.fundadores) {
+    foundersWrap.textContent = siteData.fundadores.join(' · ');
+  }
+
+  const handleEl = document.querySelector('[data-insta-handle]');
+  const handleText = document.querySelector('[data-insta-handle-text]');
+  const igUrl = (siteData.redesSociais || {}).instagram;
+  if (handleEl && handleText) {
+    if (igUrl) {
+      handleEl.href = igUrl;
+      const at = igUrl.replace(/\/+$/, '').split('/').pop();
+      handleText.textContent = '@' + at;
+    } else {
+      handleText.textContent = t('instagram.seguirPadrao', lang);
+      handleEl.href = '#';
+    }
+  }
+
+  const beholdFeedId = (siteData.redesSociais || {}).beholdFeedId;
+  const beholdWidget = document.querySelector('[data-behold-widget]');
+  const beholdEmpty = document.querySelector('[data-behold-empty]');
+  if (beholdFeedId) {
+    beholdWidget?.setAttribute('feed-id', beholdFeedId);
+    if (beholdWidget) beholdWidget.style.display = '';
+    if (beholdEmpty) beholdEmpty.style.display = 'none';
+  } else {
+    if (beholdWidget) beholdWidget.style.display = 'none';
+    if (beholdEmpty) beholdEmpty.style.display = '';
+  }
+}
+
+function renderNews(lang) {
+  const newsGrid = document.querySelector('[data-news-grid]');
+  if (!newsGrid) return;
+  const items = (currentNews || [])
+    .filter(n => n.fonte === currentTab)
+    .sort((a, b) => (a.data < b.data ? 1 : -1));
+
+  if (!items.length) {
+    newsGrid.innerHTML = `<p class="news-empty">${t('noticias.empty', lang).replace('{tag}', newsTagLabel(currentTab, lang))}</p>`;
+    return;
+  }
+
+  newsGrid.innerHTML = items.map(n => `
+    <article class="news-card">
+      <div class="news-thumb">
+        <span class="news-tag">${newsTagLabel(n.fonte, lang)}</span>
+        ${n.imagem ? `<img src="${n.imagem}" alt="" style="width:100%;height:100%;object-fit:cover;">` :
+        `<svg viewBox="0 0 24 24" stroke="white" stroke-width="1.6" fill="none"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 5"/><circle cx="8" cy="9" r="1.3" fill="white" stroke="none"/></svg>`}
+      </div>
+      <div class="news-body">
+        <div class="news-date">${fmtDate(n.data, lang)}</div>
+        <h4>${n.titulo}</h4>
+        <p>${n.resumo || ''}</p>
+        <a class="news-link" href="${n.url || '#'}" target="_blank" rel="noopener">${t('noticias.lerMais', lang)}
+          <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </article>`).join('');
+}
+
+async function loadContent(lang) {
+  const siteDataPath = lang === 'en' ? 'assets/data/site-data.en.json' : 'assets/data/site-data.json';
+  const newsPath = lang === 'en' ? 'assets/data/news.en.json' : 'assets/data/news.json';
+
+  let [siteData, news] = await Promise.all([loadJSON(siteDataPath), loadJSON(newsPath)]);
+
+  // Fallback pro português caso os arquivos em inglês ainda não existam/tenham sido movidos
+  if (!siteData && lang === 'en') siteData = await loadJSON('assets/data/site-data.json');
+  if (!news && lang === 'en') news = await loadJSON('assets/data/news.json');
+
+  renderSiteData(siteData, lang);
+  currentNews = news || [];
+  renderNews(lang);
+  observeReveals();
+}
+
+async function setLanguage(lang) {
+  setLang(lang);
+  applyI18n(lang);
+  await loadContent(lang);
+}
+
 async function init() {
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  const [siteData, news] = await Promise.all([
-    loadJSON('assets/data/site-data.json'),
-    loadJSON('assets/data/news.json')
-  ]);
+  i18nDict = await loadJSON('assets/data/i18n.json');
 
-  if (siteData) {
-    document.querySelectorAll('[data-field]').forEach(el => {
-      const val = getField(siteData, el.getAttribute('data-field'));
-      if (val) el.textContent = val;
-    });
-
-    // Estatísticas do hero
-    const statsWrap = document.querySelector('[data-stats]');
-    if (statsWrap && siteData.estatisticas) {
-      statsWrap.innerHTML = siteData.estatisticas.map(s => `
-        <div class="stat">
-          <div class="stat-num">${s.numero}</div>
-          <div class="stat-label">${s.rotulo}</div>
-        </div>`).join('');
-    }
-
-    // Áreas de foco — carrossel giratório contínuo (lista duplicada p/ loop sem emenda)
-    const focusCarousel = document.querySelector('[data-focus-carousel]');
-    if (focusCarousel && siteData.areasDeFoco) {
-      const cardHTML = a => `
-        <div class="focus-card">
-          <div class="focus-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[a.icone] || ''}</svg></div>
-          <h4>${a.titulo}</h4>
-        </div>`;
-      const once = siteData.areasDeFoco.map(cardHTML).join('');
-      focusCarousel.innerHTML = once + once; // duplicado: a animação translada -50% e reinicia sem corte
-    }
-
-    // Diretoria
-    const teamGrid = document.querySelector('[data-team-grid]');
-    if (teamGrid && siteData.diretoria) {
-      teamGrid.innerHTML = siteData.diretoria.map(m => {
-        const initials = (m.nome && m.nome !== 'A definir')
-          ? m.nome.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase()
-          : '?';
-        return `
-        <div class="team-card stagger-item">
-          <div class="team-avatar">${initials}</div>
-          <h4>${m.nome}</h4>
-          <div class="role">${m.cargo}</div>
-        </div>`;
-      }).join('');
-    }
-
-    // Redes sociais (topbar + card de contato)
-    const rs = siteData.redesSociais || {};
-    const socialLinks = [
-      rs.instagram ? { name: 'instagram', url: rs.instagram } : null,
-      rs.facebook ? { name: 'facebook', url: rs.facebook } : null
-    ].filter(Boolean);
-
-    const topbarSocial = document.querySelector('[data-social-topbar]');
-    const cardSocial = document.querySelector('[data-social-card]');
-    const socialHTML = socialLinks.map(s => `<a href="${s.url}" target="_blank" rel="noopener" aria-label="${s.name}"><svg viewBox="0 0 24 24" stroke-width="1.8">${socialIcon(s.name)}</svg></a>`).join('');
-    if (topbarSocial) topbarSocial.innerHTML = socialHTML || '';
-    if (cardSocial) cardSocial.innerHTML = socialHTML || '';
-
-    // Rodapé — ícones das áreas de foco
-    const footerFocus = document.querySelector('[data-footer-focus]');
-    if (footerFocus && siteData.areasDeFoco) {
-      footerFocus.innerHTML = siteData.areasDeFoco.map(a => `
-        <span title="${a.titulo}"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[a.icone] || ''}</svg></span>`).join('');
-    }
-
-    // WhatsApp — botão flutuante + link no card de contato
-    const wa = (siteData.contato || {}).whatsapp;
-    if (wa) {
-      const waMsg = encodeURIComponent(`Olá! Gostaria de falar com o ${getField(siteData, 'clube.nome')}.`);
-      document.querySelectorAll('[data-whatsapp-link]').forEach(el => {
-        el.href = `https://wa.me/${wa}?text=${waMsg}`;
-      });
-    }
-
-    // Nossa História — primeira diretoria e sócios-fundadores
-    const boardWrap = document.querySelector('[data-primeira-diretoria]');
-    if (boardWrap && siteData.primeiraDiretoria) {
-      boardWrap.innerHTML = siteData.primeiraDiretoria.map(m => `
-        <li><span class="role">${m.cargo}</span><span class="name">${m.nome}</span></li>`).join('');
-    }
-    const foundersWrap = document.querySelector('[data-fundadores]');
-    if (foundersWrap && siteData.fundadores) {
-      foundersWrap.textContent = siteData.fundadores.join(' · ');
-    }
-
-    // Instagram — link "seguir" + widget do Behold (behold.so)
-    const handleEl = document.querySelector('[data-insta-handle]');
-    const handleText = document.querySelector('[data-insta-handle-text]');
-    const igUrl = (siteData.redesSociais || {}).instagram;
-    if (handleEl && handleText) {
-      if (igUrl) {
-        handleEl.href = igUrl;
-        const at = igUrl.replace(/\/+$/, '').split('/').pop();
-        handleText.textContent = '@' + at;
-      } else {
-        handleText.textContent = 'Siga o clube no Instagram';
-        handleEl.href = '#';
-      }
-    }
-
-    const beholdFeedId = (siteData.redesSociais || {}).beholdFeedId;
-    const beholdWidget = document.querySelector('[data-behold-widget]');
-    const beholdEmpty = document.querySelector('[data-behold-empty]');
-    if (beholdFeedId) {
-      beholdWidget?.setAttribute('feed-id', beholdFeedId);
-      if (beholdWidget) beholdWidget.style.display = '';
-      if (beholdEmpty) beholdEmpty.style.display = 'none';
-    } else {
-      if (beholdWidget) beholdWidget.style.display = 'none';
-      if (beholdEmpty) beholdEmpty.style.display = '';
-    }
-  }
-
-  // ---------------- Notícias ----------------
-  const newsGrid = document.querySelector('[data-news-grid]');
-  let currentTab = 'clube';
-
-  function renderNews() {
-    if (!newsGrid) return;
-    const items = (news || [])
-      .filter(n => n.fonte === currentTab)
-      .sort((a, b) => (a.data < b.data ? 1 : -1));
-
-    if (!items.length) {
-      newsGrid.innerHTML = `<p class="news-empty">Nenhuma notícia cadastrada em ${NEWS_TAG_LABEL[currentTab]} ainda. Edite assets/data/news.json para adicionar.</p>`;
-      return;
-    }
-
-    newsGrid.innerHTML = items.map(n => `
-      <article class="news-card">
-        <div class="news-thumb">
-          <span class="news-tag">${NEWS_TAG_LABEL[n.fonte] || ''}</span>
-          ${n.imagem ? `<img src="${n.imagem}" alt="" style="width:100%;height:100%;object-fit:cover;">` :
-          `<svg viewBox="0 0 24 24" stroke="white" stroke-width="1.6" fill="none"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 5"/><circle cx="8" cy="9" r="1.3" fill="white" stroke="none"/></svg>`}
-        </div>
-        <div class="news-body">
-          <div class="news-date">${fmtDate(n.data)}</div>
-          <h4>${n.titulo}</h4>
-          <p>${n.resumo || ''}</p>
-          <a class="news-link" href="${n.url || '#'}" target="_blank" rel="noopener">Ler mais
-            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-      </article>`).join('');
-  }
+  const lang = getLang();
+  applyI18n(lang);
+  await loadContent(lang);
 
   document.querySelectorAll('.news-tab').forEach(tab => {
     tab.addEventListener('click', () => {
-      document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.news-tab').forEach(el => el.classList.remove('active'));
       tab.classList.add('active');
       currentTab = tab.getAttribute('data-tab');
-      renderNews();
+      renderNews(getLang());
     });
   });
-  renderNews();
 
-  // Reobserve reveal elements added dynamically
-  observeReveals();
+  document.querySelectorAll('[data-lang-btn]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const next = getLang() === 'en' ? 'pt' : 'en';
+      setLanguage(next);
+    });
+  });
 }
 
 // ---------------- Header scroll ----------------
@@ -252,7 +333,8 @@ document.getElementById('contactForm')?.addEventListener('submit', (e) => {
   const f = e.target;
   const nome = f.nome.value, email = f.email.value, msg = f.mensagem.value;
   const to = document.querySelector('[data-field="contato.email"]')?.textContent.trim() || '';
-  const subject = encodeURIComponent(`Contato pelo site — ${nome}`);
+  const lang = getLang();
+  const subject = encodeURIComponent(lang === 'en' ? `Contact from the website — ${nome}` : `Contato pelo site — ${nome}`);
   const body = encodeURIComponent(`${msg}\n\n— ${nome} (${email})`);
   window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
 });

@@ -1,0 +1,51 @@
+[
+  {
+    "_comment": "English version of news.json. source: 'ri' (Rotary International), 'distrito' (District 4740) or 'clube' (our club). Keep entries in the same order/dates as news.json.",
+    "fonte": "ri",
+    "data": "2026-07-01",
+    "titulo": "Create Lasting Impact: the 2026-27 Rotary year theme",
+    "resumo": "Rotary International President Olayinka H. Babalola calls on members to go beyond one-off actions, making clubs more welcoming and driving projects with sustainable impact in communities.",
+    "imagem": "",
+    "url": "https://www.rotary.org/en/olayinka-h-babalola-urges-members-of-rotary-to-create-lasting-impact"
+  },
+  {
+    "fonte": "distrito",
+    "data": "2026-08-08",
+    "titulo": "Donation of two adapted tricycles unites Rotary Alvorada, Ailos CrediComin and volunteers for inclusion in Lages",
+    "resumo": "Rotary Club of Lages-Alvorada, District 4740, receives adapted equipment for the \"Pernas Solidárias\" project, expanding participation of people with disabilities in races and sporting events.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
+  },
+  {
+    "fonte": "distrito",
+    "data": "2026-07-31",
+    "titulo": "Governor couple 2026-27, Moacir Schaly and Maria Cristina Thibes Schaly, bring District 4740 closer to clubs during Official Visit",
+    "resumo": "Another chapter in the Official Visits agenda reinforces the commitment to being present alongside the clubs of District 4740.",
+    "imagem": "assets/img/noticias/casal-governador-2026-27.png",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
+  },
+  {
+    "fonte": "clube",
+    "data": "2026-04-29",
+    "titulo": "Crossing borders: RC Porto União – União da Vitória visits Rotary Club Milano Fiera Porta Nuova, in Milan",
+    "resumo": "Rotary fellowship without borders: club members had the honor of taking part in a meeting of the Rotary Club Milano Fiera Porta Nuova, in Italy.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
+  },
+  {
+    "fonte": "clube",
+    "data": "2026-08-04",
+    "titulo": "June 2026 Club Newsletter",
+    "resumo": "Check out the club's activities, meetings and projects throughout June.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
+  },
+  {
+    "fonte": "clube",
+    "data": "2026-08-04",
+    "titulo": "May 2026 Club Newsletter",
+    "resumo": "Check out the club's activities, meetings and projects throughout May.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
+  }
+]
