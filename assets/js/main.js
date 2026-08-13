@@ -189,17 +189,31 @@ function renderSiteData(siteData, lang) {
     foundersWrap.textContent = siteData.fundadores.join(' · ');
   }
 
+  const igUrl = (siteData.redesSociais || {}).instagram;
+  const igAt = igUrl ? '@' + igUrl.replace(/\/+$/, '').split('/').pop() : '';
+
   const handleEl = document.querySelector('[data-insta-handle]');
   const handleText = document.querySelector('[data-insta-handle-text]');
-  const igUrl = (siteData.redesSociais || {}).instagram;
   if (handleEl && handleText) {
     if (igUrl) {
       handleEl.href = igUrl;
-      const at = igUrl.replace(/\/+$/, '').split('/').pop();
-      handleText.textContent = '@' + at;
+      handleText.textContent = igAt;
     } else {
       handleText.textContent = t('instagram.seguirPadrao', lang);
       handleEl.href = '#';
+    }
+  }
+
+  const instaItem = document.querySelector('[data-insta-item]');
+  const instaLink = document.querySelector('[data-insta-link]');
+  const instaLinkText = document.querySelector('[data-insta-link-text]');
+  if (instaItem) {
+    if (igUrl && instaLink && instaLinkText) {
+      instaLink.href = igUrl;
+      instaLinkText.textContent = igAt;
+      instaItem.style.display = '';
+    } else {
+      instaItem.style.display = 'none';
     }
   }
 

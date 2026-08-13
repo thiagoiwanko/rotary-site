@@ -200,7 +200,8 @@ header.site-header.scrolled {
 .nav-wrap {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
   padding: 1.1rem 0;
   transition: padding var(--transition);
 }
@@ -636,6 +637,42 @@ behold-widget { display: block; }
 .team-card .role { font-size: 0.82rem; color: var(--rotary-azure); font-weight: 600; }
 
 /* ===================================================================
+   LIDERANÇA ROTÁRIA (CASAL GOVERNADOR + PRESIDENTE RI)
+   =================================================================== */
+.leader-block {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  align-items: center;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+.leader-block:last-child { margin-bottom: 0; }
+.leader-block.reverse { grid-template-columns: 1fr 320px; }
+.leader-block.reverse .leader-photo { order: 2; }
+.leader-photo {
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  aspect-ratio: 4/3;
+}
+.leader-photo img { width: 100%; height: 100%; object-fit: cover; }
+.leader-photo-avatar {
+  aspect-ratio: 1;
+  background: var(--grad-hero);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.leader-photo-avatar span {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 3.2rem;
+  color: var(--white);
+}
+.leader-text h3 { font-size: clamp(1.3rem, 2.5vw, 1.7rem); margin-bottom: 0.9rem; color: var(--rotary-blue-dark); }
+.leader-text p { color: var(--charcoal); line-height: 1.7; }
+
+/* ===================================================================
    CTA REUNIÃO
    =================================================================== */
 .meet-cta {
@@ -719,6 +756,7 @@ footer ul a:hover { color: var(--rotary-gold); }
 .footer-focus { display: flex; gap: 0.7rem; flex-wrap: wrap; }
 .footer-focus span { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; }
 .footer-focus svg { width: 16px; height: 16px; stroke: var(--rotary-sky); fill: none; }
+.site-version { opacity: 0.55; font-size: 0.85em; }
 
 /* ===================================================================
    NOSSA HISTÓRIA
@@ -783,6 +821,9 @@ footer ul a:hover { color: var(--rotary-gold); }
   .about-grid, .contact-grid, .meet-cta, .history-grid { grid-template-columns: 1fr; }
   .about-visual { max-width: 420px; margin: 0 auto; }
   .footer-top { grid-template-columns: 1fr 1fr; }
+  .leader-block, .leader-block.reverse { grid-template-columns: 1fr; }
+  .leader-block.reverse .leader-photo { order: 0; }
+  .leader-photo { max-width: 320px; margin: 0 auto; }
 }
 
 @media (max-width: 860px) {
