@@ -659,20 +659,7 @@ behold-widget { display: block; }
   box-shadow: var(--shadow-md);
   aspect-ratio: 4/3;
 }
-.leader-photo img { width: 100%; height: 100%; object-fit: cover; }
-.leader-photo-avatar {
-  aspect-ratio: 1;
-  background: var(--grad-hero);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.leader-photo-avatar span {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 3.2rem;
-  color: var(--white);
-}
+.leader-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .leader-text h3 { font-size: clamp(1.3rem, 2.5vw, 1.7rem); margin-bottom: 0.9rem; color: var(--rotary-blue-dark); }
 .leader-text p { color: var(--charcoal); line-height: 1.7; }
 
