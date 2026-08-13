@@ -1,6 +1,54 @@
 [
   {
     "_comment": "English version of news.json. source: 'ri' (Rotary International), 'distrito' (District 4740) or 'clube' (our club). Keep entries in the same order/dates as news.json.",
+    "fonte": "clube",
+    "data": "2026-08-07",
+    "titulo": "August is Membership Month: Point Out the Missing Piece!",
+    "resumo": "August membership development (DQA) campaign invites clubs to refer new members and strengthen Rotary's membership base.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
+  },
+  {
+    "fonte": "clube",
+    "data": "2026-06-02",
+    "titulo": "Membership Guardians Campaign: 30 Days to Retain, Care and Recognize",
+    "resumo": "Regions 29 and 31 initiative reinforces member retention, care and recognition efforts over a 30-day period.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
+  },
+  {
+    "fonte": "clube",
+    "data": "2026-06-01",
+    "titulo": "Message from the Rotary International Director 2025-27 — June/2026",
+    "resumo": "The Rotary International Director highlights the strength of Fellowship groups and the role of connection among Rotarians.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
+  },
+  {
+    "fonte": "clube",
+    "data": "2026-05-13",
+    "titulo": "April 2026 | Rotary Foundation Newsletter",
+    "resumo": "Regions 29 and 31 newsletter on The Rotary Foundation, including mobilization for the End Polio Now campaign.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
+  },
+  {
+    "fonte": "clube",
+    "data": "2026-05-12",
+    "titulo": "Region 31 Annual Membership Report 2025-2026",
+    "resumo": "Consolidated report shows Region 31 grew by 1,063 members and 20 clubs in the 2025-2026 Rotary year, reinforcing Rotary's leading role in Brazil.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticia/213893"
+  },
+  {
+    "fonte": "clube",
+    "data": "2026-05-01",
+    "titulo": "Message from the Rotary International Director 2025-27 — May/2026",
+    "resumo": "The Rotary International Director discusses transforming talent and the role of youth in Rotary.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
+  },
+  {
     "fonte": "ri",
     "data": "2026-07-01",
     "titulo": "Create Lasting Impact: the 2026-27 Rotary year theme",

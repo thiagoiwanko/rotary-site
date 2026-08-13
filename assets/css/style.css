@@ -639,8 +639,25 @@ behold-widget { display: block; }
 }
 .team-card h4 { font-size: 1rem; margin-bottom: 0.3rem; }
 .team-card .role { font-size: 0.82rem; color: var(--rotary-azure); font-weight: 600; }
-.team-card.is-presidente .team-avatar { background: var(--grad-sky); color: var(--white); }
-.team-card.is-presidente .role { color: var(--rotary-gold-dark); }
+
+/* Diretoria: card do presidente em destaque (fundo dourado), demais em azul (inverso) */
+.team-card:not(.is-presidente) {
+  background: var(--grad-sky);
+  border-color: transparent;
+}
+.team-card:not(.is-presidente) h4 { color: var(--white); }
+.team-card:not(.is-presidente) .role { color: rgba(255,255,255,0.85); }
+
+.team-card.is-presidente {
+  background: var(--grad-gold);
+  border: 2px solid var(--rotary-gold-dark);
+  box-shadow: 0 16px 36px rgba(217,142,10,0.35);
+  transform: translateY(-4px) scale(1.03);
+}
+.team-card.is-presidente:hover { transform: translateY(-8px) scale(1.03); }
+.team-card.is-presidente h4 { color: var(--rotary-blue-dark); }
+.team-card.is-presidente .role { color: var(--rotary-blue-dark); }
+.team-card.is-presidente .team-avatar { background: var(--rotary-blue-dark); color: var(--white); }
 
 /* ===================================================================
    LIDERANÇA ROTÁRIA (CASAL GOVERNADOR + PRESIDENTE RI)
