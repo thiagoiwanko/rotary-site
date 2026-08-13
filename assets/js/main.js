@@ -322,15 +322,49 @@ function observeReveals() {
 }
 
 // ---------------- Formulário de contato (mailto fallback) ----------------
-document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const f = e.target;
-  const nome = f.nome.value, email = f.email.value, msg = f.mensagem.value;
-  const to = document.querySelector('[data-field="contato.email"]')?.textContent.trim() || '';
   const lang = getLang();
-  const subject = encodeURIComponent(lang === 'en' ? `Contact from the website — ${nome}` : `Contato pelo site — ${nome}`);
-  const body = encodeURIComponent(`${msg}\n\n— ${nome} (${email})`);
-  window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+  const statusEl = f.querySelector('[data-form-status]');
+  const submitBtn = f.querySelector('button[type="submit"]');
+  const originalBtnText = submitBtn ? submitBtn.textContent : '';
+
+  if (statusEl) {
+    statusEl.textContent = t('form.enviando', lang);
+    statusEl.className = 'form-status pending';
+  }
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = t('form.enviando', lang);
+  }
+
+  try {
+    const res = await fetch(f.action, {
+      method: 'POST',
+      body: new FormData(f),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      if (statusEl) {
+        statusEl.textContent = t('form.sucesso', lang);
+        statusEl.className = 'form-status success';
+      }
+      f.reset();
+    } else {
+      throw new Error('Formspree error');
+    }
+  } catch (err) {
+    if (statusEl) {
+      statusEl.textContent = t('form.erro', lang);
+      statusEl.className = 'form-status error';
+    }
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalBtnText;
+    }
+  }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
