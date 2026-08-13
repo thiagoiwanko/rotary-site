@@ -1,7 +1,7 @@
 [
   {
     "_comment": "fonte: 'ri' (Rotary International), 'distrito' (Distrito 4740) ou 'clube' (nosso clube). Copie um bloco e edite para adicionar notícias novas. Coloque a mais recente no topo.",
-    "fonte": "clube",
+    "fonte": "distrito",
     "data": "2026-08-07",
     "titulo": "Agosto é o Mês do DQA: Indique a Peça Que Falta!",
     "resumo": "Campanha de agosto do Desenvolvimento do Quadro Associativo (DQA) convida os clubes a indicar novos associados e fortalecer o quadro social do Rotary.",
@@ -9,7 +9,7 @@
     "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
   },
   {
-    "fonte": "clube",
+    "fonte": "distrito",
     "data": "2026-06-02",
     "titulo": "Campanha Guardiões do DQA: 30 dias para reter, cuidar e reconhecer",
     "resumo": "Iniciativa das Regiões 29 e 31 do Rotary reforça ações de retenção, cuidado e reconhecimento dos associados ao longo de 30 dias.",
@@ -17,7 +17,7 @@
     "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
   },
   {
-    "fonte": "clube",
+    "fonte": "ri",
     "data": "2026-06-01",
     "titulo": "Mensagem do Diretor do Rotary International 2025-27 — Junho/2026",
     "resumo": "Diretor do Rotary International destaca a força dos Grupos de Companheirismo e o papel do convívio entre rotarianos.",
@@ -25,7 +25,7 @@
     "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
   },
   {
-    "fonte": "clube",
+    "fonte": "distrito",
     "data": "2026-05-13",
     "titulo": "Abril de 2026 | Boletim Informativo da Fundação Rotária",
     "resumo": "Boletim das Regiões 29 e 31 sobre a Fundação Rotária, incluindo mobilização pela campanha Elimine a Pólio Agora.",
@@ -33,7 +33,7 @@
     "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
   },
   {
-    "fonte": "clube",
+    "fonte": "distrito",
     "data": "2026-05-12",
     "titulo": "Relatório Anual do DQA da Região 31 em 2025-2026",
     "resumo": "Relatório consolidado mostra que a Região 31 cresceu 1.063 associados e 20 clubes no ano rotário 2025-2026, reforçando o protagonismo do Rotary no Brasil.",
@@ -41,7 +41,7 @@
     "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticia/213893"
   },
   {
-    "fonte": "clube",
+    "fonte": "ri",
     "data": "2026-05-01",
     "titulo": "Mensagem do Diretor do Rotary International 2025-27 — Maio/2026",
     "resumo": "Diretor do Rotary International fala sobre transformação de talentos e o papel da juventude no Rotary.",
