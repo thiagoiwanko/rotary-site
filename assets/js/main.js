@@ -17,7 +17,7 @@ const ICONS = {
 
 const LANG_KEY = 'rcpu-lang';
 const LANG_META = {
-  pt: { flag: '🇧🇷', code: 'PT', htmlLang: 'pt-BR' },
+  pt: { flag: '🇧🇷', code: 'PT-BR', htmlLang: 'pt-BR' },
   en: { flag: '🇺🇸', code: 'EN', htmlLang: 'en' }
 };
 
@@ -64,14 +64,6 @@ async function loadJSON(path) {
     console.warn('Não foi possível carregar', path, e);
     return null;
   }
-}
-
-function socialIcon(name) {
-  const icons = {
-    instagram: '<rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>',
-    facebook: '<path d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H8v3h3v7h3v-7h3l1-3h-4V9c0-.6.4-1 1-1z"/>'
-  };
-  return icons[name] || '';
 }
 
 // ---------------- i18n: textos estáticos da UI ----------------
@@ -149,18 +141,6 @@ function renderSiteData(siteData, lang) {
       </div>`;
     }).join('');
   }
-
-  const rs = siteData.redesSociais || {};
-  const socialLinks = [
-    rs.instagram ? { name: 'instagram', url: rs.instagram } : null,
-    rs.facebook ? { name: 'facebook', url: rs.facebook } : null
-  ].filter(Boolean);
-
-  const topbarSocial = document.querySelector('[data-social-topbar]');
-  const cardSocial = document.querySelector('[data-social-card]');
-  const socialHTML = socialLinks.map(s => `<a href="${s.url}" target="_blank" rel="noopener" aria-label="${s.name}"><svg viewBox="0 0 24 24" stroke-width="1.8">${socialIcon(s.name)}</svg></a>`).join('');
-  if (topbarSocial) topbarSocial.innerHTML = socialHTML || '';
-  if (cardSocial) cardSocial.innerHTML = socialHTML || '';
 
   const footerFocus = document.querySelector('[data-footer-focus]');
   if (footerFocus && siteData.areasDeFoco) {
