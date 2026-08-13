@@ -1,0 +1,51 @@
+[
+  {
+    "_comment": "fonte: 'ri' (Rotary International), 'distrito' (Distrito 4740) ou 'clube' (nosso clube). Copie um bloco e edite para adicionar notícias novas. Coloque a mais recente no topo.",
+    "fonte": "ri",
+    "data": "2026-07-01",
+    "titulo": "Crie Impacto Duradouro: o tema do ano rotário 2026-27",
+    "resumo": "O presidente do Rotary International, Olayinka H. Babalola, convoca os associados a irem além de ações pontuais, tornando os clubes mais acolhedores e promovendo projetos com impacto sustentável nas comunidades.",
+    "imagem": "",
+    "url": "https://www.rotary.org/pt/olayinka-h-babalola-urges-members-of-rotary-to-create-lasting-impact"
+  },
+  {
+    "fonte": "distrito",
+    "data": "2026-08-08",
+    "titulo": "Doação de dois triciclos adaptados une Rotary Alvorada, Ailos CrediComin e voluntariado pela inclusão em Lages",
+    "resumo": "Rotary Club de Lages-Alvorada, do Distrito 4740, recebe equipamentos adaptados para o projeto \"Pernas Solidárias\", ampliando a participação de pessoas com deficiência em corridas e eventos esportivos.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
+  },
+  {
+    "fonte": "distrito",
+    "data": "2026-07-31",
+    "titulo": "Casal Governador 2026-27, Moacir Schaly e Maria Cristina Thibes Schaly, aproxima o Distrito 4740 da realidade dos clubes em Visita Oficial",
+    "resumo": "Mais um capítulo da agenda de Visitas Oficiais reforça o compromisso de estar presente junto aos clubes do Distrito 4740.",
+    "imagem": "assets/img/noticias/casal-governador-2026-27.png",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
+  },
+  {
+    "fonte": "clube",
+    "data": "2026-04-29",
+    "titulo": "Cruzando fronteiras: RC Porto União – União da Vitória visita o Rotary Club Milano Fiera Porta Nuova, em Milão",
+    "resumo": "Companheirismo rotário sem fronteiras: associados do clube tiveram a honra de participar de uma reunião do Rotary Club Milano Fiera Porta Nuova, na Itália.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
+  },
+  {
+    "fonte": "clube",
+    "data": "2026-08-04",
+    "titulo": "Informativo Rotário de Junho de 2026",
+    "resumo": "Confira as atividades, reuniões e projetos do clube ao longo do mês de junho.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
+  },
+  {
+    "fonte": "clube",
+    "data": "2026-08-04",
+    "titulo": "Informativo Rotário de Maio de 2026",
+    "resumo": "Confira as atividades, reuniões e projetos do clube ao longo do mês de maio.",
+    "imagem": "",
+    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
+  }
+]

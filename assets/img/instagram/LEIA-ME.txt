@@ -1,0 +1,8 @@
+Coloque aqui as fotos do carrossel do Instagram (formato quadrado, ex: 800x800px, .jpg ou .png).
+
+Depois, edite assets/data/instagram.json e, para cada post, informe:
+- "imagem": o nome do arquivo que você colocou aqui (ex: "foto1.jpg")
+- "legenda": um texto curto
+- "url": o link do post real no Instagram (ex: https://instagram.com/p/XXXXXXX)
+
+Enquanto um post não tiver imagem definida, o site mostra um espaço reservado elegante no lugar — nada quebra.

@@ -1,0 +1,12 @@
+{
+  "_comment": "Preencha 'handle' com o @ do clube. Para cada post: coloque a imagem em assets/img/instagram/ e referencie o nome do arquivo aqui. url é o link do post real no Instagram.",
+  "handle": "rotaryclubportouniao",
+  "posts": [
+    { "imagem": "", "legenda": "Adicione uma foto do clube aqui", "url": "" },
+    { "imagem": "", "legenda": "Adicione uma foto do clube aqui", "url": "" },
+    { "imagem": "", "legenda": "Adicione uma foto do clube aqui", "url": "" },
+    { "imagem": "", "legenda": "Adicione uma foto do clube aqui", "url": "" },
+    { "imagem": "", "legenda": "Adicione uma foto do clube aqui", "url": "" },
+    { "imagem": "", "legenda": "Adicione uma foto do clube aqui", "url": "" }
+  ]
+}
