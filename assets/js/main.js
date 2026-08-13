@@ -133,8 +133,9 @@ function renderSiteData(siteData, lang) {
       const initials = (m.nome && m.nome !== 'A definir')
         ? m.nome.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase()
         : '?';
+      const isPresidente = m.cargo === 'Presidente' || m.cargo === 'President';
       return `
-      <div class="team-card stagger-item">
+      <div class="team-card stagger-item${isPresidente ? ' is-presidente' : ''}">
         <div class="team-avatar">${initials}</div>
         <h4>${m.nome}</h4>
         <div class="role">${m.cargo}</div>

@@ -630,15 +630,17 @@ behold-widget { display: block; }
   width: 88px; height: 88px;
   border-radius: 50%;
   margin: 0 auto 1.1rem;
-  background: var(--grad-sky);
+  background: var(--grad-gold);
   display: flex; align-items: center; justify-content: center;
-  color: var(--white);
+  color: var(--rotary-blue-dark);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.6rem;
 }
 .team-card h4 { font-size: 1rem; margin-bottom: 0.3rem; }
 .team-card .role { font-size: 0.82rem; color: var(--rotary-azure); font-weight: 600; }
+.team-card.is-presidente .team-avatar { background: var(--grad-sky); color: var(--white); }
+.team-card.is-presidente .role { color: var(--rotary-gold-dark); }
 
 /* ===================================================================
    LIDERANÇA ROTÁRIA (CASAL GOVERNADOR + PRESIDENTE RI)
