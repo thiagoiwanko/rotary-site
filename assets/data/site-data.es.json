@@ -1,0 +1,73 @@
+{
+  "_comment": "Versión en español (Argentina) de site-data.json. Editá este archivo para actualizar el contenido en español.",
+  "versao": "1.2.0",
+  "clube": {
+    "nome": "Rotary Club de Porto União – União da Vitória",
+    "numero": "9015",
+    "distrito": "4740",
+    "fundacao": "27/09/1949",
+    "reuniao": "Miércoles, 12 h",
+    "temaAno": "Genera un Impacto Duradero",
+    "temaAnoOriginal": "Create Lasting Impact",
+    "anoRotario": "2026-2027",
+    "presidenteRI": "Olayinka H. Babalola",
+    "descricaoCurta": "Uniendo Porto União (SC) y União da Vitória (PR) desde 1949 a través de acciones de servicio, liderazgo y transformación social.",
+    "sobre": "Fundado en 1949, el Rotary Club de Porto União – União da Vitória reúne a líderes y voluntarios de ambas márgenes del Río Iguazú — Santa Catarina y Paraná — en torno a un único propósito: servir. A lo largo de más de siete décadas, el club desarrolla proyectos de impacto social, salud, educación y medio ambiente, integrado al Distrito 4740 y a la red mundial de Rotary International.",
+    "historia": "El 27 de septiembre de 1949, en uno de los salones del Cruz Hotel, en la Praça Hercílio Luz, en Porto União, quedó oficialmente fundado el Rotary Club de Porto União – União da Vitória, bajo la presidencia del compañero José Moura Júnior y con la presencia del gobernador de distrito Arnaldo Suarez Cuneo. En esa sesión, 19 rotarios se convirtieron en socios fundadores del club, que nacía con un propósito claro: unir ambas márgenes del Río Iguazú — Porto União (SC) y União da Vitória (PR) — en torno al ideal de servir. Esa misma noche se eligió la primera comisión directiva, con Euclides Taborda Ribas como primer presidente electo. Más de siete décadas después, el compromiso sigue siendo el mismo."
+  },
+  "fundadores": [
+    "Urbano Pereira Rey", "Francisco Bertagnolli Júnior", "Jacyr Rangel Tarlé",
+    "Norberto de Miranda Ramos", "Valdir Z. Zaular", "Ivan Germano S. Hildenbrand",
+    "José Moura Júnior", "Alcides Ferreira e Souza", "Eugênio Fischer",
+    "Carlos Evaldo Untersteil", "João Guilherme Russo", "Roberto Ciro Corrêa",
+    "Horácio Ricardo dos Santos", "Euclides Taborda Ribas", "Cid Cesar Ferreira",
+    "Anibal Khury", "Walter Suki", "Nataniel Hirsch", "José Ferreira Gringo"
+  ],
+  "primeiraDiretoria": [
+    { "cargo": "Presidente", "nome": "Euclides Taborda Ribas" },
+    { "cargo": "Vicepresidente", "nome": "José Moura Júnior" },
+    { "cargo": "Secretario", "nome": "Ari Hilis" },
+    { "cargo": "Tesorero", "nome": "Jacyr Rangel Tarlé" }
+  ],
+  "contato": {
+    "email": "rotary9015@gmail.com",
+    "telefone": "+55 42 98855-4141",
+    "whatsapp": "5542988554141",
+    "endereco": "Porto União (SC) / União da Vitória (PR), Brasil",
+    "localReuniao": "Restaurante Suprema Grill — Rua Ipiranga, 56, Centro, União da Vitória (PR)"
+  },
+  "redesSociais": {
+    "instagram": "https://www.instagram.com/rotaryclubportouniao/",
+    "facebook": "",
+    "beholdFeedId": "iKi8CMRjF5nEQoNsVtWj",
+    "site_distrital": "https://www.rotaryportouniaodavitoria.org.br/home-clube",
+    "rotary_org": "https://www.rotary.org/es"
+  },
+  "estatisticas": [
+    { "numero": "1949", "rotulo": "Año de fundación" },
+    { "numero": "77+", "rotulo": "Años de servicio" },
+    { "numero": "4740", "rotulo": "Distrito Rotario" },
+    { "numero": "2", "rotulo": "Ciudades unidas" }
+  ],
+  "diretoria": [
+    { "cargo": "Presidente", "nome": "Dr. Stefan Grube Kolb", "foto": "" },
+    { "cargo": "Vicepresidente", "nome": "Germano José Hobi Goncho", "foto": "" },
+    { "cargo": "Secretaria", "nome": "Ione Carla Jorge da Costa", "foto": "" },
+    { "cargo": "Tesorero", "nome": "Gabriel Rengel Jackiw", "foto": "" },
+    { "cargo": "Protocolo", "nome": "Suely Masnik Martini", "foto": "" },
+    { "cargo": "Director de Proyectos", "nome": "Carlos Humberto Topolski", "foto": "" },
+    { "cargo": "Director de la Fundación Rotaria", "nome": "Thiago Jorge Iwanko", "foto": "" },
+    { "cargo": "Director de Desarrollo de Membresía (DQA)", "nome": "Adriana Cristina de Lima", "foto": "" },
+    { "cargo": "Directora de Imagen Pública", "nome": "Dra. Daniela Bochnia Iwanko", "foto": "" },
+    { "cargo": "Past President", "nome": "Thiago Jorge Iwanko", "foto": "" }
+  ],
+  "areasDeFoco": [
+    { "titulo": "Construcción de la paz y prevención de conflictos", "icone": "peace" },
+    { "titulo": "Prevención y tratamiento de enfermedades", "icone": "health" },
+    { "titulo": "Agua, saneamiento e higiene", "icone": "water" },
+    { "titulo": "Salud materna e infantil", "icone": "mother" },
+    { "titulo": "Alfabetización y educación básica", "icone": "education" },
+    { "titulo": "Desarrollo económico y comunitario", "icone": "growth" },
+    { "titulo": "Medio ambiente", "icone": "environment" }
+  ]
+}

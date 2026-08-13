@@ -168,7 +168,8 @@ section { padding: var(--section-pad) 0; position: relative; }
 .topbar-items span strong { color: var(--rotary-gold); font-weight: 600; }
 .topbar-right { display: flex; align-items: center; gap: 1.1rem; }
 
-.lang-switch {
+.lang-switch { position: relative; }
+.lang-switch-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -184,10 +185,52 @@ section { padding: var(--section-pad) 0; position: relative; }
   cursor: pointer;
   transition: background var(--transition), border-color var(--transition);
 }
-.lang-switch:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.4); }
-.lang-switch .flag { font-size: 0.95rem; line-height: 1; }
+.lang-switch-btn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.4); }
+.lang-switch .flag { width: 17px; height: 17px; border-radius: 50%; object-fit: cover; display: block; flex-shrink: 0; }
+.lang-caret { transition: transform var(--transition); flex-shrink: 0; }
+.lang-switch.open .lang-caret { transform: rotate(180deg); }
+
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: var(--white);
+  border-radius: 14px;
+  box-shadow: var(--shadow-lg);
+  padding: 0.4rem;
+  min-width: 170px;
+  list-style: none;
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+}
+.lang-switch.open .lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.lang-menu li button {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border-radius: 9px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.86rem;
+  color: var(--rotary-blue-dark);
+  text-align: left;
+  transition: background var(--transition);
+}
+.lang-menu li button:hover { background: var(--cloud); }
+.lang-menu li button.active { color: var(--rotary-azure); }
+.lang-menu li button img { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+
 .mobile-nav-top-actions { display: flex; align-items: center; gap: 0.8rem; }
-.mobile-nav-top-actions .lang-switch { background: rgba(255,255,255,0.08); }
+.mobile-nav-top-actions .lang-switch-btn { background: rgba(255,255,255,0.08); }
+.mobile-nav-top-actions .lang-menu { right: auto; left: 0; }
 
 header.site-header {
   position: sticky;

@@ -2,7 +2,7 @@
    Rotary Club Porto União – União da Vitória
    Site estático data-driven: lê os JSON em assets/data/ e monta a página.
    Para atualizar conteúdo, edite os arquivos JSON — não é preciso mexer aqui.
-   Idioma: pt (padrão) / en — ver LANG_KEY / assets/data/i18n.json.
+   Idioma: pt (padrão) / en / es — ver LANG_KEY / assets/data/i18n.json.
    =================================================================== */
 
 const ICONS = {
@@ -17,15 +17,16 @@ const ICONS = {
 
 const LANG_KEY = 'rcpu-lang';
 const LANG_META = {
-  pt: { flag: '🇧🇷', code: 'PT-BR', htmlLang: 'pt-BR' },
-  en: { flag: '🇺🇸', code: 'EN', htmlLang: 'en' }
+  pt: { flag: 'assets/img/flags/br.png', code: 'PT-BR', htmlLang: 'pt-BR' },
+  en: { flag: 'assets/img/flags/us.png', code: 'EN', htmlLang: 'en' },
+  es: { flag: 'assets/img/flags/ar.png', code: 'ES-AR', htmlLang: 'es-AR' }
 };
 
 let i18nDict = null;
 
 function getLang() {
   const saved = localStorage.getItem(LANG_KEY);
-  return saved === 'en' ? 'en' : 'pt';
+  return (saved === 'en' || saved === 'es') ? saved : 'pt';
 }
 
 function setLang(lang) {
@@ -51,7 +52,8 @@ function fmtDate(iso, lang) {
   const [y, m, d] = iso.split('-');
   const mesesPt = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
   const mesesEn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const meses = lang === 'en' ? mesesEn : mesesPt;
+  const mesesEs = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const meses = lang === 'en' ? mesesEn : lang === 'es' ? mesesEs : mesesPt;
   return `${parseInt(d)} ${meses[parseInt(m)-1]} ${y}`;
 }
 
@@ -85,13 +87,16 @@ function applyI18n(lang) {
   });
 
   document.querySelectorAll('[data-lang-flag]').forEach(el => {
-    el.textContent = (LANG_META[lang] || LANG_META.pt).flag;
+    el.src = (LANG_META[lang] || LANG_META.pt).flag;
   });
   document.querySelectorAll('[data-lang-code]').forEach(el => {
     el.textContent = (LANG_META[lang] || LANG_META.pt).code;
   });
-  document.querySelectorAll('[data-lang-btn]').forEach(el => {
+  document.querySelectorAll('[data-lang-toggle]').forEach(el => {
     el.setAttribute('aria-label', t('lang.aria', lang));
+  });
+  document.querySelectorAll('[data-lang-option]').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('data-lang-option') === lang);
   });
 }
 
@@ -151,9 +156,12 @@ function renderSiteData(siteData, lang) {
 
   const wa = (siteData.contato || {}).whatsapp;
   if (wa) {
-    const waMsgTxt = lang === 'en'
-      ? `Hello! I'd like to talk to ${getField(siteData, 'clube.nome')}.`
-      : `Olá! Gostaria de falar com o ${getField(siteData, 'clube.nome')}.`;
+    const waMsgMap = {
+      en: `Hello! I'd like to talk to ${getField(siteData, 'clube.nome')}.`,
+      es: `¡Hola! Me gustaría hablar con ${getField(siteData, 'clube.nome')}.`,
+      pt: `Olá! Gostaria de falar com o ${getField(siteData, 'clube.nome')}.`
+    };
+    const waMsgTxt = waMsgMap[lang] || waMsgMap.pt;
     const waMsg = encodeURIComponent(waMsgTxt);
     document.querySelectorAll('[data-whatsapp-link]').forEach(el => {
       el.href = `https://wa.me/${wa}?text=${waMsg}`;
@@ -242,14 +250,15 @@ function renderNews(lang) {
 }
 
 async function loadContent(lang) {
-  const siteDataPath = lang === 'en' ? 'assets/data/site-data.en.json' : 'assets/data/site-data.json';
-  const newsPath = lang === 'en' ? 'assets/data/news.en.json' : 'assets/data/news.json';
+  const suffix = (lang === 'en' || lang === 'es') ? `.${lang}` : '';
+  const siteDataPath = `assets/data/site-data${suffix}.json`;
+  const newsPath = `assets/data/news${suffix}.json`;
 
   let [siteData, news] = await Promise.all([loadJSON(siteDataPath), loadJSON(newsPath)]);
 
-  // Fallback pro português caso os arquivos em inglês ainda não existam/tenham sido movidos
-  if (!siteData && lang === 'en') siteData = await loadJSON('assets/data/site-data.json');
-  if (!news && lang === 'en') news = await loadJSON('assets/data/news.json');
+  // Fallback pro português caso os arquivos traduzidos ainda não existam/tenham sido movidos
+  if (!siteData && suffix) siteData = await loadJSON('assets/data/site-data.json');
+  if (!news && suffix) news = await loadJSON('assets/data/news.json');
 
   renderSiteData(siteData, lang);
   currentNews = news || [];
@@ -281,11 +290,49 @@ async function init() {
     });
   });
 
-  document.querySelectorAll('[data-lang-btn]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const next = getLang() === 'en' ? 'pt' : 'en';
-      setLanguage(next);
+  document.querySelectorAll('[data-lang-switch]').forEach(wrap => {
+    const toggle = wrap.querySelector('[data-lang-toggle]');
+    const menu = wrap.querySelector('[data-lang-menu]');
+    if (!toggle || !menu) return;
+
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = wrap.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (isOpen) {
+        document.querySelectorAll('[data-lang-switch].open').forEach(other => {
+          if (other !== wrap) {
+            other.classList.remove('open');
+            other.querySelector('[data-lang-toggle]')?.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
     });
+
+    wrap.querySelectorAll('[data-lang-option]').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const next = opt.getAttribute('data-lang-option');
+        setLanguage(next);
+        wrap.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  });
+
+  document.addEventListener('click', () => {
+    document.querySelectorAll('[data-lang-switch].open').forEach(wrap => {
+      wrap.classList.remove('open');
+      wrap.querySelector('[data-lang-toggle]')?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('[data-lang-switch].open').forEach(wrap => {
+        wrap.classList.remove('open');
+        wrap.querySelector('[data-lang-toggle]')?.setAttribute('aria-expanded', 'false');
+      });
+    }
   });
 }
 
