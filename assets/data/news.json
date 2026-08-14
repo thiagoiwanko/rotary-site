@@ -1,12 +1,5 @@
 [
   {
-    "_comment": "Notícias do nosso clube. Copie um bloco e edite para adicionar. Coloque a mais recente no topo. 'id' precisa ser igual nos 3 arquivos de idioma (é o que liga uma notícia à sua tradução).",
-    "id": "n-milao-2026",
-    "fonte": "clube",
-    "data": "2026-04-29",
-    "titulo": "Cruzando fronteiras: RC Porto União – União da Vitória visita o Rotary Club Milano Fiera Porta Nuova, em Milão",
-    "resumo": "Companheirismo rotário sem fronteiras: associados do clube tiveram a honra de participar de uma reunião do Rotary Club Milano Fiera Porta Nuova, na Itália.",
-    "imagem": "assets/img/noticias/cruzando-fronteiras-milao.png",
-    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
+    "_comment": "Notícias do nosso clube. Copie um bloco (fonte/data/titulo/resumo/imagem/url) e edite para adicionar. Coloque a mais recente no topo. 'id' precisa ser igual nos 3 arquivos de idioma (é o que liga uma notícia à sua tradução)."
   }
 ]

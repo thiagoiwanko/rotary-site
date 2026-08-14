@@ -1,12 +1,5 @@
 [
   {
-    "_comment": "English version of news.json — our club's own news only. Keep entries in the same order/dates as news.json.",
-    "id": "n-milao-2026",
-    "fonte": "clube",
-    "data": "2026-04-29",
-    "titulo": "Crossing borders: RC Porto União – União da Vitória visits Rotary Club Milano Fiera Porta Nuova, in Milan",
-    "resumo": "Rotary fellowship without borders: club members had the honor of taking part in a meeting of the Rotary Club Milano Fiera Porta Nuova, in Italy.",
-    "imagem": "assets/img/noticias/cruzando-fronteiras-milao.png",
-    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
+    "_comment": "English version of news.json — our club's own news only. Keep entries in the same order/dates as news.json."
   }
 ]
