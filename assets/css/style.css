@@ -689,13 +689,33 @@ nav.main-nav a:hover::after { width: 100%; }
 .news-body { padding: 1.4rem 1.5rem 1.6rem; display: flex; flex-direction: column; flex: 1; }
 .news-date { font-size: 0.76rem; color: var(--pewter); font-weight: 600; margin-bottom: 0.5rem; letter-spacing: 0.03em; }
 .news-body h4 { font-size: 1.05rem; margin-bottom: 0.6rem; line-height: 1.35; }
-.news-body p { font-size: 0.9rem; color: var(--pewter); flex: 1; margin-bottom: 1rem; }
+.news-body p {
+  font-size: 0.9rem; color: var(--pewter); flex: 1; margin-bottom: 1rem;
+  display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
+}
+.news-resumo-toggle {
+  align-self: flex-start; margin: -0.5rem 0 1rem; padding: 0; border: none; background: none;
+  font-family: var(--font-display); font-weight: 600; font-size: 0.82rem; color: var(--rotary-azure); cursor: pointer;
+}
+.news-resumo-toggle:hover { text-decoration: underline; }
 .news-link { font-family: var(--font-display); font-weight: 600; font-size: 0.85rem; color: var(--rotary-azure); display: inline-flex; align-items: center; gap: 0.4rem; }
 .news-link svg { width: 14px; height: 14px; transition: transform var(--transition); }
 .news-card:hover .news-link svg { transform: translateX(4px); }
 .news-empty { color: var(--pewter); font-style: italic; padding: 2rem 0; }
 
 .news-more-wrap { display: flex; justify-content: center; margin-top: 2.2rem; }
+
+/* MODAL: notícia completa */
+.news-modal { position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center; padding:1.5rem; background:rgba(10,20,40,0.6); backdrop-filter:blur(4px); opacity:0; visibility:hidden; transition:opacity var(--transition), visibility var(--transition); }
+.news-modal.open { opacity:1; visibility:visible; }
+.news-modal-card { position:relative; background:var(--white); border-radius:24px; padding:2.2rem; max-width:560px; width:100%; max-height:85vh; overflow-y:auto; box-shadow:var(--shadow-lg); transform:translateY(12px); transition:transform var(--transition); }
+.news-modal.open .news-modal-card { transform:translateY(0); }
+.news-modal-close { position:absolute; top:0.8rem; right:0.8rem; width:34px; height:34px; border-radius:50%; background:var(--cloud); border:none; font-size:1.4rem; line-height:1; color:var(--pewter); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background var(--transition); }
+.news-modal-close:hover { background:#e4e6ea; }
+.news-modal-img { width:100%; height:200px; border-radius:14px; object-fit:cover; margin-bottom:1.2rem; display:block; }
+.news-modal-date { font-size: 0.78rem; color: var(--pewter); font-weight: 600; letter-spacing: 0.03em; margin-bottom:0.4rem; }
+.news-modal-card h3 { font-size:1.2rem; color:var(--rotary-blue-dark); margin-bottom:0.9rem; line-height:1.35; }
+.news-modal-card p { font-size:0.94rem; color:var(--pewter); line-height:1.65; white-space:pre-line; }
 
 /* ===================================================================
    INSTAGRAM

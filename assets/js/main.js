@@ -283,12 +283,25 @@ function renderNews(lang) {
         <div class="news-date">${fmtDate(n.data, lang)}</div>
         <h4>${n.titulo}</h4>
         <p>${n.resumo || ''}</p>
+        <button type="button" class="news-resumo-toggle" data-news-id="${n.id || ''}" style="display:none;">${t('noticias.verRestante', lang)}</button>
         ${hasExternalUrl(n) ? `
         <a class="news-link" href="${n.url}" target="_blank" rel="noopener">${t('noticias.lerMais', lang)}
           <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>` : ''}
       </div>
     </article>`).join('');
+
+  // Só mostra "Ver restante" nos cards em que o texto realmente foi cortado
+  // pelo line-clamp (5 linhas) — mede depois de inserido no DOM.
+  requestAnimationFrame(() => {
+    newsGrid.querySelectorAll('.news-card').forEach(card => {
+      const p = card.querySelector('.news-body p');
+      const btn = card.querySelector('.news-resumo-toggle');
+      if (p && btn && p.scrollHeight > p.clientHeight + 1) {
+        btn.style.display = '';
+      }
+    });
+  });
 }
 
 async function loadContent(lang) {
@@ -382,6 +395,41 @@ async function init() {
   initFocusModal();
   initAtaLightbox();
   initNewsMore();
+  initNewsModal();
+}
+
+// ---------------- Modal: notícia completa ----------------
+function initNewsModal() {
+  const modal = document.getElementById('newsModal');
+  const closeBtn = document.getElementById('newsModalClose');
+  const img = document.getElementById('newsModalImg');
+  const dateEl = document.getElementById('newsModalDate');
+  const title = document.getElementById('newsModalTitle');
+  const desc = document.getElementById('newsModalDesc');
+  if (!modal) return;
+
+  function open(id) {
+    const n = (currentNews || []).find(item => item.id === id);
+    if (!n) return;
+    if (n.imagem) { img.src = n.imagem; img.style.display = ''; } else { img.style.display = 'none'; }
+    dateEl.textContent = fmtDate(n.data, getLang());
+    title.textContent = n.titulo;
+    desc.textContent = n.resumo || '';
+    modal.classList.add('open');
+    document.body.classList.add('no-scroll');
+  }
+  function close() {
+    modal.classList.remove('open');
+    document.body.classList.remove('no-scroll');
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.news-resumo-toggle');
+    if (btn) open(btn.getAttribute('data-news-id'));
+  });
+  closeBtn?.addEventListener('click', close);
+  modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 }
 
 // ---------------- Modal: área de enfoque ----------------

@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=1.9.6">
 
 <!-- Dados estruturados (Schema.org) para o Google -->
 <script type="application/ld+json">
@@ -537,6 +537,17 @@
   </div>
 </footer>
 
+<!-- ============ MODAL (notícia completa) ============ -->
+<div class="news-modal" id="newsModal" role="dialog" aria-modal="true">
+  <div class="news-modal-card">
+    <button type="button" class="news-modal-close" id="newsModalClose" data-i18n-aria="noticias.fechar" aria-label="Fechar">&times;</button>
+    <img class="news-modal-img" id="newsModalImg" src="" alt="" style="display:none;">
+    <div class="news-modal-date" id="newsModalDate"></div>
+    <h3 id="newsModalTitle"></h3>
+    <p id="newsModalDesc"></p>
+  </div>
+</div>
+
 <!-- ============ MODAL (área de enfoque) ============ -->
 <div class="focus-modal" id="focusModal" role="dialog" aria-modal="true">
   <div class="focus-modal-card">
@@ -577,6 +588,6 @@
   new window.VLibras.Widget('https://vlibras.gov.br/app');
 </script>
 
-<script src="assets/js/main.js"></script>
+<script src="assets/js/main.js?v=1.9.6"></script>
 </body>
 </html>
