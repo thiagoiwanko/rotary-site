@@ -1,6 +1,6 @@
 {
   "_comment": "Edite este arquivo para atualizar as informações gerais do site. Não precisa mexer no HTML.",
-  "versao": "1.9.3",
+  "versao": "1.9.4",
   "clube": {
     "nome": "Rotary Club de Porto União – União da Vitória",
     "numero": "9015",
@@ -110,7 +110,7 @@
     {
       "cargo": "Protocolo",
       "nome": "Suely Masnik Martini",
-      "foto": ""
+      "foto": "assets/img/diretoria/suely-masnik-martini.jpg"
     },
     {
       "cargo": "Diretor de Projetos",
@@ -130,7 +130,7 @@
     {
       "cargo": "Diretora de Imagem Pública",
       "nome": "Dra. Daniela Bochnia Iwanko",
-      "foto": ""
+      "foto": "assets/img/diretoria/daniela-bochnia-iwanko.jpg"
     },
     {
       "cargo": "Past President",
