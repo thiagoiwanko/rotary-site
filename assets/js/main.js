@@ -266,10 +266,12 @@ function renderNews(lang) {
 
   if (moreWrap && moreBtn) {
     if (allItems.length > items.length) {
-      moreWrap.style.display = '';
+      moreWrap.style.display = 'flex';
       moreBtn.textContent = t('noticias.verMais', lang);
+      moreBtn.setAttribute('aria-expanded', 'false');
     } else {
       moreWrap.style.display = 'none';
+      moreBtn.setAttribute('aria-expanded', 'true');
     }
   }
 
@@ -326,7 +328,9 @@ function initNewsMore() {
   const moreBtn = document.querySelector('[data-news-more]');
   if (!moreBtn) return;
   moreBtn.addEventListener('click', () => {
-    newsShown += NEWS_PAGE_SIZE;
+    // A página começa com as 3 notícias mais recentes. Ao pedir mais,
+    // revela todas as demais de uma vez, sem obrigar vários cliques.
+    newsShown = Number.MAX_SAFE_INTEGER;
     renderNews(getLang());
     observeReveals();
   });
