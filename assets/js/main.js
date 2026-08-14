@@ -24,6 +24,17 @@ const LANG_META = {
 
 let i18nDict = null;
 
+function focusModal(modal, preferredTarget) {
+  modal._returnFocus = document.activeElement;
+  requestAnimationFrame(() => preferredTarget?.focus());
+}
+
+function restoreModalFocus(modal) {
+  const target = modal._returnFocus;
+  if (target && typeof target.focus === 'function') target.focus();
+  modal._returnFocus = null;
+}
+
 function getLang() {
   const saved = localStorage.getItem(LANG_KEY);
   return (saved === 'en' || saved === 'es') ? saved : 'pt';
@@ -42,6 +53,17 @@ function getField(obj, path) {
   return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : ''), obj);
 }
 
+function escapeHTML(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[ch]);
+}
+
+function safeAssetPath(value) {
+  const path = String(value ?? '').trim();
+  return !path.includes('..') && /^assets\/(?:img|data)\/[a-zA-Z0-9._\/-]+$/.test(path) ? path : '';
+}
+
 function fmtDate(iso, lang) {
   if (!iso) return '';
   const [y, m, d] = iso.split('-');
@@ -58,12 +80,12 @@ function fmtDate(iso, lang) {
 // precisava ser trocado manualmente a cada edição de assets/data/ (e foi
 // esquecido, causando conteúdo desatualizado/duplicado aparecendo pro
 // usuário) — agora é sempre um valor novo, sem depender de lembrar de nada.
-const DATA_V = Date.now();
+const DATA_V = '1.9.7';
 
 async function loadJSON(path) {
   try {
     const sep = path.includes('?') ? '&' : '?';
-    const res = await fetch(`${path}${sep}v=${DATA_V}`, { cache: 'no-store' });
+    const res = await fetch(`${path}${sep}v=${DATA_V}`);
     if (!res.ok) throw new Error(res.status);
     return await res.json();
   } catch (e) {
@@ -126,8 +148,8 @@ function renderSiteData(siteData, lang) {
   if (statsWrap && siteData.estatisticas) {
     statsWrap.innerHTML = siteData.estatisticas.map(s => `
       <div class="stat">
-        <div class="stat-num">${s.numero}</div>
-        <div class="stat-label">${s.rotulo}</div>
+        <div class="stat-num">${escapeHTML(s.numero)}</div>
+        <div class="stat-label">${escapeHTML(s.rotulo)}</div>
       </div>`).join('');
   }
 
@@ -136,8 +158,8 @@ function renderSiteData(siteData, lang) {
     currentFocusAreas = siteData.areasDeFoco;
     const cardHTML = (a, i) => `
       <button type="button" class="focus-card" data-icone="${a.icone}" data-focus-index="${i}">
-        <div class="focus-icon"><img src="assets/img/areas-foco/${a.icone}.png" alt="" loading="lazy"></div>
-        <h4>${a.titulo}</h4>
+        <div class="focus-icon"><img src="assets/img/areas-foco/${escapeHTML(a.icone)}.png" alt="" loading="lazy"></div>
+        <h4>${escapeHTML(a.titulo)}</h4>
       </button>`;
     const once = siteData.areasDeFoco.map(cardHTML).join('');
     focusCarousel.innerHTML = once + once; // duplicado: a animação translada -50% e reinicia sem corte
@@ -151,13 +173,13 @@ function renderSiteData(siteData, lang) {
         : '?';
       const isPresidente = m.cargo === 'Presidente' || m.cargo === 'President';
       const avatarContent = m.foto
-        ? `<img src="${m.foto}" alt="" loading="lazy">`
-        : initials;
+        ? `<img src="${escapeHTML(safeAssetPath(m.foto))}" alt="" loading="lazy">`
+        : escapeHTML(initials);
       return `
       <div class="team-card stagger-item${isPresidente ? ' is-presidente' : ''}">
         <div class="team-avatar${m.foto ? ' has-photo' : ''}">${avatarContent}</div>
-        <h4>${m.nome}</h4>
-        <div class="role">${m.cargo}</div>
+        <h4>${escapeHTML(m.nome)}</h4>
+        <div class="role">${escapeHTML(m.cargo)}</div>
       </div>`;
     }).join('');
   }
@@ -165,7 +187,7 @@ function renderSiteData(siteData, lang) {
   const footerFocus = document.querySelector('[data-footer-focus]');
   if (footerFocus && siteData.areasDeFoco) {
     footerFocus.innerHTML = siteData.areasDeFoco.map(a => `
-      <span title="${a.titulo}"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[a.icone] || ''}</svg></span>`).join('');
+      <span title="${escapeHTML(a.titulo)}"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[a.icone] || ''}</svg></span>`).join('');
   }
 
   const wa = (siteData.contato || {}).whatsapp;
@@ -185,7 +207,7 @@ function renderSiteData(siteData, lang) {
   const boardWrap = document.querySelector('[data-primeira-diretoria]');
   if (boardWrap && siteData.primeiraDiretoria) {
     boardWrap.innerHTML = siteData.primeiraDiretoria.map(m => `
-      <li><span class="role">${m.cargo}</span><span class="name">${m.nome}</span></li>`).join('');
+      <li><span class="role">${escapeHTML(m.cargo)}</span><span class="name">${escapeHTML(m.nome)}</span></li>`).join('');
   }
   const foundersWrap = document.querySelector('[data-fundadores]');
   if (foundersWrap && siteData.fundadores) {
@@ -244,7 +266,12 @@ function hasExternalUrl(n) {
   if (!u || u === '#') return false;
   if (u.includes('rcpu.com.br/#noticias')) return false;
   if (u.startsWith('#')) return false;
-  return true;
+  try {
+    const parsed = new URL(u, window.location.href);
+    return parsed.protocol === 'https:' || parsed.protocol === 'http:';
+  } catch (_) {
+    return false;
+  }
 }
 
 function renderNews(lang) {
@@ -278,16 +305,16 @@ function renderNews(lang) {
   newsGrid.innerHTML = items.map(n => `
     <article class="news-card">
       <div class="news-thumb">
-        ${n.imagem ? `<img src="${n.imagem}" alt="" style="width:100%;height:100%;object-fit:cover;">` :
+        ${safeAssetPath(n.imagem) ? `<img src="${escapeHTML(safeAssetPath(n.imagem))}" alt="" loading="lazy" width="900" height="450" style="width:100%;height:100%;object-fit:cover;">` :
         `<svg viewBox="0 0 24 24" stroke="white" stroke-width="1.6" fill="none"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 5"/><circle cx="8" cy="9" r="1.3" fill="white" stroke="none"/></svg>`}
       </div>
       <div class="news-body">
         <div class="news-date">${fmtDate(n.data, lang)}</div>
-        <h4>${n.titulo}</h4>
-        <p>${n.resumo || ''}</p>
-        <button type="button" class="news-resumo-toggle" data-news-id="${n.id || ''}" style="display:none;">${t('noticias.verRestante', lang)}</button>
+        <h4>${escapeHTML(n.titulo)}</h4>
+        <p>${escapeHTML(n.resumo || '')}</p>
+        <button type="button" class="news-resumo-toggle" data-news-id="${escapeHTML(n.id || '')}" style="display:none;">${escapeHTML(t('noticias.verRestante', lang))}</button>
         ${hasExternalUrl(n) ? `
-        <a class="news-link" href="${n.url}" target="_blank" rel="noopener">${t('noticias.lerMais', lang)}
+        <a class="news-link" href="${escapeHTML(n.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(t('noticias.lerMais', lang))}
           <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>` : ''}
       </div>
@@ -421,10 +448,12 @@ function initNewsModal() {
     desc.textContent = n.resumo || '';
     modal.classList.add('open');
     document.body.classList.add('no-scroll');
+    focusModal(modal, closeBtn);
   }
   function close() {
     modal.classList.remove('open');
     document.body.classList.remove('no-scroll');
+    restoreModalFocus(modal);
   }
 
   document.addEventListener('click', (e) => {
@@ -453,10 +482,12 @@ function initFocusModal() {
     desc.textContent = a.descricao || '';
     modal.classList.add('open');
     document.body.classList.add('no-scroll');
+    focusModal(modal, closeBtn);
   }
   function close() {
     modal.classList.remove('open');
     document.body.classList.remove('no-scroll');
+    restoreModalFocus(modal);
   }
 
   document.addEventListener('click', (e) => {
@@ -498,10 +529,12 @@ function initAtaLightbox() {
     render();
     lightbox.classList.add('open');
     document.body.classList.add('no-scroll');
+    focusModal(lightbox, closeBtn);
   }
   function close() {
     lightbox.classList.remove('open');
     document.body.classList.remove('no-scroll');
+    restoreModalFocus(lightbox);
   }
   function prev() { current = (current - 1 + ATA_PAGES.length) % ATA_PAGES.length; render(); }
   function next() { current = (current + 1) % ATA_PAGES.length; render(); }

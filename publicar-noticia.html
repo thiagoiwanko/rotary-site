@@ -242,15 +242,14 @@
 
   let editingId = null;
   let currentImagemPath = '';
-  const SESSION_KEY = 'rcpu_admin_session';
-  let authToken = sessionStorage.getItem(SESSION_KEY) || null;
+  // O token descriptografado existe somente em memória. Recarregar ou fechar
+  // a página exige desbloquear o cofre novamente.
+  let authToken = null;
 
   function hasVault() { return !!localStorage.getItem(VAULT_KEY); }
 
   function setAuthToken(token) {
     authToken = token;
-    if (token) sessionStorage.setItem(SESSION_KEY, token);
-    else sessionStorage.removeItem(SESSION_KEY);
   }
 
   function refreshAuthView() {
@@ -379,7 +378,8 @@
       refreshAuthView();
     } catch (err) {
       authLog.classList.add('show');
-      authLog.innerHTML = '<div class="err">Erro: ' + err.message + '</div>';
+      authLog.textContent = 'Erro: ' + err.message;
+      authLog.classList.add('err-text');
       authBtn.disabled = false;
       authBtn.textContent = 'Entrar';
     }
@@ -513,8 +513,9 @@
   // ---------------- Lista / editar / excluir ----------------
 
   function newsItemHTML(n) {
-    const thumb = n.imagem
-      ? `<img src="${n.imagem}" alt="">`
+    const safeImage = /^assets\/img\/[a-zA-Z0-9._\/-]+$/.test(n.imagem || '') ? n.imagem : '';
+    const thumb = safeImage
+      ? `<img src="${escapeHtml(safeImage)}" alt="">`
       : '';
     const hasId = !!n.id;
     return `
@@ -554,7 +555,11 @@
         btn.addEventListener('click', () => deleteNews(btn.getAttribute('data-delete'), btn.getAttribute('data-title')));
       });
     } catch (err) {
-      newsListEl.innerHTML = '<p class="hint err-text">Não deu para carregar a lista: ' + err.message + '</p>';
+      newsListEl.innerHTML = '';
+      const errorText = document.createElement('p');
+      errorText.className = 'hint err-text';
+      errorText.textContent = 'Não deu para carregar a lista: ' + err.message;
+      newsListEl.appendChild(errorText);
     }
   }
 

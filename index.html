@@ -32,7 +32,8 @@
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="assets/css/style.css?v=1.9.6">
 
 <!-- Dados estruturados (Schema.org) para o Google -->
@@ -120,7 +121,7 @@
 <header class="site-header" id="siteHeader">
   <div class="container nav-wrap">
     <a href="#topo" class="brand">
-      <img src="assets/img/logo.png" alt="Rotary Club Porto União – União da Vitória">
+      <img src="assets/img/logo.png" alt="Rotary Club Porto União – União da Vitória" width="600" height="210">
     </a>
     <nav class="main-nav">
       <ul>
@@ -174,9 +175,10 @@
   <a href="#contato" class="btn btn-primary" data-i18n="nav.associado">Seja um associado</a>
 </div>
 
+<main id="main-content">
 <!-- ============ HERO ============ -->
 <section class="hero" id="topo">
-  <img class="hero-wheel" src="assets/img/wheel-icon.png" alt="">
+  <img class="hero-wheel" src="assets/img/wheel-icon.png" alt="" width="512" height="512" fetchpriority="high">
   <div class="container">
     <div class="hero-inner">
       <div class="theme-row">
@@ -217,7 +219,7 @@
 <section id="polio" class="polio-section">
   <div class="container">
     <div class="polio-inner reveal">
-      <img class="polio-badge" src="assets/img/polio/elimine-polio-agora.jpg" alt="Elimine a Pólio Agora" loading="lazy">
+      <img class="polio-badge" src="assets/img/polio/elimine-polio-agora.jpg" alt="Elimine a Pólio Agora" loading="lazy" width="400" height="400">
       <span class="eyebrow" data-i18n="polio.eyebrow">Fundação Rotária · Saúde global</span>
       <h2 class="section-title" data-i18n="polio.title">Elimine a Pólio Agora</h2>
       <p class="section-lede" data-i18n="polio.lede">Desde 1985 o Rotary lidera a maior campanha de vacinação voluntária da história. Estamos a um passo de tornar a pólio a segunda doença humana já erradicada do planeta — mas só chegamos lá com a ajuda de todos.</p>
@@ -256,7 +258,7 @@
       <div class="about-visual reveal">
         <span class="ring r1"></span>
         <span class="ring r2"></span>
-        <img src="assets/img/wheel-icon.png" alt="Rotary Club Porto União – União da Vitória">
+        <img src="assets/img/wheel-icon.png" alt="Rotary Club Porto União – União da Vitória" loading="lazy" width="512" height="512">
       </div>
       <div class="about-text reveal">
         <span class="eyebrow" data-i18n="about.eyebrow">Quem somos</span>
@@ -418,7 +420,7 @@
     <!-- TODO: texto definitivo do presidente ainda será enviado pelo usuário — placeholder abaixo -->
     <div class="leader-block reveal">
       <div class="leader-photo">
-        <img src="assets/img/lideranca/presidente-stefan.jpg" alt="Dr. Stefan Grube Kolb">
+        <img src="assets/img/lideranca/presidente-stefan.jpg" alt="Dr. Stefan Grube Kolb" loading="lazy">
       </div>
       <div class="leader-text">
         <span class="eyebrow" data-i18n="presidenteClube.eyebrow">Presidente do Clube · 2026-2027</span>
@@ -429,7 +431,7 @@
 
     <div class="leader-block reverse reveal">
       <div class="leader-photo">
-        <img src="assets/img/noticias/casal-governador-2026-27.png" alt="Moacir Schaly e Maria Cristina Thibes Schaly">
+        <img src="assets/img/noticias/casal-governador-2026-27.png" alt="Moacir Schaly e Maria Cristina Thibes Schaly" loading="lazy">
       </div>
       <div class="leader-text">
         <span class="eyebrow" data-i18n="governador.eyebrow">Casal Governador · Distrito 4740</span>
@@ -440,7 +442,7 @@
 
     <div class="leader-block reveal">
       <div class="leader-photo">
-        <img src="assets/img/lideranca/presidente-babalola.jpg" alt="Olayinka H. Babalola">
+        <img src="assets/img/lideranca/presidente-babalola.jpg" alt="Olayinka H. Babalola" loading="lazy">
       </div>
       <div class="leader-text">
         <span class="eyebrow" data-i18n="presidente.eyebrow">Presidente do Rotary International</span>
@@ -504,6 +506,7 @@
   </div>
 </section>
 
+</main>
 <!-- ============ FOOTER ============ -->
 <footer class="site-footer">
   <div class="container">
@@ -538,7 +541,7 @@
 </footer>
 
 <!-- ============ MODAL (notícia completa) ============ -->
-<div class="news-modal" id="newsModal" role="dialog" aria-modal="true">
+<div class="news-modal" id="newsModal" role="dialog" aria-modal="true" aria-labelledby="newsModalTitle">
   <div class="news-modal-card">
     <button type="button" class="news-modal-close" id="newsModalClose" data-i18n-aria="noticias.fechar" aria-label="Fechar">&times;</button>
     <img class="news-modal-img" id="newsModalImg" src="" alt="" style="display:none;">
@@ -549,7 +552,7 @@
 </div>
 
 <!-- ============ MODAL (área de enfoque) ============ -->
-<div class="focus-modal" id="focusModal" role="dialog" aria-modal="true">
+<div class="focus-modal" id="focusModal" role="dialog" aria-modal="true" aria-labelledby="focusModalTitle">
   <div class="focus-modal-card">
     <button type="button" class="focus-modal-close" id="focusModalClose" data-i18n-aria="historia.ataFechar" aria-label="Fechar">&times;</button>
     <div class="focus-modal-icon"><img id="focusModalImg" src="" alt=""></div>
