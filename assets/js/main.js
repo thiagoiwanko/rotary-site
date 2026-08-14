@@ -57,9 +57,16 @@ function fmtDate(iso, lang) {
   return `${parseInt(d)} ${meses[parseInt(m)-1]} ${y}`;
 }
 
+// Bump este valor sempre que editar algum arquivo em assets/data/ — o CDN do
+// GitHub Pages cacheia JSON por um tempo e o `cache:'no-store'` do fetch só
+// evita o cache do navegador, não o do CDN. Trocar o número força a busca
+// de uma URL "nova" e contorna o cache antigo.
+const DATA_V = '20260814c';
+
 async function loadJSON(path) {
   try {
-    const res = await fetch(path, { cache: 'no-store' });
+    const sep = path.includes('?') ? '&' : '?';
+    const res = await fetch(`${path}${sep}v=${DATA_V}`, { cache: 'no-store' });
     if (!res.ok) throw new Error(res.status);
     return await res.json();
   } catch (e) {
