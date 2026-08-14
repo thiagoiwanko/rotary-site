@@ -62,12 +62,12 @@
     { "cargo": "Past President", "nome": "Thiago Jorge Iwanko", "foto": "" }
   ],
   "areasDeFoco": [
-    { "titulo": "Peacebuilding and conflict prevention", "icone": "peace" },
-    { "titulo": "Disease prevention and treatment", "icone": "health" },
-    { "titulo": "Water, sanitation and hygiene", "icone": "water" },
-    { "titulo": "Maternal and child health", "icone": "mother" },
-    { "titulo": "Basic education and literacy", "icone": "education" },
-    { "titulo": "Community economic development", "icone": "growth" },
-    { "titulo": "Environment", "icone": "environment" }
+    { "titulo": "Peacebuilding and conflict prevention", "icone": "peace", "descricao": "Rotary trains leaders and promotes dialogue to prevent and resolve conflict, supporting peacebuilding in communities affected by tension and violence." },
+    { "titulo": "Disease prevention and treatment", "icone": "health", "descricao": "We support activities and training that reduce the causes and effects of disease, strengthening local health professionals and expanding access to care." },
+    { "titulo": "Water, sanitation and hygiene", "icone": "water", "descricao": "We bring clean water, sanitation, and hygiene education to communities that still lack access to these essential services." },
+    { "titulo": "Maternal and child health", "icone": "mother", "descricao": "We connect mothers and young children to nutrition, health care, and sanitation services, improving the well-being of entire families." },
+    { "titulo": "Basic education and literacy", "icone": "education", "descricao": "We strengthen communities' ability to provide quality basic education, reduce gender disparity in school, and expand adult literacy." },
+    { "titulo": "Community economic development", "icone": "growth", "descricao": "We put Rotarians' professional expertise to work driving local economic development, creating decent jobs — especially for young people and women." },
+    { "titulo": "Environment", "icone": "environment", "descricao": "Together with local leaders, we develop projects that protect ecosystems and pursue innovative solutions to the planet's environmental challenges." }
   ]
 }

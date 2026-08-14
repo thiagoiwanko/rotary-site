@@ -407,6 +407,30 @@
     });
   }
 
+  // ---------------- Gramática (LanguageTool) e tradução (Google, sem chave) ----------------
+
+  async function checkGrammar(text) {
+    const res = await fetch('https://api.languagetool.org/v2/check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ text: text, language: 'pt-BR' })
+    });
+    if (!res.ok) throw new Error('status ' + res.status);
+    const data = await res.json();
+    return data.matches || [];
+  }
+
+  async function translateText(text, targetLang) {
+    const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=pt&tl=' + targetLang + '&dt=t&q=' + encodeURIComponent(text);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('status ' + res.status);
+    const data = await res.json();
+    return data[0].map((chunk) => chunk[0]).join('');
+  }
+
+  const LANG_FOR_FILE = { 'assets/data/news.json': 'pt', 'assets/data/news.en.json': 'en', 'assets/data/news.es.json': 'es' };
+  const LANG_LABEL = { en: 'inglês', es: 'espanhol' };
+
   // ---------------- Lista / editar / excluir ----------------
 
   function newsItemHTML(n) {
@@ -537,6 +561,25 @@
       return;
     }
 
+    log('Verificando gramática e ortografia...');
+    try {
+      const matches = await checkGrammar(titulo + '\n\n' + resumo);
+      if (matches.length) {
+        const preview = matches.slice(0, 8).map((m) => '• ' + (m.shortMessage || m.message)).join('\n');
+        log('Possíveis problemas encontrados (' + matches.length + '):', 'err');
+        log(preview, 'err');
+        const proceed = confirm(
+          'A verificação gramatical encontrou ' + matches.length + ' possível(is) problema(s) no título/texto:\n\n' +
+          preview + '\n\nPublicar assim mesmo?'
+        );
+        if (!proceed) { log('Publicação cancelada — corrija o texto e tente de novo.', 'err'); return; }
+      } else {
+        log('Nenhum problema de gramática encontrado.', 'ok');
+      }
+    } catch (err) {
+      log('Não foi possível checar gramática agora (' + err.message + ') — seguindo sem checar.', 'err');
+    }
+
     let token;
     try {
       token = await resolveToken();
@@ -566,9 +609,26 @@
       }
 
       const id = wasEditing ? editingId : genId();
-      const entry = { id, fonte, data, titulo, resumo, imagem: imagemPath, url: 'https://www.rcpu.com.br/#noticias' };
+      const base = { id, fonte, data, imagem: imagemPath, url: 'https://www.rcpu.com.br/#noticias' };
 
       for (const path of NEWS_FILES) {
+        const lang = LANG_FOR_FILE[path];
+        let entryTitulo = titulo;
+        let entryResumo = resumo;
+
+        if (lang !== 'pt') {
+          log('Traduzindo para ' + LANG_LABEL[lang] + '...');
+          try {
+            entryTitulo = await translateText(titulo, lang);
+            entryResumo = await translateText(resumo, lang);
+            log(LANG_LABEL[lang] + ': "' + entryTitulo + '"', 'ok');
+          } catch (err) {
+            log('Não deu para traduzir pra ' + LANG_LABEL[lang] + ' (' + err.message + ') — usando o texto em português nessa versão.', 'err');
+          }
+        }
+
+        const entry = Object.assign({}, base, { titulo: entryTitulo, resumo: entryResumo });
+
         log('Atualizando ' + path + '...');
         const file = await getFile(path, token);
         if (!file) throw new Error(path + ' não encontrado no repositório.');

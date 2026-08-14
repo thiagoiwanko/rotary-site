@@ -108,6 +108,7 @@ function applyI18n(lang) {
 
 // ---------------- Conteúdo dinâmico (site-data.json + news.json) ----------------
 let currentNews = [];
+let currentFocusAreas = [];
 
 function renderSiteData(siteData, lang) {
   if (!siteData) return;
@@ -128,11 +129,12 @@ function renderSiteData(siteData, lang) {
 
   const focusCarousel = document.querySelector('[data-focus-carousel]');
   if (focusCarousel && siteData.areasDeFoco) {
-    const cardHTML = a => `
-      <div class="focus-card" data-icone="${a.icone}">
+    currentFocusAreas = siteData.areasDeFoco;
+    const cardHTML = (a, i) => `
+      <button type="button" class="focus-card" data-icone="${a.icone}" data-focus-index="${i}">
         <div class="focus-icon"><img src="assets/img/areas-foco/${a.icone}.png" alt="" loading="lazy"></div>
         <h4>${a.titulo}</h4>
-      </div>`;
+      </button>`;
     const once = siteData.areasDeFoco.map(cardHTML).join('');
     focusCarousel.innerHTML = once + once; // duplicado: a animação translada -50% e reinicia sem corte
   }
@@ -328,6 +330,94 @@ async function init() {
         wrap.querySelector('[data-lang-toggle]')?.setAttribute('aria-expanded', 'false');
       });
     }
+  });
+
+  initFocusModal();
+  initAtaLightbox();
+}
+
+// ---------------- Modal: área de enfoque ----------------
+function initFocusModal() {
+  const modal = document.getElementById('focusModal');
+  const closeBtn = document.getElementById('focusModalClose');
+  const img = document.getElementById('focusModalImg');
+  const title = document.getElementById('focusModalTitle');
+  const desc = document.getElementById('focusModalDesc');
+  if (!modal) return;
+
+  function open(index) {
+    const a = currentFocusAreas[index];
+    if (!a) return;
+    img.src = `assets/img/areas-foco/${a.icone}.png`;
+    title.textContent = a.titulo;
+    desc.textContent = a.descricao || '';
+    modal.classList.add('open');
+    document.body.classList.add('no-scroll');
+  }
+  function close() {
+    modal.classList.remove('open');
+    document.body.classList.remove('no-scroll');
+  }
+
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('[data-focus-index]');
+    if (card) {
+      open(parseInt(card.getAttribute('data-focus-index'), 10));
+    }
+  });
+  closeBtn?.addEventListener('click', close);
+  modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+}
+
+// ---------------- Lightbox: ata de fundação ----------------
+function initAtaLightbox() {
+  const ATA_PAGES = [
+    'assets/img/historia/ata-1949-01.jpg',
+    'assets/img/historia/ata-1949-02.jpg',
+    'assets/img/historia/ata-1949-03.jpg',
+    'assets/img/historia/ata-1949-04.jpg'
+  ];
+  const lightbox = document.getElementById('ataLightbox');
+  const img = document.getElementById('ataLightboxImg');
+  const counter = document.getElementById('ataLightboxCounter');
+  const closeBtn = document.getElementById('ataLightboxClose');
+  const prevBtn = document.getElementById('ataLightboxPrev');
+  const nextBtn = document.getElementById('ataLightboxNext');
+  if (!lightbox) return;
+
+  let current = 0;
+
+  function render() {
+    img.src = ATA_PAGES[current];
+    img.alt = `Ata de fundação — página ${current + 1}`;
+    counter.textContent = `${current + 1} / ${ATA_PAGES.length}`;
+  }
+  function open(index) {
+    current = index;
+    render();
+    lightbox.classList.add('open');
+    document.body.classList.add('no-scroll');
+  }
+  function close() {
+    lightbox.classList.remove('open');
+    document.body.classList.remove('no-scroll');
+  }
+  function prev() { current = (current - 1 + ATA_PAGES.length) % ATA_PAGES.length; render(); }
+  function next() { current = (current + 1) % ATA_PAGES.length; render(); }
+
+  document.querySelectorAll('[data-ata-open]').forEach(btn => {
+    btn.addEventListener('click', () => open(parseInt(btn.getAttribute('data-ata-open'), 10)));
+  });
+  closeBtn?.addEventListener('click', close);
+  prevBtn?.addEventListener('click', prev);
+  nextBtn?.addEventListener('click', next);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') prev();
+    if (e.key === 'ArrowRight') next();
   });
 }
 

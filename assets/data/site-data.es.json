@@ -62,12 +62,12 @@
     { "cargo": "Past President", "nome": "Thiago Jorge Iwanko", "foto": "" }
   ],
   "areasDeFoco": [
-    { "titulo": "Construcción de la paz y prevención de conflictos", "icone": "peace" },
-    { "titulo": "Prevención y tratamiento de enfermedades", "icone": "health" },
-    { "titulo": "Agua, saneamiento e higiene", "icone": "water" },
-    { "titulo": "Salud materna e infantil", "icone": "mother" },
-    { "titulo": "Alfabetización y educación básica", "icone": "education" },
-    { "titulo": "Desarrollo económico y comunitario", "icone": "growth" },
-    { "titulo": "Medio ambiente", "icone": "environment" }
+    { "titulo": "Construcción de la paz y prevención de conflictos", "icone": "peace", "descricao": "Rotary forma líderes y promueve el diálogo para prevenir y resolver conflictos, apoyando la construcción de paz en comunidades afectadas por tensiones y violencia." },
+    { "titulo": "Prevención y tratamiento de enfermedades", "icone": "health", "descricao": "Apoyamos actividades y capacitaciones que reducen las causas y los efectos de las enfermedades, fortaleciendo a los profesionales de la salud locales y ampliando el acceso a la atención médica." },
+    { "titulo": "Agua, saneamiento e higiene", "icone": "water", "descricao": "Llevamos agua potable, saneamiento e higiene a comunidades que todavía no tienen acceso a estos servicios esenciales." },
+    { "titulo": "Salud materna e infantil", "icone": "mother", "descricao": "Conectamos a madres y niños pequeños con servicios de nutrición, salud y saneamiento, mejorando el bienestar de familias enteras." },
+    { "titulo": "Alfabetización y educación básica", "icone": "education", "descricao": "Fortalecemos la capacidad de las comunidades para garantizar una educación básica de calidad, reducir la desigualdad de género en la escuela y ampliar la alfabetización de adultos." },
+    { "titulo": "Desarrollo económico y comunitario", "icone": "growth", "descricao": "Ponemos la experiencia profesional de los rotarios al servicio del desarrollo económico local, generando trabajo decente, especialmente para jóvenes y mujeres." },
+    { "titulo": "Medio ambiente", "icone": "environment", "descricao": "Junto a líderes locales, desarrollamos proyectos que protegen los ecosistemas y buscan soluciones innovadoras para los desafíos ambientales del planeta." }
   ]
 }

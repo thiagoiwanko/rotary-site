@@ -62,12 +62,12 @@
     { "cargo": "Past President", "nome": "Thiago Jorge Iwanko", "foto": "" }
   ],
   "areasDeFoco": [
-    { "titulo": "Paz e prevenção de conflitos", "icone": "peace" },
-    { "titulo": "Prevenção e tratamento de doenças", "icone": "health" },
-    { "titulo": "Água, saneamento e higiene", "icone": "water" },
-    { "titulo": "Saúde materno-infantil", "icone": "mother" },
-    { "titulo": "Alfabetização e educação", "icone": "education" },
-    { "titulo": "Desenvolvimento econômico e comunitário", "icone": "growth" },
-    { "titulo": "Meio ambiente", "icone": "environment" }
+    { "titulo": "Paz e prevenção de conflitos", "icone": "peace", "descricao": "O Rotary forma líderes e promove o diálogo para prevenir e resolver conflitos, apoiando a construção da paz em comunidades afetadas por tensões e violência." },
+    { "titulo": "Prevenção e tratamento de doenças", "icone": "health", "descricao": "Apoiamos ações e capacitações que reduzem as causas e os efeitos de doenças, fortalecendo profissionais de saúde locais e ampliando o acesso a cuidados médicos." },
+    { "titulo": "Água, saneamento e higiene", "icone": "water", "descricao": "Levamos água potável, saneamento básico e educação em higiene a comunidades que ainda não têm acesso a esses serviços essenciais." },
+    { "titulo": "Saúde materno-infantil", "icone": "mother", "descricao": "Conectamos mães e crianças pequenas a serviços de nutrição, saúde e saneamento, aumentando o bem-estar de famílias inteiras." },
+    { "titulo": "Alfabetização e educação", "icone": "education", "descricao": "Fortalecemos a capacidade das comunidades de garantir educação básica de qualidade, reduzir a desigualdade de gênero na escola e ampliar a alfabetização de adultos." },
+    { "titulo": "Desenvolvimento econômico e comunitário", "icone": "growth", "descricao": "Usamos a experiência profissional dos rotarianos para impulsionar o desenvolvimento econômico local, gerando trabalho decente, principalmente para jovens e mulheres." },
+    { "titulo": "Meio ambiente", "icone": "environment", "descricao": "Junto com lideranças locais, desenvolvemos projetos que protegem ecossistemas e buscam soluções inovadoras para os desafios ambientais do planeta." }
   ]
 }
