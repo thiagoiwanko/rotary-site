@@ -119,17 +119,6 @@
     <button type="button" class="auth-btn" id="authBtn">Entrar</button>
     <div id="authStatus" class="auth-status" style="display:none; margin-top:1rem;"><span class="dot"></span><span id="authStatusText">Autorizado</span> — <a href="#" id="forgetLink2" style="font-weight:600;">trocar</a></div>
     <div class="log" id="authLog"></div>
-
-    <details class="help">
-      <summary>Como criar o token (só precisa fazer isso uma vez)</summary>
-      <ol>
-        <li>Entre em <code>github.com/settings/personal-access-tokens/new</code> logado com a conta dona do repositório.</li>
-        <li>Em "Repository access", escolha "Only select repositories" e selecione <code>rotary-site</code>.</li>
-        <li>Em "Permissions" → "Repository permissions", mude <strong>Contents</strong> para <strong>Read and write</strong>.</li>
-        <li>Defina uma data de expiração (ex.: 1 ano) e clique em "Generate token".</li>
-        <li>Copie o token gerado (começa com <code>github_pat_</code>) e cole no campo acima. Guarde-o em local seguro — o GitHub só mostra uma vez.</li>
-      </ol>
-    </details>
   </div>
 
   <div class="two-col">
