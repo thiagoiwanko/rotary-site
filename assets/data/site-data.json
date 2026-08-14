@@ -1,6 +1,6 @@
 {
   "_comment": "Edite este arquivo para atualizar as informações gerais do site. Não precisa mexer no HTML.",
-  "versao": "1.9.4",
+  "versao": "1.9.5",
   "clube": {
     "nome": "Rotary Club de Porto União – União da Vitória",
     "numero": "9015",
@@ -120,7 +120,7 @@
     {
       "cargo": "Diretor da Fundação Rotária",
       "nome": "Thiago Jorge Iwanko",
-      "foto": ""
+      "foto": "assets/img/diretoria/thiago-jorge-iwanko.jpg"
     },
     {
       "cargo": "Diretor de Quadro Associativo (DQA)",
@@ -135,7 +135,7 @@
     {
       "cargo": "Past President",
       "nome": "Thiago Jorge Iwanko",
-      "foto": ""
+      "foto": "assets/img/diretoria/thiago-jorge-iwanko.jpg"
     }
   ],
   "areasDeFoco": [

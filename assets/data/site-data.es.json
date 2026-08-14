@@ -1,6 +1,6 @@
 {
   "_comment": "Versión en español (Argentina) de site-data.json. Editá este archivo para actualizar el contenido en español.",
-  "versao": "1.9.4",
+  "versao": "1.9.5",
   "clube": {
     "nome": "Rotary Club de Porto União – União da Vitória",
     "numero": "9015",
@@ -120,7 +120,7 @@
     {
       "cargo": "Director de la Fundación Rotaria",
       "nome": "Thiago Jorge Iwanko",
-      "foto": ""
+      "foto": "assets/img/diretoria/thiago-jorge-iwanko.jpg"
     },
     {
       "cargo": "Director de Desarrollo de Membresía (DQA)",
@@ -135,7 +135,7 @@
     {
       "cargo": "Past President",
       "nome": "Thiago Jorge Iwanko",
-      "foto": ""
+      "foto": "assets/img/diretoria/thiago-jorge-iwanko.jpg"
     }
   ],
   "areasDeFoco": [

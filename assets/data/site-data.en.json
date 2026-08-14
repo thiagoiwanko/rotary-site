@@ -1,6 +1,6 @@
 {
   "_comment": "English version of site-data.json. Edit this file to update the English content of the site.",
-  "versao": "1.9.4",
+  "versao": "1.9.5",
   "clube": {
     "nome": "Rotary Club of Porto União – União da Vitória",
     "numero": "9015",
@@ -120,7 +120,7 @@
     {
       "cargo": "Rotary Foundation Director",
       "nome": "Thiago Jorge Iwanko",
-      "foto": ""
+      "foto": "assets/img/diretoria/thiago-jorge-iwanko.jpg"
     },
     {
       "cargo": "Membership Director (DQA)",
@@ -135,7 +135,7 @@
     {
       "cargo": "Past President",
       "nome": "Thiago Jorge Iwanko",
-      "foto": ""
+      "foto": "assets/img/diretoria/thiago-jorge-iwanko.jpg"
     }
   ],
   "areasDeFoco": [
