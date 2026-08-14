@@ -226,6 +226,20 @@ function renderSiteData(siteData, lang) {
   }
 }
 
+// Um "Ler mais" só faz sentido se apontar pra algo fora da própria página de
+// notícias do site (ex.: post original no Instagram). O painel publicar-noticia.html
+// grava sempre a mesma URL interna (#noticias) quando não há link externo — nesse
+// caso não mostramos o link, pra não parecer quebrado (clicar não levava a lugar
+// nenhum, só rolava/recarregava a própria página).
+function hasExternalUrl(n) {
+  if (!n.url) return false;
+  const u = n.url.trim();
+  if (!u || u === '#') return false;
+  if (u.includes('rcpu.com.br/#noticias')) return false;
+  if (u.startsWith('#')) return false;
+  return true;
+}
+
 function renderNews(lang) {
   const newsGrid = document.querySelector('[data-news-grid]');
   if (!newsGrid) return;
@@ -248,9 +262,10 @@ function renderNews(lang) {
         <div class="news-date">${fmtDate(n.data, lang)}</div>
         <h4>${n.titulo}</h4>
         <p>${n.resumo || ''}</p>
-        <a class="news-link" href="${n.url || '#'}" target="_blank" rel="noopener">${t('noticias.lerMais', lang)}
+        ${hasExternalUrl(n) ? `
+        <a class="news-link" href="${n.url}" target="_blank" rel="noopener">${t('noticias.lerMais', lang)}
           <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
+        </a>` : ''}
       </div>
     </article>`).join('');
 }

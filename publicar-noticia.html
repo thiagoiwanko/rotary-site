@@ -43,7 +43,7 @@
   .publish-btn:disabled, .auth-btn:disabled { opacity: 0.55; cursor: not-allowed; }
   .cancel-edit-btn {
     width: 100%; padding: 0.7rem; border: 1.5px solid var(--silver); border-radius: 12px; background: var(--white);
-    color: var(--charcoal); font-weight: 700; font-size: 0.88rem; cursor: pointer; margin-top: 0.6rem; display: none;
+    color: var(--charcoal); font-weight: 700; font-size: 0.88rem; cursor: pointer; margin-top: 0.6rem;
   }
   .log { margin-top: 1.2rem; padding: 1rem; border-radius: 10px; background: var(--ink); color: #d8f0d8; font-size: 0.82rem; font-family: monospace; white-space: pre-wrap; max-height: 260px; overflow-y: auto; display: none; }
   .log.show { display: block; }
@@ -149,7 +149,7 @@
       </div>
 
       <button type="submit" class="publish-btn" id="publishBtn">Publicar notícia</button>
-      <button type="button" class="cancel-edit-btn" id="cancelEditBtn">Cancelar edição</button>
+      <button type="button" class="cancel-edit-btn" id="cancelEditBtn">Nova notícia</button>
 
       <div class="log" id="log"></div>
       <div class="success-box" id="successBox">
@@ -461,7 +461,7 @@
       const file = await getFile('assets/data/news.json');
       if (!file) { newsListEl.innerHTML = '<p class="hint">Nenhuma notícia encontrada no repositório.</p>'; return; }
       const text = b64DecodeUtf8(file.content.replace(/\n/g, ''));
-      const arr = JSON.parse(text);
+      const arr = JSON.parse(text).filter((n) => n && n.titulo);
       arr.sort((a, b) => (a.data < b.data ? 1 : -1));
       lastLoadedArr = arr;
       if (!arr.length) { newsListEl.innerHTML = '<p class="hint">Nenhuma notícia publicada ainda.</p>'; return; }
@@ -497,7 +497,6 @@
     }
     $('formTitle').textContent = '1. Editar notícia';
     publishBtn.textContent = 'Salvar alterações';
-    cancelEditBtn.style.display = '';
     resetLog();
     window.scrollTo({ top: $('newsForm').offsetTop - 20, behavior: 'smooth' });
   }
@@ -511,7 +510,6 @@
     $('foto').value = '';
     $('formTitle').textContent = '1. A notícia';
     publishBtn.textContent = 'Publicar notícia';
-    cancelEditBtn.style.display = 'none';
     $('currentPhotoHint').style.display = 'none';
   }
   cancelEditBtn.addEventListener('click', cancelEdit);
