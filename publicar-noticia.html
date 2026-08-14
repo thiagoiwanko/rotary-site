@@ -218,6 +218,10 @@
   fotoInput.addEventListener('change', () => {
     const file = fotoInput.files[0];
     if (!file) { destroyCropper(); return; }
+    if (typeof Cropper === 'undefined') {
+      log('Não consegui carregar a ferramenta de recorte (cdnjs.cloudflare.com pode estar bloqueado nesta rede) — a foto será enviada inteira, sem recorte.', 'err');
+      return;
+    }
     const reader = new FileReader();
     reader.onload = (e) => {
       cropImg.src = e.target.result;
