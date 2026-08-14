@@ -98,6 +98,10 @@ function applyI18n(lang) {
   document.querySelectorAll('[data-lang-option]').forEach(el => {
     el.classList.toggle('active', el.getAttribute('data-lang-option') === lang);
   });
+
+  document.querySelectorAll('[data-polio-donate-link]').forEach(el => {
+    el.href = `https://my.rotary.org/${lang}/polioplus-fund`;
+  });
 }
 
 // ---------------- Conteúdo dinâmico (site-data.json + news.json) ----------------
@@ -124,8 +128,8 @@ function renderSiteData(siteData, lang) {
   const focusCarousel = document.querySelector('[data-focus-carousel]');
   if (focusCarousel && siteData.areasDeFoco) {
     const cardHTML = a => `
-      <div class="focus-card">
-        <div class="focus-icon"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[a.icone] || ''}</svg></div>
+      <div class="focus-card" data-icone="${a.icone}">
+        <div class="focus-icon"><img src="assets/img/areas-foco/${a.icone}.png" alt="" loading="lazy"></div>
         <h4>${a.titulo}</h4>
       </div>`;
     const once = siteData.areasDeFoco.map(cardHTML).join('');
