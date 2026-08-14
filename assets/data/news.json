@@ -1,99 +1,11 @@
 [
   {
-    "_comment": "fonte: 'ri' (Rotary International), 'distrito' (Distrito 4740) ou 'clube' (nosso clube). Copie um bloco e edite para adicionar notícias novas. Coloque a mais recente no topo.",
-    "fonte": "distrito",
-    "data": "2026-08-07",
-    "titulo": "Agosto é o Mês do DQA: Indique a Peça Que Falta!",
-    "resumo": "Campanha de agosto do Desenvolvimento do Quadro Associativo (DQA) convida os clubes a indicar novos associados e fortalecer o quadro social do Rotary.",
-    "imagem": "",
-    "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
-  },
-  {
-    "fonte": "distrito",
-    "data": "2026-06-02",
-    "titulo": "Campanha Guardiões do DQA: 30 dias para reter, cuidar e reconhecer",
-    "resumo": "Iniciativa das Regiões 29 e 31 do Rotary reforça ações de retenção, cuidado e reconhecimento dos associados ao longo de 30 dias.",
-    "imagem": "",
-    "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
-  },
-  {
-    "fonte": "ri",
-    "data": "2026-06-01",
-    "titulo": "Mensagem do Diretor do Rotary International 2025-27 — Junho/2026",
-    "resumo": "Diretor do Rotary International destaca a força dos Grupos de Companheirismo e o papel do convívio entre rotarianos.",
-    "imagem": "",
-    "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
-  },
-  {
-    "fonte": "distrito",
-    "data": "2026-05-13",
-    "titulo": "Abril de 2026 | Boletim Informativo da Fundação Rotária",
-    "resumo": "Boletim das Regiões 29 e 31 sobre a Fundação Rotária, incluindo mobilização pela campanha Elimine a Pólio Agora.",
-    "imagem": "",
-    "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
-  },
-  {
-    "fonte": "distrito",
-    "data": "2026-05-12",
-    "titulo": "Relatório Anual do DQA da Região 31 em 2025-2026",
-    "resumo": "Relatório consolidado mostra que a Região 31 cresceu 1.063 associados e 20 clubes no ano rotário 2025-2026, reforçando o protagonismo do Rotary no Brasil.",
-    "imagem": "",
-    "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticia/213893"
-  },
-  {
-    "fonte": "ri",
-    "data": "2026-05-01",
-    "titulo": "Mensagem do Diretor do Rotary International 2025-27 — Maio/2026",
-    "resumo": "Diretor do Rotary International fala sobre transformação de talentos e o papel da juventude no Rotary.",
-    "imagem": "",
-    "url": "https://www.rotaryportouniaodavitoria.org.br/clube-noticias"
-  },
-  {
-    "fonte": "ri",
-    "data": "2026-07-01",
-    "titulo": "Crie Impacto Duradouro: o tema do ano rotário 2026-27",
-    "resumo": "O presidente do Rotary International, Olayinka H. Babalola, convoca os associados a irem além de ações pontuais, tornando os clubes mais acolhedores e promovendo projetos com impacto sustentável nas comunidades.",
-    "imagem": "",
-    "url": "https://www.rotary.org/pt/olayinka-h-babalola-urges-members-of-rotary-to-create-lasting-impact"
-  },
-  {
-    "fonte": "distrito",
-    "data": "2026-08-08",
-    "titulo": "Doação de dois triciclos adaptados une Rotary Alvorada, Ailos CrediComin e voluntariado pela inclusão em Lages",
-    "resumo": "Rotary Club de Lages-Alvorada, do Distrito 4740, recebe equipamentos adaptados para o projeto \"Pernas Solidárias\", ampliando a participação de pessoas com deficiência em corridas e eventos esportivos.",
-    "imagem": "",
-    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
-  },
-  {
-    "fonte": "distrito",
-    "data": "2026-07-31",
-    "titulo": "Casal Governador 2026-27, Moacir Schaly e Maria Cristina Thibes Schaly, aproxima o Distrito 4740 da realidade dos clubes em Visita Oficial",
-    "resumo": "Mais um capítulo da agenda de Visitas Oficiais reforça o compromisso de estar presente junto aos clubes do Distrito 4740.",
-    "imagem": "assets/img/noticias/casal-governador-2026-27.png",
-    "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
-  },
-  {
+    "_comment": "Notícias do nosso clube. Copie um bloco e edite para adicionar. Coloque a mais recente no topo.",
     "fonte": "clube",
     "data": "2026-04-29",
     "titulo": "Cruzando fronteiras: RC Porto União – União da Vitória visita o Rotary Club Milano Fiera Porta Nuova, em Milão",
     "resumo": "Companheirismo rotário sem fronteiras: associados do clube tiveram a honra de participar de uma reunião do Rotary Club Milano Fiera Porta Nuova, na Itália.",
     "imagem": "assets/img/noticias/cruzando-fronteiras-milao.png",
     "url": "https://www.rotaryportouniaodavitoria.org.br/home-clube"
-  },
-  {
-    "fonte": "distrito",
-    "data": "2026-08-04",
-    "titulo": "Revista Distrital 4740 — Informativo Rotário de Junho de 2026",
-    "resumo": "Edição de junho da Revista Distrital 4740, com as atividades do Distrito e do Governador Moacir Schaly ao longo do mês.",
-    "imagem": "assets/img/noticias/informativo-junho-2026.png",
-    "url": "https://www.rotaryportouniaodavitoria.org.br/informativo/3317"
-  },
-  {
-    "fonte": "distrito",
-    "data": "2026-08-04",
-    "titulo": "Revista Distrital 4740 — Informativo Rotário de Maio de 2026",
-    "resumo": "Edição de maio da Revista Distrital 4740, com as atividades do Distrito e do Governador Moacir Schaly ao longo do mês.",
-    "imagem": "assets/img/noticias/informativo-maio-2026.png",
-    "url": "https://www.rotaryportouniaodavitoria.org.br/informativo/3307"
   }
 ]

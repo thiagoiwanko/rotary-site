@@ -78,24 +78,6 @@
     </div>
 
     <div class="field">
-      <label>Postar em</label>
-      <div class="radio-group">
-        <div class="radio-opt">
-          <input type="radio" name="fonte" id="fonte-clube" value="clube" checked>
-          <label for="fonte-clube">Nosso Clube</label>
-        </div>
-        <div class="radio-opt">
-          <input type="radio" name="fonte" id="fonte-distrito" value="distrito">
-          <label for="fonte-distrito">Distrito 4740</label>
-        </div>
-        <div class="radio-opt">
-          <input type="radio" name="fonte" id="fonte-ri" value="ri">
-          <label for="fonte-ri">Rotary International</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="field">
       <label for="data">Data do evento</label>
       <input type="date" id="data" required>
     </div>
@@ -335,7 +317,7 @@
     successBox.classList.remove('show');
 
     const titulo = $('titulo').value.trim();
-    const fonte = document.querySelector('input[name="fonte"]:checked').value;
+    const fonte = 'clube';
     const data = $('data').value;
     const resumo = $('resumo').value.trim();
     const fotoFile = $('foto').files[0] || null;

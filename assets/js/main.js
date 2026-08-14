@@ -113,7 +113,6 @@ function applyI18n(lang) {
 
 // ---------------- Conteúdo dinâmico (site-data.json + news.json) ----------------
 let currentNews = [];
-let currentTab = 'clube';
 
 function renderSiteData(siteData, lang) {
   if (!siteData) return;
@@ -234,11 +233,11 @@ function renderNews(lang) {
   const newsGrid = document.querySelector('[data-news-grid]');
   if (!newsGrid) return;
   const items = (currentNews || [])
-    .filter(n => n.fonte === currentTab)
+    .filter(n => n.fonte === 'clube')
     .sort((a, b) => (a.data < b.data ? 1 : -1));
 
   if (!items.length) {
-    newsGrid.innerHTML = `<p class="news-empty">${t('noticias.empty', lang).replace('{tag}', newsTagLabel(currentTab, lang))}</p>`;
+    newsGrid.innerHTML = `<p class="news-empty">${t('noticias.empty', lang)}</p>`;
     return;
   }
 
@@ -291,15 +290,6 @@ async function init() {
   const lang = getLang();
   applyI18n(lang);
   await loadContent(lang);
-
-  document.querySelectorAll('.news-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.news-tab').forEach(el => el.classList.remove('active'));
-      tab.classList.add('active');
-      currentTab = tab.getAttribute('data-tab');
-      renderNews(getLang());
-    });
-  });
 
   document.querySelectorAll('[data-lang-switch]').forEach(wrap => {
     const toggle = wrap.querySelector('[data-lang-toggle]');
