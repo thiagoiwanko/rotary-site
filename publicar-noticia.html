@@ -114,25 +114,39 @@
 
     <h2 style="margin-top:0.5rem;">2. Autorização de publicação</h2>
 
-    <div class="field">
-      <label for="token">Token do GitHub (Personal Access Token)</label>
-      <input type="password" id="token" required autocomplete="off" placeholder="ghp_... ou github_pat_...">
-      <div class="checkbox-row" style="margin-top:0.6rem;">
-        <input type="checkbox" id="rememberToken">
-        <label for="rememberToken">Lembrar neste navegador (fica salvo só neste computador)</label>
+    <div id="setupBlock">
+      <div class="hint" style="margin-bottom:0.9rem;">Primeiro uso neste navegador: cole o token do GitHub uma única vez e crie uma senha sua. Da próxima vez, só vai pedir a senha — o token fica guardado aqui criptografado, nunca em texto puro.</div>
+      <div class="field">
+        <label for="token">Token do GitHub (Personal Access Token)</label>
+        <input type="password" id="token" autocomplete="off" placeholder="github_pat_...">
       </div>
+      <div class="field">
+        <label for="newPass">Crie uma senha para este painel</label>
+        <input type="password" id="newPass" autocomplete="new-password" placeholder="mínimo 8 caracteres">
+      </div>
+      <div class="field">
+        <label for="newPassConfirm">Confirme a senha</label>
+        <input type="password" id="newPassConfirm" autocomplete="new-password">
+      </div>
+      <details class="help">
+        <summary>Como criar o token (só precisa fazer isso uma vez)</summary>
+        <ol>
+          <li>Entre em <code>github.com/settings/personal-access-tokens/new</code> logado com a conta dona do repositório.</li>
+          <li>Em "Repository access", escolha "Only select repositories" e selecione <code>rotary-site</code>.</li>
+          <li>Em "Permissions" → "Repository permissions", mude <strong>Contents</strong> para <strong>Read and write</strong>.</li>
+          <li>Defina uma data de expiração (ex.: 1 ano) e clique em "Generate token".</li>
+          <li>Copie o token gerado (começa com <code>github_pat_</code>) e cole no campo acima. Guarde-o em local seguro — o GitHub só mostra uma vez.</li>
+        </ol>
+      </details>
     </div>
 
-    <details class="help">
-      <summary>Como criar o token (só precisa fazer isso uma vez)</summary>
-      <ol>
-        <li>Entre em <code>github.com/settings/personal-access-tokens/new</code> logado com a conta dona do repositório.</li>
-        <li>Em "Repository access", escolha "Only select repositories" e selecione <code>rotary-site</code>.</li>
-        <li>Em "Permissions" → "Repository permissions", mude <strong>Contents</strong> para <strong>Read and write</strong>.</li>
-        <li>Defina uma data de expiração (ex.: 1 ano) e clique em "Generate token".</li>
-        <li>Copie o token gerado (começa com <code>github_pat_</code>) e cole no campo acima. Guarde-o em local seguro — o GitHub só mostra uma vez.</li>
-      </ol>
-    </details>
+    <div id="unlockBlock" style="display:none;">
+      <div class="field">
+        <label for="unlockPass">Senha</label>
+        <input type="password" id="unlockPass" autocomplete="current-password">
+      </div>
+      <div class="hint"><a href="#" id="forgetLink">Esqueci a senha / trocar o token</a></div>
+    </div>
 
     <button type="submit" class="publish-btn" id="publishBtn" style="margin-top:1.5rem;">Publicar notícia</button>
 
@@ -150,17 +164,106 @@
   const BRANCH = 'main';
   const API = 'https://api.github.com/repos/' + REPO + '/contents/';
   const NEWS_FILES = ['assets/data/news.json', 'assets/data/news.en.json', 'assets/data/news.es.json'];
-  const TOKEN_KEY = 'rcpu_admin_gh_token';
+  const VAULT_KEY = 'rcpu_admin_vault';
 
   const $ = (id) => document.getElementById(id);
+  const setupBlock = $('setupBlock');
+  const unlockBlock = $('unlockBlock');
   const tokenInput = $('token');
-  const rememberBox = $('rememberToken');
+  const newPassInput = $('newPass');
+  const newPassConfirmInput = $('newPassConfirm');
+  const unlockPassInput = $('unlockPass');
+  const forgetLink = $('forgetLink');
   const logEl = $('log');
   const successBox = $('successBox');
   const publishBtn = $('publishBtn');
 
-  const savedToken = localStorage.getItem(TOKEN_KEY);
-  if (savedToken) { tokenInput.value = savedToken; rememberBox.checked = true; }
+  function hasVault() { return !!localStorage.getItem(VAULT_KEY); }
+
+  function refreshAuthView() {
+    if (hasVault()) {
+      setupBlock.style.display = 'none';
+      unlockBlock.style.display = '';
+      unlockPassInput.value = '';
+    } else {
+      setupBlock.style.display = '';
+      unlockBlock.style.display = 'none';
+    }
+  }
+  refreshAuthView();
+
+  forgetLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (!confirm('Isso apaga o token guardado neste navegador. Você vai precisar colar o token do GitHub de novo. Continuar?')) return;
+    localStorage.removeItem(VAULT_KEY);
+    refreshAuthView();
+  });
+
+  // ---- Cofre local: PBKDF2 (senha -> chave) + AES-GCM (criptografa o token) ----
+  // O token nunca é salvo em texto puro; só o resultado criptografado vai pro localStorage.
+  function bufToB64(buf) {
+    let bin = '';
+    const bytes = new Uint8Array(buf);
+    for (let i = 0; i < bytes.byteLength; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin);
+  }
+  function b64ToBuf(b64) {
+    const bin = atob(b64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes;
+  }
+
+  async function deriveKey(password, saltBytes) {
+    const enc = new TextEncoder();
+    const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt: saltBytes, iterations: 150000, hash: 'SHA-256' },
+      keyMaterial,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['encrypt', 'decrypt']
+    );
+  }
+
+  async function saveVault(token, password) {
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await deriveKey(password, salt);
+    const enc = new TextEncoder();
+    const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc.encode(token));
+    localStorage.setItem(VAULT_KEY, JSON.stringify({ salt: bufToB64(salt), iv: bufToB64(iv), data: bufToB64(ciphertext) }));
+  }
+
+  async function unlockVault(password) {
+    const vault = JSON.parse(localStorage.getItem(VAULT_KEY));
+    const salt = b64ToBuf(vault.salt);
+    const iv = b64ToBuf(vault.iv);
+    const key = await deriveKey(password, salt);
+    const data = b64ToBuf(vault.data);
+    try {
+      const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, data);
+      return new TextDecoder().decode(plain);
+    } catch (e) {
+      throw new Error('Senha incorreta.');
+    }
+  }
+
+  async function resolveToken() {
+    if (hasVault()) {
+      const pass = unlockPassInput.value;
+      if (!pass) throw new Error('Digite a senha.');
+      return unlockVault(pass);
+    }
+    const token = tokenInput.value.trim();
+    const pass = newPassInput.value;
+    const confirmPass = newPassConfirmInput.value;
+    if (!token) throw new Error('Cole o token do GitHub.');
+    if (!pass || pass.length < 8) throw new Error('Crie uma senha com pelo menos 8 caracteres.');
+    if (pass !== confirmPass) throw new Error('As senhas não conferem.');
+    await saveVault(token, pass);
+    return token;
+  }
 
   function log(msg, cls) {
     logEl.classList.add('show');
@@ -236,15 +339,19 @@
     const data = $('data').value;
     const resumo = $('resumo').value.trim();
     const fotoFile = $('foto').files[0] || null;
-    const token = tokenInput.value.trim();
 
-    if (!titulo || !data || !resumo || !token) {
-      log('Preencha título, data, texto e token antes de publicar.', 'err');
+    if (!titulo || !data || !resumo) {
+      log('Preencha título, data e texto antes de publicar.', 'err');
       return;
     }
 
-    if (rememberBox.checked) localStorage.setItem(TOKEN_KEY, token);
-    else localStorage.removeItem(TOKEN_KEY);
+    let token;
+    try {
+      token = await resolveToken();
+    } catch (err) {
+      log('Erro: ' + err.message, 'err');
+      return;
+    }
 
     publishBtn.disabled = true;
     publishBtn.textContent = 'Publicando...';
@@ -290,7 +397,7 @@
       log('Publicação concluída com sucesso.', 'ok');
       successBox.classList.add('show');
       $('newsForm').reset();
-      if (rememberBox.checked) { tokenInput.value = token; rememberBox.checked = true; }
+      refreshAuthView();
     } catch (err) {
       log('Erro: ' + err.message, 'err');
       log('Nada além do que já foi confirmado acima (linhas "ok") foi publicado. Você pode corrigir e tentar de novo.', 'err');
