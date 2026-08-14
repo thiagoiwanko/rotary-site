@@ -1,6 +1,7 @@
 [
   {
-    "_comment": "Notícias do nosso clube. Copie um bloco e edite para adicionar. Coloque a mais recente no topo.",
+    "_comment": "Notícias do nosso clube. Copie um bloco e edite para adicionar. Coloque a mais recente no topo. 'id' precisa ser igual nos 3 arquivos de idioma (é o que liga uma notícia à sua tradução).",
+    "id": "n-milao-2026",
     "fonte": "clube",
     "data": "2026-04-29",
     "titulo": "Cruzando fronteiras: RC Porto União – União da Vitória visita o Rotary Club Milano Fiera Porta Nuova, em Milão",

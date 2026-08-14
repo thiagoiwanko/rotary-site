@@ -888,7 +888,7 @@ behold-widget { display: block; }
    =================================================================== */
 footer.site-footer { background: var(--ink); color: rgba(255,255,255,0.7); padding-top: 4rem; }
 .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
-.footer-brand img.logo-on-dark { height: 72px; width: auto; margin-bottom: 1.3rem; }
+.footer-brand img.logo-on-dark { height: 108px; width: auto; margin-bottom: 1.3rem; }
 .footer-brand p { font-size: 0.88rem; max-width: 320px; color: rgba(255,255,255,0.55); }
 footer h5 { color: var(--white); font-family: var(--font-display); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.1rem; }
 footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
@@ -998,7 +998,7 @@ footer ul a:hover { color: var(--rotary-gold); }
 }
 .mobile-nav.open { transform: translateX(0); }
 .mobile-nav-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
-.mobile-nav-top img.logo-on-dark { height: 50px; width: auto; }
+.mobile-nav-top img.logo-on-dark { height: 68px; width: auto; }
 .mobile-nav-close { background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
 .mobile-nav ul { list-style: none; display: flex; flex-direction: column; gap: 1.6rem; }
 .mobile-nav a { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; color: white; }

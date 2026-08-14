@@ -25,18 +25,9 @@
   }
   .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--rotary-azure); }
   .field textarea { min-height: 110px; resize: vertical; }
-  .radio-group { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-  .radio-opt { flex: 1 1 auto; }
-  .radio-opt input { display: none; }
-  .radio-opt label {
-    display: block; text-align: center; padding: 0.7rem 0.5rem; border: 1.5px solid var(--silver);
-    border-radius: 10px; font-weight: 600; font-size: 0.85rem; cursor: pointer; color: var(--charcoal);
-    transition: var(--transition);
-  }
-  .radio-opt input:checked + label { border-color: var(--rotary-blue); background: var(--rotary-blue); color: var(--white); }
   .checkbox-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--charcoal); }
   .checkbox-row input { width: 16px; height: 16px; }
-  details.help { font-size: 0.85rem; color: var(--charcoal); }
+  details.help { font-size: 0.85rem; color: var(--charcoal); margin-top: 0.5rem; }
   details.help summary { cursor: pointer; font-weight: 700; color: var(--rotary-azure); margin-bottom: 0.6rem; }
   details.help ol { padding-left: 1.2rem; }
   details.help li { margin-bottom: 0.4rem; }
@@ -48,6 +39,10 @@
   }
   .publish-btn:hover:not(:disabled) { transform: translateY(-2px); }
   .publish-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+  .cancel-edit-btn {
+    width: 100%; padding: 0.7rem; border: 1.5px solid var(--silver); border-radius: 12px; background: var(--white);
+    color: var(--charcoal); font-weight: 700; font-size: 0.88rem; cursor: pointer; margin-top: 0.6rem; display: none;
+  }
   .log { margin-top: 1.2rem; padding: 1rem; border-radius: 10px; background: var(--ink); color: #d8f0d8; font-size: 0.82rem; font-family: monospace; white-space: pre-wrap; max-height: 260px; overflow-y: auto; display: none; }
   .log.show { display: block; }
   .log .err { color: #ff9b9b; }
@@ -56,6 +51,20 @@
   .success-box { background: #e8f8ee; border: 1.5px solid #2e8b57; border-radius: 10px; padding: 1.2rem; margin-top: 1.2rem; display: none; }
   .success-box.show { display: block; }
   .success-box a { color: var(--rotary-azure); font-weight: 700; }
+  .news-item { display: flex; gap: 1rem; align-items: flex-start; padding: 0.9rem 0; border-bottom: 1px solid var(--cloud); }
+  .news-item:last-child { border-bottom: none; }
+  .ni-thumb { width: 64px; height: 64px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: var(--rotary-blue); }
+  .ni-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ni-body { flex: 1; min-width: 0; }
+  .ni-date { font-size: 0.72rem; color: var(--pewter); font-weight: 700; letter-spacing: 0.03em; }
+  .ni-title { font-size: 0.92rem; font-weight: 700; color: var(--ink); margin: 0.15rem 0 0.25rem; }
+  .ni-resumo { font-size: 0.82rem; color: var(--pewter); }
+  .ni-actions { display: flex; flex-direction: column; gap: 0.4rem; flex-shrink: 0; }
+  .ni-btn { padding: 0.4rem 0.8rem; border-radius: 8px; border: 1.5px solid var(--silver); background: var(--white); font-size: 0.78rem; font-weight: 700; cursor: pointer; color: var(--charcoal); white-space: nowrap; }
+  .ni-btn:hover:not(:disabled) { border-color: var(--rotary-azure); color: var(--rotary-azure); }
+  .ni-btn-danger:hover:not(:disabled) { border-color: var(--rotary-cardinal); color: var(--rotary-cardinal); }
+  .ni-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .err-text { color: var(--rotary-cardinal); }
 </style>
 </head>
 <body>
@@ -66,11 +75,16 @@
   </div>
 
   <div class="warn-box">
-    Página de uso interno — não é indexada e não aparece em nenhum menu do site. Só publica quem colar aqui um token válido do GitHub com permissão de escrita neste repositório. Não compartilhe o link nem o token desta página com ninguém de fora do clube.
+    Página de uso interno — não é indexada e não aparece em nenhum menu do site. Só publica, edita ou apaga quem tiver o token do GitHub com permissão de escrita neste repositório. Não compartilhe o link nem o token desta página com ninguém de fora do clube.
+  </div>
+
+  <div class="pub-card">
+    <h2>Notícias publicadas</h2>
+    <div id="newsList"><p class="hint">Carregando...</p></div>
   </div>
 
   <form class="pub-card" id="newsForm">
-    <h2>1. A notícia</h2>
+    <h2 id="formTitle">1. A notícia</h2>
 
     <div class="field">
       <label for="titulo">Título</label>
@@ -91,10 +105,11 @@
     <div class="field">
       <label for="foto">Foto (opcional)</label>
       <input type="file" id="foto" accept="image/png,image/jpeg,image/webp">
+      <div class="hint" id="currentPhotoHint" style="display:none;"></div>
       <div class="hint">Se não enviar foto, o card da notícia usa uma imagem padrão do site.</div>
     </div>
 
-    <h2 style="margin-top:0.5rem;">2. Autorização de publicação</h2>
+    <h2 style="margin-top:0.5rem;">2. Autorização</h2>
 
     <div id="setupBlock">
       <div class="hint" style="margin-bottom:0.9rem;">Primeiro uso neste navegador: cole o token do GitHub uma única vez e crie uma senha sua. Da próxima vez, só vai pedir a senha — o token fica guardado aqui criptografado, nunca em texto puro.</div>
@@ -110,16 +125,6 @@
         <label for="newPassConfirm">Confirme a senha</label>
         <input type="password" id="newPassConfirm" autocomplete="new-password">
       </div>
-      <details class="help">
-        <summary>Como criar o token (só precisa fazer isso uma vez)</summary>
-        <ol>
-          <li>Entre em <code>github.com/settings/personal-access-tokens/new</code> logado com a conta dona do repositório.</li>
-          <li>Em "Repository access", escolha "Only select repositories" e selecione <code>rotary-site</code>.</li>
-          <li>Em "Permissions" → "Repository permissions", mude <strong>Contents</strong> para <strong>Read and write</strong>.</li>
-          <li>Defina uma data de expiração (ex.: 1 ano) e clique em "Generate token".</li>
-          <li>Copie o token gerado (começa com <code>github_pat_</code>) e cole no campo acima. Guarde-o em local seguro — o GitHub só mostra uma vez.</li>
-        </ol>
-      </details>
     </div>
 
     <div id="unlockBlock" style="display:none;">
@@ -130,11 +135,31 @@
       <div class="hint"><a href="#" id="forgetLink">Esqueci a senha / trocar o token</a></div>
     </div>
 
+    <div id="plainBlock" style="display:none;">
+      <div class="hint" style="margin-bottom:0.9rem;">Esta página só guarda o token com senha quando aberta por <code>https://</code>. Acessando assim (ex.: <code>http://</code> ou arquivo local), cole o token do GitHub — ele não fica salvo, precisa colar de novo toda vez.</div>
+      <div class="field">
+        <label for="plainToken">Token do GitHub (Personal Access Token)</label>
+        <input type="password" id="plainToken" autocomplete="off" placeholder="github_pat_...">
+      </div>
+    </div>
+
+    <details class="help">
+      <summary>Como criar o token (só precisa fazer isso uma vez)</summary>
+      <ol>
+        <li>Entre em <code>github.com/settings/personal-access-tokens/new</code> logado com a conta dona do repositório.</li>
+        <li>Em "Repository access", escolha "Only select repositories" e selecione <code>rotary-site</code>.</li>
+        <li>Em "Permissions" → "Repository permissions", mude <strong>Contents</strong> para <strong>Read and write</strong>.</li>
+        <li>Defina uma data de expiração (ex.: 1 ano) e clique em "Generate token".</li>
+        <li>Copie o token gerado (começa com <code>github_pat_</code>) e cole no campo acima. Guarde-o em local seguro — o GitHub só mostra uma vez.</li>
+      </ol>
+    </details>
+
     <button type="submit" class="publish-btn" id="publishBtn" style="margin-top:1.5rem;">Publicar notícia</button>
+    <button type="button" class="cancel-edit-btn" id="cancelEditBtn">Cancelar edição</button>
 
     <div class="log" id="log"></div>
     <div class="success-box" id="successBox">
-      <strong>Publicado!</strong> A notícia já está no repositório e o site (GitHub Pages) atualiza em 1-2 minutos.
+      <strong>Pronto!</strong> A notícia já está no repositório e o site (GitHub Pages) atualiza em 1-2 minutos.
       <div style="margin-top:0.6rem;"><a href="https://www.rcpu.com.br/#noticias" target="_blank" rel="noopener">Ver no site →</a></div>
     </div>
   </form>
@@ -147,10 +172,12 @@
   const API = 'https://api.github.com/repos/' + REPO + '/contents/';
   const NEWS_FILES = ['assets/data/news.json', 'assets/data/news.en.json', 'assets/data/news.es.json'];
   const VAULT_KEY = 'rcpu_admin_vault';
+  const CRYPTO_OK = !!(window.crypto && window.crypto.subtle);
 
   const $ = (id) => document.getElementById(id);
   const setupBlock = $('setupBlock');
   const unlockBlock = $('unlockBlock');
+  const plainBlock = $('plainBlock');
   const tokenInput = $('token');
   const newPassInput = $('newPass');
   const newPassConfirmInput = $('newPassConfirm');
@@ -159,10 +186,22 @@
   const logEl = $('log');
   const successBox = $('successBox');
   const publishBtn = $('publishBtn');
+  const cancelEditBtn = $('cancelEditBtn');
+  const newsListEl = $('newsList');
+
+  let editingId = null;
+  let currentImagemPath = '';
 
   function hasVault() { return !!localStorage.getItem(VAULT_KEY); }
 
   function refreshAuthView() {
+    if (!CRYPTO_OK) {
+      setupBlock.style.display = 'none';
+      unlockBlock.style.display = 'none';
+      plainBlock.style.display = '';
+      return;
+    }
+    plainBlock.style.display = 'none';
     if (hasVault()) {
       setupBlock.style.display = 'none';
       unlockBlock.style.display = '';
@@ -183,6 +222,7 @@
 
   // ---- Cofre local: PBKDF2 (senha -> chave) + AES-GCM (criptografa o token) ----
   // O token nunca é salvo em texto puro; só o resultado criptografado vai pro localStorage.
+  // Só funciona em contexto seguro (https:// ou localhost) — ver CRYPTO_OK acima.
   function bufToB64(buf) {
     let bin = '';
     const bytes = new Uint8Array(buf);
@@ -232,6 +272,11 @@
   }
 
   async function resolveToken() {
+    if (!CRYPTO_OK) {
+      const token = $('plainToken').value.trim();
+      if (!token) throw new Error('Cole o token do GitHub.');
+      return token;
+    }
     if (hasVault()) {
       const pass = unlockPassInput.value;
       if (!pass) throw new Error('Digite a senha.');
@@ -255,10 +300,23 @@
     logEl.appendChild(line);
     logEl.scrollTop = logEl.scrollHeight;
   }
+  function resetLog() {
+    logEl.innerHTML = '';
+    logEl.classList.remove('show');
+    successBox.classList.remove('show');
+  }
 
   function slugify(str) {
     return str.normalize('NFD').replace(/[̀-ͯ]/g, '')
       .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 60);
+  }
+
+  function genId() {
+    return 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  }
+
+  function escapeHtml(s) {
+    return (s || '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   }
 
   function b64EncodeUtf8(str) {
@@ -269,11 +327,9 @@
   }
 
   function ghHeaders(token) {
-    return {
-      'Authorization': 'Bearer ' + token,
-      'Accept': 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28'
-    };
+    const h = { 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
+    if (token) h['Authorization'] = 'Bearer ' + token;
+    return h;
   }
 
   async function getFile(path, token) {
@@ -310,11 +366,122 @@
     });
   }
 
+  // ---------------- Lista / editar / excluir ----------------
+
+  function newsItemHTML(n) {
+    const thumb = n.imagem
+      ? `<img src="${n.imagem}" alt="">`
+      : '';
+    const hasId = !!n.id;
+    return `
+      <div class="news-item">
+        <div class="ni-thumb">${thumb}</div>
+        <div class="ni-body">
+          <div class="ni-date">${n.data || ''}</div>
+          <div class="ni-title">${escapeHtml(n.titulo)}</div>
+          <div class="ni-resumo">${escapeHtml((n.resumo || '').slice(0, 120))}${(n.resumo || '').length > 120 ? '…' : ''}</div>
+        </div>
+        <div class="ni-actions">
+          <button type="button" class="ni-btn" data-edit="${n.id || ''}" ${hasId ? '' : 'disabled title="Item antigo sem id — edite direto no JSON no GitHub"'}>Editar</button>
+          <button type="button" class="ni-btn ni-btn-danger" data-delete="${n.id || ''}" data-title="${escapeHtml(n.titulo)}" ${hasId ? '' : 'disabled title="Item antigo sem id — apague direto no JSON no GitHub"'}>Excluir</button>
+        </div>
+      </div>`;
+  }
+
+  let lastLoadedArr = [];
+
+  async function loadNewsList() {
+    newsListEl.innerHTML = '<p class="hint">Carregando...</p>';
+    try {
+      const file = await getFile('assets/data/news.json');
+      if (!file) { newsListEl.innerHTML = '<p class="hint">Nenhuma notícia encontrada no repositório.</p>'; return; }
+      const text = b64DecodeUtf8(file.content.replace(/\n/g, ''));
+      const arr = JSON.parse(text);
+      arr.sort((a, b) => (a.data < b.data ? 1 : -1));
+      lastLoadedArr = arr;
+      if (!arr.length) { newsListEl.innerHTML = '<p class="hint">Nenhuma notícia publicada ainda.</p>'; return; }
+      newsListEl.innerHTML = arr.map(newsItemHTML).join('');
+      newsListEl.querySelectorAll('[data-edit]').forEach((btn) => {
+        if (btn.disabled) return;
+        btn.addEventListener('click', () => startEdit(btn.getAttribute('data-edit')));
+      });
+      newsListEl.querySelectorAll('[data-delete]').forEach((btn) => {
+        if (btn.disabled) return;
+        btn.addEventListener('click', () => deleteNews(btn.getAttribute('data-delete'), btn.getAttribute('data-title')));
+      });
+    } catch (err) {
+      newsListEl.innerHTML = '<p class="hint err-text">Não deu para carregar a lista: ' + err.message + '</p>';
+    }
+  }
+
+  function startEdit(id) {
+    const item = lastLoadedArr.find((n) => n.id === id);
+    if (!item) return;
+    editingId = id;
+    currentImagemPath = item.imagem || '';
+    $('titulo').value = item.titulo || '';
+    $('data').value = item.data || '';
+    $('resumo').value = item.resumo || '';
+    $('foto').value = '';
+    const hint = $('currentPhotoHint');
+    if (currentImagemPath) {
+      hint.style.display = '';
+      hint.textContent = 'Foto atual: ' + currentImagemPath + ' (escolha um arquivo acima só se quiser trocar)';
+    } else {
+      hint.style.display = 'none';
+    }
+    $('formTitle').textContent = '1. Editar notícia';
+    publishBtn.textContent = 'Salvar alterações';
+    cancelEditBtn.style.display = '';
+    resetLog();
+    window.scrollTo({ top: $('newsForm').offsetTop - 20, behavior: 'smooth' });
+  }
+
+  function cancelEdit() {
+    editingId = null;
+    currentImagemPath = '';
+    $('newsForm').reset();
+    $('formTitle').textContent = '1. A notícia';
+    publishBtn.textContent = 'Publicar notícia';
+    cancelEditBtn.style.display = 'none';
+    $('currentPhotoHint').style.display = 'none';
+    refreshAuthView();
+  }
+  cancelEditBtn.addEventListener('click', cancelEdit);
+
+  async function deleteNews(id, title) {
+    if (!confirm('Excluir a notícia "' + title + '"? Isso remove ela dos 3 idiomas e não pode ser desfeito por aqui.')) return;
+    resetLog();
+    let token;
+    try { token = await resolveToken(); }
+    catch (err) { log('Erro: ' + err.message, 'err'); return; }
+
+    try {
+      for (const path of NEWS_FILES) {
+        log('Removendo de ' + path + '...');
+        const file = await getFile(path, token);
+        if (!file) { log(path + ' não encontrado, pulando.', 'err'); continue; }
+        const arr = JSON.parse(b64DecodeUtf8(file.content.replace(/\n/g, '')));
+        const before = arr.length;
+        const filtered = arr.filter((n) => n.id !== id);
+        if (filtered.length === before) { log(path + ': item não encontrado (já removido?).', 'ok'); continue; }
+        const newB64 = b64EncodeUtf8(JSON.stringify(filtered, null, 2) + '\n');
+        await putFile(path, token, newB64, file.sha, 'update');
+        log(path + ' atualizado.', 'ok');
+      }
+      log('Notícia excluída.', 'ok');
+      if (editingId === id) cancelEdit();
+      await loadNewsList();
+    } catch (err) {
+      log('Erro: ' + err.message, 'err');
+    }
+  }
+
+  // ---------------- Criar / salvar edição ----------------
+
   $('newsForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    logEl.innerHTML = '';
-    logEl.classList.remove('show');
-    successBox.classList.remove('show');
+    resetLog();
 
     const titulo = $('titulo').value.trim();
     const fonte = 'clube';
@@ -335,11 +502,12 @@
       return;
     }
 
+    const wasEditing = !!editingId;
     publishBtn.disabled = true;
-    publishBtn.textContent = 'Publicando...';
+    publishBtn.textContent = wasEditing ? 'Salvando...' : 'Publicando...';
 
     try {
-      let imagemPath = '';
+      let imagemPath = wasEditing ? currentImagemPath : '';
 
       if (fotoFile) {
         log('Enviando foto...');
@@ -352,14 +520,8 @@
         log('Foto enviada: ' + imagemPath, 'ok');
       }
 
-      const entry = {
-        fonte: fonte,
-        data: data,
-        titulo: titulo,
-        resumo: resumo,
-        imagem: imagemPath,
-        url: 'https://www.rcpu.com.br/#noticias'
-      };
+      const id = wasEditing ? editingId : genId();
+      const entry = { id, fonte, data, titulo, resumo, imagem: imagemPath, url: 'https://www.rcpu.com.br/#noticias' };
 
       for (const path of NEWS_FILES) {
         log('Atualizando ' + path + '...');
@@ -369,25 +531,34 @@
         let arr;
         try { arr = JSON.parse(currentText); }
         catch (e) { throw new Error(path + ' tem um JSON inválido no repositório — publicação interrompida.'); }
-        arr.push(entry);
+
+        if (wasEditing) {
+          const idx = arr.findIndex((n) => n.id === id);
+          if (idx >= 0) arr[idx] = entry; else arr.push(entry);
+        } else {
+          arr.push(entry);
+        }
+
         const newText = JSON.stringify(arr, null, 2) + '\n';
         const newB64 = b64EncodeUtf8(newText);
         await putFile(path, token, newB64, file.sha, 'update');
         log(path + ' atualizado.', 'ok');
       }
 
-      log('Publicação concluída com sucesso.', 'ok');
+      log(wasEditing ? 'Alterações salvas.' : 'Publicação concluída com sucesso.', 'ok');
       successBox.classList.add('show');
-      $('newsForm').reset();
-      refreshAuthView();
+      cancelEdit();
+      await loadNewsList();
     } catch (err) {
       log('Erro: ' + err.message, 'err');
       log('Nada além do que já foi confirmado acima (linhas "ok") foi publicado. Você pode corrigir e tentar de novo.', 'err');
     } finally {
       publishBtn.disabled = false;
-      publishBtn.textContent = 'Publicar notícia';
+      publishBtn.textContent = editingId ? 'Salvar alterações' : 'Publicar notícia';
     }
   });
+
+  loadNewsList();
 })();
 </script>
 </body>
