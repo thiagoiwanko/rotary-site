@@ -38,11 +38,6 @@ function t(key, lang) {
   return dict[key] !== undefined ? dict[key] : key;
 }
 
-function newsTagLabel(fonte, lang) {
-  const map = { ri: 'noticias.tab.ri', distrito: 'noticias.tab.distrito', clube: 'noticias.tab.clube' };
-  return map[fonte] ? t(map[fonte], lang) : '';
-}
-
 function getField(obj, path) {
   return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : ''), obj);
 }
@@ -244,7 +239,6 @@ function renderNews(lang) {
   newsGrid.innerHTML = items.map(n => `
     <article class="news-card">
       <div class="news-thumb">
-        <span class="news-tag">${newsTagLabel(n.fonte, lang)}</span>
         ${n.imagem ? `<img src="${n.imagem}" alt="" style="width:100%;height:100%;object-fit:cover;">` :
         `<svg viewBox="0 0 24 24" stroke="white" stroke-width="1.6" fill="none"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 5"/><circle cx="8" cy="9" r="1.3" fill="white" stroke="none"/></svg>`}
       </div>
