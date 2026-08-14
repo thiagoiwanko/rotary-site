@@ -504,7 +504,7 @@ nav.main-nav a:hover::after { width: 100%; }
   background: radial-gradient(circle at 25% 20%, rgba(0,162,224,0.5), transparent 55%),
               radial-gradient(circle at 80% 85%, rgba(247,168,27,0.4), transparent 55%);
 }
-.about-visual img { position: relative; height: 84%; width: auto; max-width: 90%; object-fit: contain; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.35)); }
+.about-visual img { position: relative; height: 84%; width: auto; max-width: 90%; object-fit: contain; border-radius: 14px; box-shadow: 0 20px 40px rgba(0,0,0,0.25); }
 .about-visual .ring {
   position: absolute;
   border: 1.5px solid rgba(255,255,255,0.25);
