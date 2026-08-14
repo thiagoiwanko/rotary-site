@@ -197,9 +197,16 @@
 
   let editingId = null;
   let currentImagemPath = '';
-  let authToken = null;
+  const SESSION_KEY = 'rcpu_admin_session';
+  let authToken = sessionStorage.getItem(SESSION_KEY) || null;
 
   function hasVault() { return !!localStorage.getItem(VAULT_KEY); }
+
+  function setAuthToken(token) {
+    authToken = token;
+    if (token) sessionStorage.setItem(SESSION_KEY, token);
+    else sessionStorage.removeItem(SESSION_KEY);
+  }
 
   function refreshAuthView() {
     if (authToken) {
@@ -237,7 +244,7 @@
     e.preventDefault();
     if (!confirm('Isso apaga o token guardado neste navegador. Você vai precisar colar o token do GitHub de novo. Continuar?')) return;
     localStorage.removeItem(VAULT_KEY);
-    authToken = null;
+    setAuthToken(null);
     refreshAuthView();
   }
   forgetLink.addEventListener('click', forgetVault);
@@ -323,7 +330,7 @@
     authBtn.textContent = 'Verificando...';
     try {
       const token = await resolveToken();
-      authToken = token;
+      setAuthToken(token);
       refreshAuthView();
     } catch (err) {
       authLog.classList.add('show');
@@ -563,7 +570,15 @@
     try {
       const matches = await checkGrammar(titulo + '\n\n' + resumo);
       if (matches.length) {
-        const preview = matches.slice(0, 8).map((m) => '• ' + (m.shortMessage || m.message)).join('\n');
+        const preview = matches.slice(0, 8).map((m) => {
+          const ctx = m.context || {};
+          const trecho = ctx.text ? ctx.text.substring(ctx.offset, ctx.offset + ctx.length) : '';
+          const sugestao = (m.replacements && m.replacements[0] && m.replacements[0].value) || '';
+          let line = '• ' + (trecho ? '"' + trecho + '"' : (m.shortMessage || 'trecho'));
+          line += ': ' + (m.message || m.shortMessage || 'possível erro');
+          if (sugestao) line += ' (sugestão: "' + sugestao + '")';
+          return line;
+        }).join('\n');
         log('Possíveis problemas encontrados (' + matches.length + '):', 'err');
         log(preview, 'err');
         const proceed = confirm(
@@ -581,7 +596,7 @@
     let token;
     try {
       token = await resolveToken();
-      authToken = token;
+      setAuthToken(token);
       refreshAuthView();
     } catch (err) {
       log('Erro: ' + err.message, 'err');
