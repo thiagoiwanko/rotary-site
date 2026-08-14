@@ -695,6 +695,8 @@ nav.main-nav a:hover::after { width: 100%; }
 .news-card:hover .news-link svg { transform: translateX(4px); }
 .news-empty { color: var(--pewter); font-style: italic; padding: 2rem 0; }
 
+.news-more-wrap { display: flex; justify-content: center; margin-top: 2.2rem; }
+
 /* ===================================================================
    INSTAGRAM
    =================================================================== */

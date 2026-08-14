@@ -109,6 +109,8 @@ function applyI18n(lang) {
 // ---------------- Conteúdo dinâmico (site-data.json + news.json) ----------------
 let currentNews = [];
 let currentFocusAreas = [];
+const NEWS_PAGE_SIZE = 3;
+let newsShown = NEWS_PAGE_SIZE;
 
 function renderSiteData(siteData, lang) {
   if (!siteData) return;
@@ -242,14 +244,28 @@ function hasExternalUrl(n) {
 
 function renderNews(lang) {
   const newsGrid = document.querySelector('[data-news-grid]');
+  const moreWrap = document.querySelector('[data-news-more-wrap]');
+  const moreBtn = document.querySelector('[data-news-more]');
   if (!newsGrid) return;
-  const items = (currentNews || [])
+  const allItems = (currentNews || [])
     .filter(n => n.fonte === 'clube')
     .sort((a, b) => (a.data < b.data ? 1 : -1));
 
-  if (!items.length) {
+  if (!allItems.length) {
     newsGrid.innerHTML = `<p class="news-empty">${t('noticias.empty', lang)}</p>`;
+    if (moreWrap) moreWrap.style.display = 'none';
     return;
+  }
+
+  const items = allItems.slice(0, newsShown);
+
+  if (moreWrap && moreBtn) {
+    if (allItems.length > items.length) {
+      moreWrap.style.display = '';
+      moreBtn.textContent = t('noticias.verMais', lang);
+    } else {
+      moreWrap.style.display = 'none';
+    }
   }
 
   newsGrid.innerHTML = items.map(n => `
@@ -283,8 +299,19 @@ async function loadContent(lang) {
 
   renderSiteData(siteData, lang);
   currentNews = news || [];
+  newsShown = NEWS_PAGE_SIZE;
   renderNews(lang);
   observeReveals();
+}
+
+function initNewsMore() {
+  const moreBtn = document.querySelector('[data-news-more]');
+  if (!moreBtn) return;
+  moreBtn.addEventListener('click', () => {
+    newsShown += NEWS_PAGE_SIZE;
+    renderNews(getLang());
+    observeReveals();
+  });
 }
 
 async function setLanguage(lang) {
@@ -349,6 +376,7 @@ async function init() {
 
   initFocusModal();
   initAtaLightbox();
+  initNewsMore();
 }
 
 // ---------------- Modal: área de enfoque ----------------

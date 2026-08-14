@@ -8,6 +8,7 @@
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
 <style>
   body { background: var(--cloud); min-height: 100vh; }
   .pub-wrap { max-width: 1100px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
@@ -68,6 +69,8 @@
   .ni-btn-danger:hover:not(:disabled) { border-color: var(--rotary-cardinal); color: var(--rotary-cardinal); }
   .ni-btn:disabled { opacity: 0.4; cursor: not-allowed; }
   .err-text { color: var(--rotary-cardinal); }
+  .crop-box { max-width: 100%; max-height: 360px; overflow: hidden; border-radius: 10px; background: var(--ink); }
+  .crop-box img { display: block; max-width: 100%; }
 </style>
 </head>
 <body>
@@ -127,7 +130,8 @@
 
       <div class="field">
         <label for="titulo">Título</label>
-        <input type="text" id="titulo" required maxlength="180">
+        <input type="text" id="titulo" required maxlength="180" style="text-transform:uppercase;">
+        <div class="hint">Sempre salvo em caixa alta, igual ao padrão do clube.</div>
       </div>
 
       <div class="field">
@@ -146,6 +150,10 @@
         <input type="file" id="foto" accept="image/png,image/jpeg,image/webp">
         <div class="hint" id="currentPhotoHint" style="display:none;"></div>
         <div class="hint">Se não enviar foto, o card da notícia usa uma imagem padrão do site.</div>
+        <div id="cropWrap" style="display:none; margin-top:0.9rem;">
+          <div class="crop-box"><img id="cropImg" alt=""></div>
+          <div class="hint">Arraste e ajuste o quadro pra escolher a parte da foto que vai aparecer no card da notícia.</div>
+        </div>
       </div>
 
       <button type="submit" class="publish-btn" id="publishBtn">Publicar notícia</button>
@@ -165,6 +173,7 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 <script>
 (() => {
   const REPO = 'thiagoiwanko/rotary-site';
@@ -194,6 +203,38 @@
   const publishBtn = $('publishBtn');
   const cancelEditBtn = $('cancelEditBtn');
   const newsListEl = $('newsList');
+
+  const fotoInput = $('foto');
+  const cropWrap = $('cropWrap');
+  const cropImg = $('cropImg');
+  let cropper = null;
+
+  function destroyCropper() {
+    if (cropper) { cropper.destroy(); cropper = null; }
+    cropWrap.style.display = 'none';
+    cropImg.removeAttribute('src');
+  }
+
+  fotoInput.addEventListener('change', () => {
+    const file = fotoInput.files[0];
+    if (!file) { destroyCropper(); return; }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      cropImg.src = e.target.result;
+      cropWrap.style.display = '';
+      if (cropper) cropper.destroy();
+      cropper = new Cropper(cropImg, { aspectRatio: 2, viewMode: 1, autoCropArea: 1, background: false });
+    };
+    reader.readAsDataURL(file);
+  });
+
+  function getCroppedBlob() {
+    return new Promise((resolve) => {
+      if (!cropper) { resolve(null); return; }
+      const canvas = cropper.getCroppedCanvas({ width: 900, height: 450, imageSmoothingQuality: 'high' });
+      canvas.toBlob((blob) => resolve(blob), 'image/jpeg', 0.9);
+    });
+  }
 
   let editingId = null;
   let currentImagemPath = '';
@@ -495,6 +536,7 @@
     $('data').value = item.data || '';
     $('resumo').value = item.resumo || '';
     $('foto').value = '';
+    destroyCropper();
     const hint = $('currentPhotoHint');
     if (currentImagemPath) {
       hint.style.display = '';
@@ -515,6 +557,7 @@
     $('data').value = '';
     $('resumo').value = '';
     $('foto').value = '';
+    destroyCropper();
     $('formTitle').textContent = '1. A notícia';
     publishBtn.textContent = 'Publicar notícia';
     $('currentPhotoHint').style.display = 'none';
@@ -555,7 +598,7 @@
     e.preventDefault();
     resetLog();
 
-    const titulo = $('titulo').value.trim();
+    const titulo = $('titulo').value.trim().toUpperCase();
     const fonte = 'clube';
     const data = $('data').value;
     const resumo = $('resumo').value.trim();
@@ -611,11 +654,11 @@
       let imagemPath = wasEditing ? currentImagemPath : '';
 
       if (fotoFile) {
-        log('Enviando foto...');
-        const ext = (fotoFile.name.split('.').pop() || 'jpg').toLowerCase();
+        log('Recortando e enviando foto...');
         const slug = slugify(titulo) || 'noticia';
-        imagemPath = 'assets/img/noticias/' + data + '-' + slug + '.' + ext;
-        const fotoB64 = await fileToBase64(fotoFile);
+        imagemPath = 'assets/img/noticias/' + data + '-' + slug + '.jpg';
+        const croppedBlob = await getCroppedBlob();
+        const fotoB64 = await fileToBase64(croppedBlob || fotoFile);
         const existing = await getFile(imagemPath, token);
         await putFile(imagemPath, token, fotoB64, existing ? existing.sha : null, 'update');
         log('Foto enviada: ' + imagemPath, 'ok');
