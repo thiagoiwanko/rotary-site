@@ -374,11 +374,12 @@ nav.main-nav a:hover::after { width: 100%; }
   right: 0;
   bottom: 0;
   width: 100%;
-  height: auto;
-  max-height: 22%;
+  height: clamp(70px, 12vh, 130px);
   object-fit: cover;
   object-position: bottom;
-  opacity: 0.14;
+  opacity: 0.12;
+  mask-image: linear-gradient(to bottom, transparent, black 40%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 40%);
   pointer-events: none;
 }
 @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
