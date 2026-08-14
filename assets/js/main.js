@@ -52,11 +52,13 @@ function fmtDate(iso, lang) {
   return `${parseInt(d)} ${meses[parseInt(m)-1]} ${y}`;
 }
 
-// Bump este valor sempre que editar algum arquivo em assets/data/ — o CDN do
+// Valor de cache-busting gerado a cada carregamento da página — o CDN do
 // GitHub Pages cacheia JSON por um tempo e o `cache:'no-store'` do fetch só
-// evita o cache do navegador, não o do CDN. Trocar o número força a busca
-// de uma URL "nova" e contorna o cache antigo.
-const DATA_V = '20260814c';
+// evita o cache do navegador, não o do CDN. Antes isso era um número fixo que
+// precisava ser trocado manualmente a cada edição de assets/data/ (e foi
+// esquecido, causando conteúdo desatualizado/duplicado aparecendo pro
+// usuário) — agora é sempre um valor novo, sem depender de lembrar de nada.
+const DATA_V = Date.now();
 
 async function loadJSON(path) {
   try {
@@ -148,9 +150,12 @@ function renderSiteData(siteData, lang) {
         ? m.nome.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase()
         : '?';
       const isPresidente = m.cargo === 'Presidente' || m.cargo === 'President';
+      const avatarContent = m.foto
+        ? `<img src="${m.foto}" alt="" loading="lazy">`
+        : initials;
       return `
       <div class="team-card stagger-item${isPresidente ? ' is-presidente' : ''}">
-        <div class="team-avatar">${initials}</div>
+        <div class="team-avatar${m.foto ? ' has-photo' : ''}">${avatarContent}</div>
         <h4>${m.nome}</h4>
         <div class="role">${m.cargo}</div>
       </div>`;

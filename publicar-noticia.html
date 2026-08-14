@@ -447,6 +447,33 @@
     return res.json();
   }
 
+  // Lê o JSON mais recente, aplica mutateFn(arr) e grava de volta. Se outra gravação
+  // aconteceu no meio do caminho (sha desatualizado, erro 409), busca o arquivo de
+  // novo com o sha atual e tenta outra vez — evita duplicar/perder notícias quando
+  // duas abas/edições colidem.
+  async function updateJsonFile(path, token, mutateFn, message) {
+    let lastErr;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      const file = await getFile(path, token);
+      if (!file) throw new Error(path + ' não encontrado no repositório.');
+      const currentText = b64DecodeUtf8(file.content.replace(/\n/g, ''));
+      let arr;
+      try { arr = JSON.parse(currentText); }
+      catch (e) { throw new Error(path + ' tem um JSON inválido no repositório — operação interrompida.'); }
+      const newArr = mutateFn(arr);
+      const newB64 = b64EncodeUtf8(JSON.stringify(newArr, null, 2) + '\n');
+      try {
+        await putFile(path, token, newB64, file.sha, message);
+        return;
+      } catch (err) {
+        lastErr = err;
+        if (String(err.message).indexOf('(409)') === -1 || attempt === 3) throw err;
+        await new Promise((r) => setTimeout(r, 400 * attempt));
+      }
+    }
+    throw lastErr;
+  }
+
   function fileToBase64(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -578,15 +605,14 @@
     try {
       for (const path of NEWS_FILES) {
         log('Removendo de ' + path + '...');
-        const file = await getFile(path, token);
-        if (!file) { log(path + ' não encontrado, pulando.', 'err'); continue; }
-        const arr = JSON.parse(b64DecodeUtf8(file.content.replace(/\n/g, '')));
-        const before = arr.length;
-        const filtered = arr.filter((n) => n.id !== id);
-        if (filtered.length === before) { log(path + ': item não encontrado (já removido?).', 'ok'); continue; }
-        const newB64 = b64EncodeUtf8(JSON.stringify(filtered, null, 2) + '\n');
-        await putFile(path, token, newB64, file.sha, 'update');
-        log(path + ' atualizado.', 'ok');
+        let found = true;
+        await updateJsonFile(path, token, (arr) => {
+          const before = arr.length;
+          const filtered = arr.filter((n) => n.id !== id);
+          found = filtered.length !== before;
+          return filtered;
+        }, 'update');
+        log(found ? path + ' atualizado.' : path + ': item não encontrado (já removido?).', 'ok');
       }
       log('Notícia excluída.', 'ok');
       if (editingId === id) cancelEdit();
@@ -600,6 +626,21 @@
 
   $('newsForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    // Trava o botão já aqui, de forma síncrona (antes de qualquer await) — fecha
+    // a janela de duplo-clique/duplo-submit que causava notícia duplicada ao editar.
+    if (publishBtn.disabled) return;
+    publishBtn.disabled = true;
+    publishBtn.textContent = editingId ? 'Salvando...' : 'Publicando...';
+
+    try {
+      await handleNewsSubmit();
+    } finally {
+      publishBtn.disabled = false;
+      publishBtn.textContent = editingId ? 'Salvar alterações' : 'Publicar notícia';
+    }
+  });
+
+  async function handleNewsSubmit() {
     resetLog();
 
     const titulo = $('titulo').value.trim().toUpperCase();
@@ -644,6 +685,21 @@
       if (!seguirComDataFutura) { log('Publicação cancelada — corrija a data e tente de novo.', 'err'); return; }
     }
 
+    // ---- Aviso de título repetido (só ao criar, não ao editar) ----
+    // Evita o caso de clicar em "Publicar" de novo achando que está editando e
+    // acabar criando uma segunda notícia com o mesmo título.
+    if (!editingId) {
+      const dup = lastLoadedArr.find((n) => n.titulo && n.titulo.trim().toUpperCase() === titulo);
+      if (dup) {
+        const seguirMesmoAssim = confirm(
+          'Já existe uma notícia publicada com esse título:\n"' + dup.titulo + '" (' + dup.data + ')\n\n' +
+          'Se a intenção era corrigir essa notícia, cancele aqui e clique em "Editar" nela na lista ao lado.\n\n' +
+          'Publicar mesmo assim como uma notícia nova?'
+        );
+        if (!seguirMesmoAssim) { log('Publicação cancelada.', 'err'); return; }
+      }
+    }
+
     log('Verificando gramática e ortografia...');
     try {
       const matches = await checkGrammar(titulo + '\n\n' + resumo);
@@ -682,8 +738,6 @@
     }
 
     const wasEditing = !!editingId;
-    publishBtn.disabled = true;
-    publishBtn.textContent = wasEditing ? 'Salvando...' : 'Publicando...';
 
     try {
       let imagemPath = wasEditing ? currentImagemPath : '';
@@ -721,23 +775,15 @@
         const entry = Object.assign({}, base, { titulo: entryTitulo, resumo: entryResumo });
 
         log('Atualizando ' + path + '...');
-        const file = await getFile(path, token);
-        if (!file) throw new Error(path + ' não encontrado no repositório.');
-        const currentText = b64DecodeUtf8(file.content.replace(/\n/g, ''));
-        let arr;
-        try { arr = JSON.parse(currentText); }
-        catch (e) { throw new Error(path + ' tem um JSON inválido no repositório — publicação interrompida.'); }
-
-        if (wasEditing) {
-          const idx = arr.findIndex((n) => n.id === id);
-          if (idx >= 0) arr[idx] = entry; else arr.push(entry);
-        } else {
-          arr.push(entry);
-        }
-
-        const newText = JSON.stringify(arr, null, 2) + '\n';
-        const newB64 = b64EncodeUtf8(newText);
-        await putFile(path, token, newB64, file.sha, 'update');
+        await updateJsonFile(path, token, (arr) => {
+          if (wasEditing) {
+            const idx = arr.findIndex((n) => n.id === id);
+            if (idx >= 0) arr[idx] = entry; else arr.push(entry);
+          } else {
+            arr.push(entry);
+          }
+          return arr;
+        }, 'update');
         log(path + ' atualizado.', 'ok');
       }
 
@@ -748,11 +794,8 @@
     } catch (err) {
       log('Erro: ' + err.message, 'err');
       log('Nada além do que já foi confirmado acima (linhas "ok") foi publicado. Você pode corrigir e tentar de novo.', 'err');
-    } finally {
-      publishBtn.disabled = false;
-      publishBtn.textContent = editingId ? 'Salvar alterações' : 'Publicar notícia';
     }
-  });
+  }
 
   loadNewsList();
 })();

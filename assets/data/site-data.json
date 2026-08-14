@@ -1,6 +1,6 @@
 {
   "_comment": "Edite este arquivo para atualizar as informações gerais do site. Não precisa mexer no HTML.",
-  "versao": "1.9.2",
+  "versao": "1.9.3",
   "clube": {
     "nome": "Rotary Club de Porto União – União da Vitória",
     "numero": "9015",
@@ -16,18 +16,43 @@
     "historia": "Aos 27 de setembro de 1949, num dos salões do Cruz Hotel, na Praça Hercílio Luz, em Porto União, foi instalado oficialmente o Rotary Club de Porto União – União da Vitória, sob a presidência do companheiro José Moura Júnior e com a presença do governador distrital Arnaldo Suarez Cuneo. Naquela sessão, 19 rotarianos tornaram-se sócios-fundadores do clube, que nascia com um propósito claro: unir as duas margens do Rio Iguaçu — Porto União (SC) e União da Vitória (PR) — em torno do ideal de servir. Na mesma noite foi eleita a primeira diretoria, tendo Euclides Taborda Ribas como primeiro presidente eleito. Mais de sete décadas depois, o compromisso segue o mesmo."
   },
   "fundadores": [
-    "Urbano Pereira Rey", "Francisco Bertagnolli Júnior", "Jacyr Rangel Tarlé",
-    "Norberto de Miranda Ramos", "Valdir Z. Zaular", "Ivan Germano S. Hildenbrand",
-    "José Moura Júnior", "Alcides Ferreira e Souza", "Eugênio Fischer",
-    "Carlos Evaldo Untersteil", "João Guilherme Russo", "Roberto Ciro Corrêa",
-    "Horácio Ricardo dos Santos", "Euclides Taborda Ribas", "Cid Cesar Ferreira",
-    "Anibal Khury", "Walter Suki", "Nataniel Hirsch", "José Ferreira Gringo"
+    "Urbano Pereira Rey",
+    "Francisco Bertagnolli Júnior",
+    "Jacyr Rangel Tarlé",
+    "Norberto de Miranda Ramos",
+    "Valdir Z. Zaular",
+    "Ivan Germano S. Hildenbrand",
+    "José Moura Júnior",
+    "Alcides Ferreira e Souza",
+    "Eugênio Fischer",
+    "Carlos Evaldo Untersteil",
+    "João Guilherme Russo",
+    "Roberto Ciro Corrêa",
+    "Horácio Ricardo dos Santos",
+    "Euclides Taborda Ribas",
+    "Cid Cesar Ferreira",
+    "Anibal Khury",
+    "Walter Suki",
+    "Nataniel Hirsch",
+    "José Ferreira Gringo"
   ],
   "primeiraDiretoria": [
-    { "cargo": "Presidente", "nome": "Euclides Taborda Ribas" },
-    { "cargo": "Vice-Presidente", "nome": "José Moura Júnior" },
-    { "cargo": "Secretário", "nome": "Ari Hilis" },
-    { "cargo": "Tesoureiro", "nome": "Jacyr Rangel Tarlé" }
+    {
+      "cargo": "Presidente",
+      "nome": "Euclides Taborda Ribas"
+    },
+    {
+      "cargo": "Vice-Presidente",
+      "nome": "José Moura Júnior"
+    },
+    {
+      "cargo": "Secretário",
+      "nome": "Ari Hilis"
+    },
+    {
+      "cargo": "Tesoureiro",
+      "nome": "Jacyr Rangel Tarlé"
+    }
   ],
   "contato": {
     "email": "rotary9015@gmail.com",
@@ -44,30 +69,110 @@
     "rotary_org": "https://www.rotary.org/pt"
   },
   "estatisticas": [
-    { "numero": "1949", "rotulo": "Ano de fundação" },
-    { "numero": "77+", "rotulo": "Anos de serviço" },
-    { "numero": "4740", "rotulo": "Distrito Rotary" },
-    { "numero": "2", "rotulo": "Cidades unidas" }
+    {
+      "numero": "1949",
+      "rotulo": "Ano de fundação"
+    },
+    {
+      "numero": "77+",
+      "rotulo": "Anos de serviço"
+    },
+    {
+      "numero": "4740",
+      "rotulo": "Distrito Rotary"
+    },
+    {
+      "numero": "2",
+      "rotulo": "Cidades unidas"
+    }
   ],
   "diretoria": [
-    { "cargo": "Presidente", "nome": "Dr. Stefan Grube Kolb", "foto": "" },
-    { "cargo": "Vice-Presidente", "nome": "Germano José Hobi Goncho", "foto": "" },
-    { "cargo": "Secretária", "nome": "Ione Carla Jorge da Costa", "foto": "" },
-    { "cargo": "Tesoureiro", "nome": "Gabriel Rengel Jackiw", "foto": "" },
-    { "cargo": "Protocolo", "nome": "Suely Masnik Martini", "foto": "" },
-    { "cargo": "Diretor de Projetos", "nome": "Carlos Humberto Topolski", "foto": "" },
-    { "cargo": "Diretor da Fundação Rotária", "nome": "Thiago Jorge Iwanko", "foto": "" },
-    { "cargo": "Diretor de Quadro Associativo (DQA)", "nome": "Adriana Cristina de Lima", "foto": "" },
-    { "cargo": "Diretora de Imagem Pública", "nome": "Dra. Daniela Bochnia Iwanko", "foto": "" },
-    { "cargo": "Past President", "nome": "Thiago Jorge Iwanko", "foto": "" }
+    {
+      "cargo": "Presidente",
+      "nome": "Dr. Stefan Grube Kolb",
+      "foto": "assets/img/diretoria/stefan-grube-kolb.jpg"
+    },
+    {
+      "cargo": "Vice-Presidente",
+      "nome": "Germano José Hobi Goncho",
+      "foto": ""
+    },
+    {
+      "cargo": "Secretária",
+      "nome": "Ione Carla Jorge da Costa",
+      "foto": "assets/img/diretoria/ione-carla-jorge-da-costa.jpg"
+    },
+    {
+      "cargo": "Tesoureiro",
+      "nome": "Gabriel Rengel Jackiw",
+      "foto": "assets/img/diretoria/gabriel-rengel-jackiw.jpg"
+    },
+    {
+      "cargo": "Protocolo",
+      "nome": "Suely Masnik Martini",
+      "foto": ""
+    },
+    {
+      "cargo": "Diretor de Projetos",
+      "nome": "Carlos Humberto Topolski",
+      "foto": ""
+    },
+    {
+      "cargo": "Diretor da Fundação Rotária",
+      "nome": "Thiago Jorge Iwanko",
+      "foto": ""
+    },
+    {
+      "cargo": "Diretor de Quadro Associativo (DQA)",
+      "nome": "Adriana Cristina de Lima",
+      "foto": ""
+    },
+    {
+      "cargo": "Diretora de Imagem Pública",
+      "nome": "Dra. Daniela Bochnia Iwanko",
+      "foto": ""
+    },
+    {
+      "cargo": "Past President",
+      "nome": "Thiago Jorge Iwanko",
+      "foto": ""
+    }
   ],
   "areasDeFoco": [
-    { "titulo": "Paz e prevenção de conflitos", "icone": "peace", "descricao": "O Rotary forma líderes e promove o diálogo para prevenir e resolver conflitos, apoiando a construção da paz em comunidades afetadas por tensões e violência." },
-    { "titulo": "Prevenção e tratamento de doenças", "icone": "health", "descricao": "Apoiamos ações e capacitações que reduzem as causas e os efeitos de doenças, fortalecendo profissionais de saúde locais e ampliando o acesso a cuidados médicos." },
-    { "titulo": "Água, saneamento e higiene", "icone": "water", "descricao": "Levamos água potável, saneamento básico e educação em higiene a comunidades que ainda não têm acesso a esses serviços essenciais." },
-    { "titulo": "Saúde materno-infantil", "icone": "mother", "descricao": "Conectamos mães e crianças pequenas a serviços de nutrição, saúde e saneamento, aumentando o bem-estar de famílias inteiras." },
-    { "titulo": "Alfabetização e educação", "icone": "education", "descricao": "Fortalecemos a capacidade das comunidades de garantir educação básica de qualidade, reduzir a desigualdade de gênero na escola e ampliar a alfabetização de adultos." },
-    { "titulo": "Desenvolvimento econômico e comunitário", "icone": "growth", "descricao": "Usamos a experiência profissional dos rotarianos para impulsionar o desenvolvimento econômico local, gerando trabalho decente, principalmente para jovens e mulheres." },
-    { "titulo": "Meio ambiente", "icone": "environment", "descricao": "Junto com lideranças locais, desenvolvemos projetos que protegem ecossistemas e buscam soluções inovadoras para os desafios ambientais do planeta." }
+    {
+      "titulo": "Paz e prevenção de conflitos",
+      "icone": "peace",
+      "descricao": "O Rotary forma líderes e promove o diálogo para prevenir e resolver conflitos, apoiando a construção da paz em comunidades afetadas por tensões e violência."
+    },
+    {
+      "titulo": "Prevenção e tratamento de doenças",
+      "icone": "health",
+      "descricao": "Apoiamos ações e capacitações que reduzem as causas e os efeitos de doenças, fortalecendo profissionais de saúde locais e ampliando o acesso a cuidados médicos."
+    },
+    {
+      "titulo": "Água, saneamento e higiene",
+      "icone": "water",
+      "descricao": "Levamos água potável, saneamento básico e educação em higiene a comunidades que ainda não têm acesso a esses serviços essenciais."
+    },
+    {
+      "titulo": "Saúde materno-infantil",
+      "icone": "mother",
+      "descricao": "Conectamos mães e crianças pequenas a serviços de nutrição, saúde e saneamento, aumentando o bem-estar de famílias inteiras."
+    },
+    {
+      "titulo": "Alfabetização e educação",
+      "icone": "education",
+      "descricao": "Fortalecemos a capacidade das comunidades de garantir educação básica de qualidade, reduzir a desigualdade de gênero na escola e ampliar a alfabetização de adultos."
+    },
+    {
+      "titulo": "Desenvolvimento econômico e comunitário",
+      "icone": "growth",
+      "descricao": "Usamos a experiência profissional dos rotarianos para impulsionar o desenvolvimento econômico local, gerando trabalho decente, principalmente para jovens e mulheres."
+    },
+    {
+      "titulo": "Meio ambiente",
+      "icone": "environment",
+      "descricao": "Junto com lideranças locais, desenvolvemos projetos que protegem ecossistemas e buscam soluções inovadoras para os desafios ambientais do planeta."
+    }
   ]
 }

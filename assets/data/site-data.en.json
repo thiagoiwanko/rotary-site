@@ -1,6 +1,6 @@
 {
   "_comment": "English version of site-data.json. Edit this file to update the English content of the site.",
-  "versao": "1.9.2",
+  "versao": "1.9.3",
   "clube": {
     "nome": "Rotary Club of Porto União – União da Vitória",
     "numero": "9015",
@@ -16,18 +16,43 @@
     "historia": "On September 27, 1949, in one of the halls of the Cruz Hotel, on Praça Hercílio Luz in Porto União, the Rotary Club of Porto União – União da Vitória was officially chartered, under the presidency of fellow Rotarian José Moura Júnior and with district governor Arnaldo Suarez Cuneo in attendance. At that session, 19 Rotarians became the club's founding members, born with a clear purpose: to unite both banks of the Iguaçu River — Porto União (SC) and União da Vitória (PR) — around the ideal of service. That same night, the first board was elected, with Euclides Taborda Ribas as the first elected president. More than seven decades later, that same commitment endures."
   },
   "fundadores": [
-    "Urbano Pereira Rey", "Francisco Bertagnolli Júnior", "Jacyr Rangel Tarlé",
-    "Norberto de Miranda Ramos", "Valdir Z. Zaular", "Ivan Germano S. Hildenbrand",
-    "José Moura Júnior", "Alcides Ferreira e Souza", "Eugênio Fischer",
-    "Carlos Evaldo Untersteil", "João Guilherme Russo", "Roberto Ciro Corrêa",
-    "Horácio Ricardo dos Santos", "Euclides Taborda Ribas", "Cid Cesar Ferreira",
-    "Anibal Khury", "Walter Suki", "Nataniel Hirsch", "José Ferreira Gringo"
+    "Urbano Pereira Rey",
+    "Francisco Bertagnolli Júnior",
+    "Jacyr Rangel Tarlé",
+    "Norberto de Miranda Ramos",
+    "Valdir Z. Zaular",
+    "Ivan Germano S. Hildenbrand",
+    "José Moura Júnior",
+    "Alcides Ferreira e Souza",
+    "Eugênio Fischer",
+    "Carlos Evaldo Untersteil",
+    "João Guilherme Russo",
+    "Roberto Ciro Corrêa",
+    "Horácio Ricardo dos Santos",
+    "Euclides Taborda Ribas",
+    "Cid Cesar Ferreira",
+    "Anibal Khury",
+    "Walter Suki",
+    "Nataniel Hirsch",
+    "José Ferreira Gringo"
   ],
   "primeiraDiretoria": [
-    { "cargo": "President", "nome": "Euclides Taborda Ribas" },
-    { "cargo": "Vice President", "nome": "José Moura Júnior" },
-    { "cargo": "Secretary", "nome": "Ari Hilis" },
-    { "cargo": "Treasurer", "nome": "Jacyr Rangel Tarlé" }
+    {
+      "cargo": "President",
+      "nome": "Euclides Taborda Ribas"
+    },
+    {
+      "cargo": "Vice President",
+      "nome": "José Moura Júnior"
+    },
+    {
+      "cargo": "Secretary",
+      "nome": "Ari Hilis"
+    },
+    {
+      "cargo": "Treasurer",
+      "nome": "Jacyr Rangel Tarlé"
+    }
   ],
   "contato": {
     "email": "rotary9015@gmail.com",
@@ -44,30 +69,110 @@
     "rotary_org": "https://www.rotary.org/en"
   },
   "estatisticas": [
-    { "numero": "1949", "rotulo": "Year founded" },
-    { "numero": "77+", "rotulo": "Years of service" },
-    { "numero": "4740", "rotulo": "Rotary District" },
-    { "numero": "2", "rotulo": "Cities united" }
+    {
+      "numero": "1949",
+      "rotulo": "Year founded"
+    },
+    {
+      "numero": "77+",
+      "rotulo": "Years of service"
+    },
+    {
+      "numero": "4740",
+      "rotulo": "Rotary District"
+    },
+    {
+      "numero": "2",
+      "rotulo": "Cities united"
+    }
   ],
   "diretoria": [
-    { "cargo": "President", "nome": "Dr. Stefan Grube Kolb", "foto": "" },
-    { "cargo": "Vice President", "nome": "Germano José Hobi Goncho", "foto": "" },
-    { "cargo": "Secretary", "nome": "Ione Carla Jorge da Costa", "foto": "" },
-    { "cargo": "Treasurer", "nome": "Gabriel Rengel Jackiw", "foto": "" },
-    { "cargo": "Protocol", "nome": "Suely Masnik Martini", "foto": "" },
-    { "cargo": "Projects Director", "nome": "Carlos Humberto Topolski", "foto": "" },
-    { "cargo": "Rotary Foundation Director", "nome": "Thiago Jorge Iwanko", "foto": "" },
-    { "cargo": "Membership Director (DQA)", "nome": "Adriana Cristina de Lima", "foto": "" },
-    { "cargo": "Public Image Director", "nome": "Dra. Daniela Bochnia Iwanko", "foto": "" },
-    { "cargo": "Past President", "nome": "Thiago Jorge Iwanko", "foto": "" }
+    {
+      "cargo": "President",
+      "nome": "Dr. Stefan Grube Kolb",
+      "foto": "assets/img/diretoria/stefan-grube-kolb.jpg"
+    },
+    {
+      "cargo": "Vice President",
+      "nome": "Germano José Hobi Goncho",
+      "foto": ""
+    },
+    {
+      "cargo": "Secretary",
+      "nome": "Ione Carla Jorge da Costa",
+      "foto": "assets/img/diretoria/ione-carla-jorge-da-costa.jpg"
+    },
+    {
+      "cargo": "Treasurer",
+      "nome": "Gabriel Rengel Jackiw",
+      "foto": "assets/img/diretoria/gabriel-rengel-jackiw.jpg"
+    },
+    {
+      "cargo": "Protocol",
+      "nome": "Suely Masnik Martini",
+      "foto": ""
+    },
+    {
+      "cargo": "Projects Director",
+      "nome": "Carlos Humberto Topolski",
+      "foto": ""
+    },
+    {
+      "cargo": "Rotary Foundation Director",
+      "nome": "Thiago Jorge Iwanko",
+      "foto": ""
+    },
+    {
+      "cargo": "Membership Director (DQA)",
+      "nome": "Adriana Cristina de Lima",
+      "foto": ""
+    },
+    {
+      "cargo": "Public Image Director",
+      "nome": "Dra. Daniela Bochnia Iwanko",
+      "foto": ""
+    },
+    {
+      "cargo": "Past President",
+      "nome": "Thiago Jorge Iwanko",
+      "foto": ""
+    }
   ],
   "areasDeFoco": [
-    { "titulo": "Peacebuilding and conflict prevention", "icone": "peace", "descricao": "Rotary trains leaders and promotes dialogue to prevent and resolve conflict, supporting peacebuilding in communities affected by tension and violence." },
-    { "titulo": "Disease prevention and treatment", "icone": "health", "descricao": "We support activities and training that reduce the causes and effects of disease, strengthening local health professionals and expanding access to care." },
-    { "titulo": "Water, sanitation and hygiene", "icone": "water", "descricao": "We bring clean water, sanitation, and hygiene education to communities that still lack access to these essential services." },
-    { "titulo": "Maternal and child health", "icone": "mother", "descricao": "We connect mothers and young children to nutrition, health care, and sanitation services, improving the well-being of entire families." },
-    { "titulo": "Basic education and literacy", "icone": "education", "descricao": "We strengthen communities' ability to provide quality basic education, reduce gender disparity in school, and expand adult literacy." },
-    { "titulo": "Community economic development", "icone": "growth", "descricao": "We put Rotarians' professional expertise to work driving local economic development, creating decent jobs — especially for young people and women." },
-    { "titulo": "Environment", "icone": "environment", "descricao": "Together with local leaders, we develop projects that protect ecosystems and pursue innovative solutions to the planet's environmental challenges." }
+    {
+      "titulo": "Peacebuilding and conflict prevention",
+      "icone": "peace",
+      "descricao": "Rotary trains leaders and promotes dialogue to prevent and resolve conflict, supporting peacebuilding in communities affected by tension and violence."
+    },
+    {
+      "titulo": "Disease prevention and treatment",
+      "icone": "health",
+      "descricao": "We support activities and training that reduce the causes and effects of disease, strengthening local health professionals and expanding access to care."
+    },
+    {
+      "titulo": "Water, sanitation and hygiene",
+      "icone": "water",
+      "descricao": "We bring clean water, sanitation, and hygiene education to communities that still lack access to these essential services."
+    },
+    {
+      "titulo": "Maternal and child health",
+      "icone": "mother",
+      "descricao": "We connect mothers and young children to nutrition, health care, and sanitation services, improving the well-being of entire families."
+    },
+    {
+      "titulo": "Basic education and literacy",
+      "icone": "education",
+      "descricao": "We strengthen communities' ability to provide quality basic education, reduce gender disparity in school, and expand adult literacy."
+    },
+    {
+      "titulo": "Community economic development",
+      "icone": "growth",
+      "descricao": "We put Rotarians' professional expertise to work driving local economic development, creating decent jobs — especially for young people and women."
+    },
+    {
+      "titulo": "Environment",
+      "icone": "environment",
+      "descricao": "Together with local leaders, we develop projects that protect ecosystems and pursue innovative solutions to the planet's environmental challenges."
+    }
   ]
 }

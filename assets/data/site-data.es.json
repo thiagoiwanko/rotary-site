@@ -1,6 +1,6 @@
 {
   "_comment": "Versión en español (Argentina) de site-data.json. Editá este archivo para actualizar el contenido en español.",
-  "versao": "1.9.2",
+  "versao": "1.9.3",
   "clube": {
     "nome": "Rotary Club de Porto União – União da Vitória",
     "numero": "9015",
@@ -16,18 +16,43 @@
     "historia": "El 27 de septiembre de 1949, en uno de los salones del Cruz Hotel, en la Praça Hercílio Luz, en Porto União, quedó oficialmente fundado el Rotary Club de Porto União – União da Vitória, bajo la presidencia del compañero José Moura Júnior y con la presencia del gobernador de distrito Arnaldo Suarez Cuneo. En esa sesión, 19 rotarios se convirtieron en socios fundadores del club, que nacía con un propósito claro: unir ambas márgenes del Río Iguazú — Porto União (SC) y União da Vitória (PR) — en torno al ideal de servir. Esa misma noche se eligió la primera comisión directiva, con Euclides Taborda Ribas como primer presidente electo. Más de siete décadas después, el compromiso sigue siendo el mismo."
   },
   "fundadores": [
-    "Urbano Pereira Rey", "Francisco Bertagnolli Júnior", "Jacyr Rangel Tarlé",
-    "Norberto de Miranda Ramos", "Valdir Z. Zaular", "Ivan Germano S. Hildenbrand",
-    "José Moura Júnior", "Alcides Ferreira e Souza", "Eugênio Fischer",
-    "Carlos Evaldo Untersteil", "João Guilherme Russo", "Roberto Ciro Corrêa",
-    "Horácio Ricardo dos Santos", "Euclides Taborda Ribas", "Cid Cesar Ferreira",
-    "Anibal Khury", "Walter Suki", "Nataniel Hirsch", "José Ferreira Gringo"
+    "Urbano Pereira Rey",
+    "Francisco Bertagnolli Júnior",
+    "Jacyr Rangel Tarlé",
+    "Norberto de Miranda Ramos",
+    "Valdir Z. Zaular",
+    "Ivan Germano S. Hildenbrand",
+    "José Moura Júnior",
+    "Alcides Ferreira e Souza",
+    "Eugênio Fischer",
+    "Carlos Evaldo Untersteil",
+    "João Guilherme Russo",
+    "Roberto Ciro Corrêa",
+    "Horácio Ricardo dos Santos",
+    "Euclides Taborda Ribas",
+    "Cid Cesar Ferreira",
+    "Anibal Khury",
+    "Walter Suki",
+    "Nataniel Hirsch",
+    "José Ferreira Gringo"
   ],
   "primeiraDiretoria": [
-    { "cargo": "Presidente", "nome": "Euclides Taborda Ribas" },
-    { "cargo": "Vicepresidente", "nome": "José Moura Júnior" },
-    { "cargo": "Secretario", "nome": "Ari Hilis" },
-    { "cargo": "Tesorero", "nome": "Jacyr Rangel Tarlé" }
+    {
+      "cargo": "Presidente",
+      "nome": "Euclides Taborda Ribas"
+    },
+    {
+      "cargo": "Vicepresidente",
+      "nome": "José Moura Júnior"
+    },
+    {
+      "cargo": "Secretario",
+      "nome": "Ari Hilis"
+    },
+    {
+      "cargo": "Tesorero",
+      "nome": "Jacyr Rangel Tarlé"
+    }
   ],
   "contato": {
     "email": "rotary9015@gmail.com",
@@ -44,30 +69,110 @@
     "rotary_org": "https://www.rotary.org/es"
   },
   "estatisticas": [
-    { "numero": "1949", "rotulo": "Año de fundación" },
-    { "numero": "77+", "rotulo": "Años de servicio" },
-    { "numero": "4740", "rotulo": "Distrito Rotario" },
-    { "numero": "2", "rotulo": "Ciudades unidas" }
+    {
+      "numero": "1949",
+      "rotulo": "Año de fundación"
+    },
+    {
+      "numero": "77+",
+      "rotulo": "Años de servicio"
+    },
+    {
+      "numero": "4740",
+      "rotulo": "Distrito Rotario"
+    },
+    {
+      "numero": "2",
+      "rotulo": "Ciudades unidas"
+    }
   ],
   "diretoria": [
-    { "cargo": "Presidente", "nome": "Dr. Stefan Grube Kolb", "foto": "" },
-    { "cargo": "Vicepresidente", "nome": "Germano José Hobi Goncho", "foto": "" },
-    { "cargo": "Secretaria", "nome": "Ione Carla Jorge da Costa", "foto": "" },
-    { "cargo": "Tesorero", "nome": "Gabriel Rengel Jackiw", "foto": "" },
-    { "cargo": "Protocolo", "nome": "Suely Masnik Martini", "foto": "" },
-    { "cargo": "Director de Proyectos", "nome": "Carlos Humberto Topolski", "foto": "" },
-    { "cargo": "Director de la Fundación Rotaria", "nome": "Thiago Jorge Iwanko", "foto": "" },
-    { "cargo": "Director de Desarrollo de Membresía (DQA)", "nome": "Adriana Cristina de Lima", "foto": "" },
-    { "cargo": "Directora de Imagen Pública", "nome": "Dra. Daniela Bochnia Iwanko", "foto": "" },
-    { "cargo": "Past President", "nome": "Thiago Jorge Iwanko", "foto": "" }
+    {
+      "cargo": "Presidente",
+      "nome": "Dr. Stefan Grube Kolb",
+      "foto": "assets/img/diretoria/stefan-grube-kolb.jpg"
+    },
+    {
+      "cargo": "Vicepresidente",
+      "nome": "Germano José Hobi Goncho",
+      "foto": ""
+    },
+    {
+      "cargo": "Secretaria",
+      "nome": "Ione Carla Jorge da Costa",
+      "foto": "assets/img/diretoria/ione-carla-jorge-da-costa.jpg"
+    },
+    {
+      "cargo": "Tesorero",
+      "nome": "Gabriel Rengel Jackiw",
+      "foto": "assets/img/diretoria/gabriel-rengel-jackiw.jpg"
+    },
+    {
+      "cargo": "Protocolo",
+      "nome": "Suely Masnik Martini",
+      "foto": ""
+    },
+    {
+      "cargo": "Director de Proyectos",
+      "nome": "Carlos Humberto Topolski",
+      "foto": ""
+    },
+    {
+      "cargo": "Director de la Fundación Rotaria",
+      "nome": "Thiago Jorge Iwanko",
+      "foto": ""
+    },
+    {
+      "cargo": "Director de Desarrollo de Membresía (DQA)",
+      "nome": "Adriana Cristina de Lima",
+      "foto": ""
+    },
+    {
+      "cargo": "Directora de Imagen Pública",
+      "nome": "Dra. Daniela Bochnia Iwanko",
+      "foto": ""
+    },
+    {
+      "cargo": "Past President",
+      "nome": "Thiago Jorge Iwanko",
+      "foto": ""
+    }
   ],
   "areasDeFoco": [
-    { "titulo": "Construcción de la paz y prevención de conflictos", "icone": "peace", "descricao": "Rotary forma líderes y promueve el diálogo para prevenir y resolver conflictos, apoyando la construcción de paz en comunidades afectadas por tensiones y violencia." },
-    { "titulo": "Prevención y tratamiento de enfermedades", "icone": "health", "descricao": "Apoyamos actividades y capacitaciones que reducen las causas y los efectos de las enfermedades, fortaleciendo a los profesionales de la salud locales y ampliando el acceso a la atención médica." },
-    { "titulo": "Agua, saneamiento e higiene", "icone": "water", "descricao": "Llevamos agua potable, saneamiento e higiene a comunidades que todavía no tienen acceso a estos servicios esenciales." },
-    { "titulo": "Salud materna e infantil", "icone": "mother", "descricao": "Conectamos a madres y niños pequeños con servicios de nutrición, salud y saneamiento, mejorando el bienestar de familias enteras." },
-    { "titulo": "Alfabetización y educación básica", "icone": "education", "descricao": "Fortalecemos la capacidad de las comunidades para garantizar una educación básica de calidad, reducir la desigualdad de género en la escuela y ampliar la alfabetización de adultos." },
-    { "titulo": "Desarrollo económico y comunitario", "icone": "growth", "descricao": "Ponemos la experiencia profesional de los rotarios al servicio del desarrollo económico local, generando trabajo decente, especialmente para jóvenes y mujeres." },
-    { "titulo": "Medio ambiente", "icone": "environment", "descricao": "Junto a líderes locales, desarrollamos proyectos que protegen los ecosistemas y buscan soluciones innovadoras para los desafíos ambientales del planeta." }
+    {
+      "titulo": "Construcción de la paz y prevención de conflictos",
+      "icone": "peace",
+      "descricao": "Rotary forma líderes y promueve el diálogo para prevenir y resolver conflictos, apoyando la construcción de paz en comunidades afectadas por tensiones y violencia."
+    },
+    {
+      "titulo": "Prevención y tratamiento de enfermedades",
+      "icone": "health",
+      "descricao": "Apoyamos actividades y capacitaciones que reducen las causas y los efectos de las enfermedades, fortaleciendo a los profesionales de la salud locales y ampliando el acceso a la atención médica."
+    },
+    {
+      "titulo": "Agua, saneamiento e higiene",
+      "icone": "water",
+      "descricao": "Llevamos agua potable, saneamiento e higiene a comunidades que todavía no tienen acceso a estos servicios esenciales."
+    },
+    {
+      "titulo": "Salud materna e infantil",
+      "icone": "mother",
+      "descricao": "Conectamos a madres y niños pequeños con servicios de nutrición, salud y saneamiento, mejorando el bienestar de familias enteras."
+    },
+    {
+      "titulo": "Alfabetización y educación básica",
+      "icone": "education",
+      "descricao": "Fortalecemos la capacidad de las comunidades para garantizar una educación básica de calidad, reducir la desigualdad de género en la escuela y ampliar la alfabetización de adultos."
+    },
+    {
+      "titulo": "Desarrollo económico y comunitario",
+      "icone": "growth",
+      "descricao": "Ponemos la experiencia profesional de los rotarios al servicio del desarrollo económico local, generando trabajo decente, especialmente para jóvenes y mujeres."
+    },
+    {
+      "titulo": "Medio ambiente",
+      "icone": "environment",
+      "descricao": "Junto a líderes locales, desarrollamos proyectos que protegen los ecosistemas y buscan soluciones innovadoras para los desafíos ambientales del planeta."
+    }
   ]
 }
