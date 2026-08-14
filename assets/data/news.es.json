@@ -59,11 +59,20 @@
   {
     "id": "nmst967ycuqsr",
     "fonte": "clube",
-    "data": "2026-12-23",
+    "data": "2025-12-23",
     "imagem": "assets/img/noticias/2026-12-23-natal-que-transforma.jpeg",
     "url": "https://www.rcpu.com.br/#noticias",
     "titulo": "NAVIDAD QUE TRANSFORMA",
     "resumo": "En diciembre, entregamos cajas de chocolates al CMEI São Braz, llevando alegría a 108 niños y reforzando el verdadero espíritu de la Navidad: solidaridad, cuidado, unidad y compromiso de servir a los demás."
+  },
+  {
+    "id": "nmst9em7mwjio",
+    "fonte": "clube",
+    "data": "2025-11-08",
+    "imagem": "assets/img/noticias/2025-11-08-pizza-solidaria-em-prol-da-campanha-de-vacinacao-contra-a-po.jpeg",
+    "url": "https://www.rcpu.com.br/#noticias",
+    "titulo": "PIZZA SOLIDARIA A FAVOR DE LA CAMPAÑA DE VACUNACIÓN CONTRA LA POLIO",
+    "resumo": "¡No es solo una pizza, es un gesto que salva!\n\nEl Club Rotario de Porto União – União da Vitória realizó una acción especial con la venta de pizzas para recaudar fondos destinados a la campaña de erradicación de la poliomielitis. Una iniciativa que unió compañerismo, solidaridad y el compromiso de Rotary de contribuir a un mundo libre de polio."
   },
   {
     "id": "nmst9gc7l4fcb",
