@@ -305,7 +305,7 @@ function renderNews(lang) {
   newsGrid.innerHTML = items.map(n => `
     <article class="news-card">
       <div class="news-thumb">
-        ${safeAssetPath(n.imagem) ? `<img src="${escapeHTML(safeAssetPath(n.imagem))}" alt="" loading="lazy" width="900" height="450" style="width:100%;height:100%;object-fit:cover;">` :
+        ${safeAssetPath(n.miniatura || n.imagem) ? `<img src="${escapeHTML(safeAssetPath(n.miniatura || n.imagem))}"${safeAssetPath(n.miniatura) && safeAssetPath(n.imagem) ? ` srcset="${escapeHTML(safeAssetPath(n.miniatura))} 600w, ${escapeHTML(safeAssetPath(n.imagem))} 1200w" sizes="(max-width: 760px) calc(100vw - 2rem), 33vw"` : ''} alt="" loading="lazy" width="600" height="300" style="width:100%;height:100%;object-fit:cover;">` :
         `<svg viewBox="0 0 24 24" stroke="white" stroke-width="1.6" fill="none"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 5"/><circle cx="8" cy="9" r="1.3" fill="white" stroke="none"/></svg>`}
       </div>
       <div class="news-body">
