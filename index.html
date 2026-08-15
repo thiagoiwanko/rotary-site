@@ -584,15 +584,26 @@
     <div class="vw-plugin-top-wrapper"></div>
   </div>
 </div>
-<script src="https://vlibras.gov.br/app/vlibras-plugin.js" defer></script>
+<script id="vlibras-plugin" src="https://vlibras.gov.br/app/vlibras-plugin.js" defer></script>
 <script>
-  // O atributo "defer" nao funciona em script inline: sem esta espera, o codigo
-  // rodaria antes do plugin carregar e window.VLibras estaria undefined.
-  window.addEventListener('load', function () {
-    if (window.VLibras && window.VLibras.Widget) {
-      new window.VLibras.Widget('https://vlibras.gov.br/app');
+  // O VLibras.Widget so se inicializa dentro de window.onload (ele sobrescreve
+  // window.onload no construtor). Portanto precisa ser instanciado ANTES do
+  // evento load da janela - escutar 'load' da janela chega tarde demais e o
+  // widget nunca aparece. O evento 'load' do proprio <script defer> dispara
+  // depois do plugin executar e antes do load da janela: e o momento certo.
+  (function () {
+    var s = document.getElementById('vlibras-plugin');
+    function iniciar() {
+      if (window.VLibras && window.VLibras.Widget) {
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+      }
     }
-  });
+    if (window.VLibras && window.VLibras.Widget) {
+      iniciar();
+    } else {
+      s.addEventListener('load', iniciar);
+    }
+  })();
 </script>
 
 <script src="assets/js/main.js?v=1.9.10"></script>
