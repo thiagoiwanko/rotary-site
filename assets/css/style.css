@@ -577,7 +577,7 @@ nav.main-nav a:hover::after { width: 100%; }
   margin: 0 auto 0.9rem;
 }
 .focus-icon img { width: 100%; height: 100%; object-fit: contain; }
-.focus-card h4 { font-size: 0.9rem; font-weight: 700; color: var(--icon-color); line-height: 1.3; }
+.focus-card h3 { font-size: 0.9rem; font-weight: 700; color: var(--icon-color); line-height: 1.3; }
 @media (prefers-reduced-motion: reduce) {
   .focus-carousel { animation: none; }
 }
@@ -691,7 +691,7 @@ nav.main-nav a:hover::after { width: 100%; }
 .news-thumb svg { width: 34px; height: 34px; opacity: 0.55; position: relative; }
 .news-body { padding: 1.4rem 1.5rem 1.6rem; display: flex; flex-direction: column; flex: 1; }
 .news-date { font-size: 0.76rem; color: var(--pewter); font-weight: 600; margin-bottom: 0.5rem; letter-spacing: 0.03em; }
-.news-body h4 { font-size: 1.05rem; margin-bottom: 0.6rem; line-height: 1.35; }
+.news-body h3 { font-size: 1.05rem; margin-bottom: 0.6rem; line-height: 1.35; }
 .news-body p {
   font-size: 0.9rem; color: var(--pewter); flex: 1; margin-bottom: 1rem;
   display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
@@ -785,7 +785,7 @@ behold-widget { display: block; }
 }
 .team-avatar.has-photo { background: var(--cloud); }
 .team-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.team-card h4 { font-size: 1rem; margin-bottom: 0.3rem; }
+.team-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
 .team-card .role { font-size: 0.82rem; color: var(--rotary-azure); font-weight: 600; }
 
 /* Diretoria: card do presidente em destaque (fundo dourado), demais em azul (inverso) */
@@ -793,7 +793,7 @@ behold-widget { display: block; }
   background: var(--grad-sky);
   border-color: transparent;
 }
-.team-card:not(.is-presidente) h4 { color: var(--white); }
+.team-card:not(.is-presidente) h3 { color: var(--white); }
 .team-card:not(.is-presidente) .role { color: rgba(255,255,255,0.85); }
 
 .team-card.is-presidente {
@@ -803,7 +803,7 @@ behold-widget { display: block; }
   transform: translateY(-4px) scale(1.03);
 }
 .team-card.is-presidente:hover { transform: translateY(-8px) scale(1.03); }
-.team-card.is-presidente h4 { color: var(--rotary-blue-dark); }
+.team-card.is-presidente h3 { color: var(--rotary-blue-dark); }
 .team-card.is-presidente .role { color: var(--rotary-blue-dark); }
 .team-card.is-presidente .team-avatar { background: var(--rotary-blue-dark); color: var(--white); }
 
@@ -906,7 +906,7 @@ footer.site-footer { background: var(--ink); color: rgba(255,255,255,0.7); paddi
 .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
 .footer-brand img.logo-on-dark { height: 108px; width: auto; margin-bottom: 1.3rem; }
 .footer-brand p { font-size: 0.88rem; max-width: 320px; color: rgba(255,255,255,0.55); }
-footer h5 { color: var(--white); font-family: var(--font-display); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.1rem; }
+footer h3 { color: var(--white); font-family: var(--font-display); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.1rem; }
 footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
 footer ul a { font-size: 0.9rem; color: rgba(255,255,255,0.6); transition: color var(--transition); }
 footer ul a:hover { color: var(--rotary-gold); }
@@ -945,7 +945,7 @@ footer ul a:hover { color: var(--rotary-gold); }
   box-shadow: var(--shadow-sm);
   padding: clamp(1.6rem, 3vw, 2.4rem);
 }
-.history-card h4 { font-size: 1rem; color: var(--rotary-blue-dark); margin-bottom: 1rem; }
+.history-card h3 { font-size: 1rem; color: var(--rotary-blue-dark); margin-bottom: 1rem; }
 .history-board { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
 .history-board li { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.9rem; padding-bottom: 0.7rem; border-bottom: 1px dashed #e4e6ea; }
 .history-board li:last-child { border-bottom: none; padding-bottom: 0; }
@@ -1072,7 +1072,7 @@ body.no-scroll { overflow: hidden; }
    HISTÓRIA: ATA DE FUNDAÇÃO (galeria + lightbox)
    =================================================================== */
 .history-doc { margin-top: 2.4rem; }
-.history-doc h4 { font-size: 1.05rem; color: var(--rotary-blue-dark); margin-bottom: 0.4rem; }
+.history-doc h3 { font-size: 1.05rem; color: var(--rotary-blue-dark); margin-bottom: 0.4rem; }
 .history-doc-lede { font-size: 0.9rem; color: var(--pewter); margin-bottom: 1.2rem; }
 .history-doc-gallery {
   display: grid;

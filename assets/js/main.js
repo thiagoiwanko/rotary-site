@@ -158,8 +158,8 @@ function renderSiteData(siteData, lang) {
     currentFocusAreas = siteData.areasDeFoco;
     const cardHTML = (a, i) => `
       <button type="button" class="focus-card" data-icone="${a.icone}" data-focus-index="${i}">
-        <div class="focus-icon"><img src="assets/img/areas-foco/${escapeHTML(a.icone)}.png" alt="" loading="lazy"></div>
-        <h4>${escapeHTML(a.titulo)}</h4>
+        <div class="focus-icon"><img src="assets/img/areas-foco/${escapeHTML(a.icone)}.png" alt="" loading="lazy" width="100" height="100"></div>
+        <h3>${escapeHTML(a.titulo)}</h3>
       </button>`;
     const once = siteData.areasDeFoco.map(cardHTML).join('');
     focusCarousel.innerHTML = once + once; // duplicado: a animação translada -50% e reinicia sem corte
@@ -173,12 +173,12 @@ function renderSiteData(siteData, lang) {
         : '?';
       const isPresidente = m.cargo === 'Presidente' || m.cargo === 'President';
       const avatarContent = m.foto
-        ? `<img src="${escapeHTML(safeAssetPath(m.foto))}" alt="" loading="lazy">`
+        ? `<img src="${escapeHTML(safeAssetPath(m.foto))}" alt="" loading="lazy" width="400" height="400">`
         : escapeHTML(initials);
       return `
       <div class="team-card stagger-item${isPresidente ? ' is-presidente' : ''}">
         <div class="team-avatar${m.foto ? ' has-photo' : ''}">${avatarContent}</div>
-        <h4>${escapeHTML(m.nome)}</h4>
+        <h3>${escapeHTML(m.nome)}</h3>
         <div class="role">${escapeHTML(m.cargo)}</div>
       </div>`;
     }).join('');
@@ -310,7 +310,7 @@ function renderNews(lang) {
       </div>
       <div class="news-body">
         <div class="news-date">${fmtDate(n.data, lang)}</div>
-        <h4>${escapeHTML(n.titulo)}</h4>
+        <h3>${escapeHTML(n.titulo)}</h3>
         <p>${escapeHTML(n.resumo || '')}</p>
         <button type="button" class="news-resumo-toggle" data-news-id="${escapeHTML(n.id || '')}" style="display:none;">${escapeHTML(t('noticias.verRestante', lang))}</button>
         ${hasExternalUrl(n) ? `
@@ -322,14 +322,19 @@ function renderNews(lang) {
 
   // Só mostra "Ver restante" nos cards em que o texto realmente foi cortado
   // pelo line-clamp (5 linhas) — mede depois de inserido no DOM.
+  // Duas passadas para evitar layout thrashing: primeiro TODAS as leituras de
+  // layout, depois TODAS as escritas. Ler e escrever no mesmo laco obriga o
+  // navegador a recalcular o layout a cada card (reflow forcado).
   requestAnimationFrame(() => {
+    const cortados = [];
     newsGrid.querySelectorAll('.news-card').forEach(card => {
       const p = card.querySelector('.news-body p');
       const btn = card.querySelector('.news-resumo-toggle');
       if (p && btn && p.scrollHeight > p.clientHeight + 1) {
-        btn.style.display = '';
+        cortados.push(btn);
       }
     });
+    cortados.forEach(btn => { btn.style.display = ''; });
   });
 }
 
