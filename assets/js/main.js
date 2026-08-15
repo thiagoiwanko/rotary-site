@@ -61,7 +61,7 @@ function escapeHTML(value) {
 
 function safeAssetPath(value) {
   const path = String(value ?? '').trim();
-  return !path.includes('..') && /^assets\/(?:img|data)\/[a-zA-Z0-9._\/-]+$/.test(path) ? path : '';
+  return !path.includes('..') && /^assets\/(?:img|data)\/[\p{L}\p{N}._\/-]+$/u.test(path) ? path : '';
 }
 
 function fmtDate(iso, lang) {
