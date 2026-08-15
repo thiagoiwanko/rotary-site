@@ -369,20 +369,6 @@ nav.main-nav a:hover::after { width: 100%; }
   opacity: 0.16;
   animation: spin 90s linear infinite;
 }
-.hero-skyline {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: clamp(70px, 12vh, 130px);
-  object-fit: cover;
-  object-position: bottom;
-  opacity: 0.12;
-  mask-image: linear-gradient(to bottom, transparent, black 40%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 40%);
-  pointer-events: none;
-}
 @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
 
 .hero .container { position: relative; z-index: 2; }
@@ -1002,7 +988,6 @@ footer ul a:hover { color: var(--rotary-gold); }
   .topbar-items span:nth-child(n+3) { display: none; }
   .hero-stats { grid-template-columns: repeat(2, auto); row-gap: 1.6rem; }
   .hero-wheel { opacity: 0.1; }
-  .hero-skyline { opacity: 0.1; max-height: 16%; }
   .form-row { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
 }
