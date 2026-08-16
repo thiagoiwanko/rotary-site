@@ -2,7 +2,7 @@
    Rotary Club Porto União – União da Vitória
    Site estático data-driven: lê os JSON em assets/data/ e monta a página.
    Para atualizar conteúdo, edite os arquivos JSON — não é preciso mexer aqui.
-   Idioma: pt (padrão) / en / es — ver LANG_KEY / assets/data/i18n.json.
+   Idioma: pt (padrão) / en / es — ver LANG_KEY / assets/data/i18n.{pt,en,es}.json.
    =================================================================== */
 
 const ICONS = {
@@ -50,7 +50,7 @@ function t(key, lang) {
 }
 
 // Cada idioma vive em seu proprio arquivo (i18n.pt.json / .en / .es). Antes os
-// tres vinham juntos em i18n.json (21 KB) e 2/3 do download era descartado.
+// tres vinham juntos num unico arquivo (21 KB) e 2/3 do download era descartado.
 // Carrega sob demanda e guarda em cache para a troca de idioma nao repetir.
 const i18nCache = {};
 async function carregarI18n(lang) {
