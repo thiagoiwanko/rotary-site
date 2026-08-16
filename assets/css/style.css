@@ -340,7 +340,8 @@ nav.main-nav a:hover::after { width: 100%; }
   background: var(--grad-hero);
   overflow: hidden;
   padding-top: clamp(3rem, 8vh, 6rem);
-  padding-bottom: 4rem;
+  /* precisa acomodar a altura do skyline, senao os numeros ficam por tras dele */
+  padding-bottom: clamp(150px, 28vh, 320px);
 }
 .hero::before, .hero::after {
   content: '';
@@ -474,8 +475,9 @@ nav.main-nav a:hover::after { width: 100%; }
 }
 
 .scroll-cue {
-  margin: 0.4rem auto 0;
-  padding-bottom: 0.6rem;
+  /* margin criaria um vao onde apareceria o branco puro do body */
+  margin: 0;
+  padding: 0.5rem 0 0.9rem;
   background: var(--cloud);
   width: 100%;
   color: var(--pewter);
