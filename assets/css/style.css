@@ -998,6 +998,10 @@ footer ul a:hover { color: var(--rotary-gold); }
   .topbar-items span:nth-child(n+3) { display: none; }
   .hero-stats { grid-template-columns: repeat(2, auto); row-gap: 1.6rem; }
   .hero-wheel { opacity: 0.1; }
+  /* Em tela estreita as estatisticas passam de 1 para 2 linhas e o hero fica
+     mais alto: o skyline precisa de folga extra para nao cobrir a 2a linha. */
+  .hero { padding-bottom: calc(clamp(110px, 24vh, 270px) + 2.2rem); }
+  .hero-skyline { height: clamp(90px, 20vh, 200px); }
   .form-row { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
 }
