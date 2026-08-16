@@ -341,7 +341,7 @@ nav.main-nav a:hover::after { width: 100%; }
   overflow: hidden;
   padding-top: clamp(3rem, 8vh, 6rem);
   /* precisa acomodar a altura do skyline, senao os numeros ficam por tras dele */
-  padding-bottom: clamp(150px, 28vh, 320px);
+  padding-bottom: clamp(200px, 36vh, 400px);
 }
 .hero::before, .hero::after {
   content: '';
