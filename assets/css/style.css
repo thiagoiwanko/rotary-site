@@ -479,24 +479,6 @@ nav.main-nav a:hover::after { width: 100%; }
   object-position: bottom center;
 }
 
-.scroll-cue {
-  /* margin criaria um vao onde apareceria o branco puro do body */
-  margin: 0;
-  padding: 0.5rem 0 0.9rem;
-  background: var(--cloud);
-  width: 100%;
-  color: var(--pewter);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-family: var(--font-display);
-}
-.scroll-cue .line { width: 1px; height: 34px; background: linear-gradient(var(--pewter), transparent); animation: pulse-line 2s ease-in-out infinite; }
-@keyframes pulse-line { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
 
 /* ===================================================================
    REVEAL ANIMATION
