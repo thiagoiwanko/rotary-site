@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,800&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="assets/css/style.css?v=1.9.40-sem-libras">
+<link rel="stylesheet" href="assets/css/style.css?v=1.9.41">
 
 <!-- Dados estruturados (Schema.org) para o Google -->
 <script type="application/ld+json">
@@ -577,38 +577,59 @@
 <a href="#" class="whatsapp-float" data-whatsapp-link target="_blank" rel="noopener" data-i18n-aria="whatsapp.aria" aria-label="Fale conosco no WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.44 1.32 4.94L2.05 22l5.29-1.38a9.9 9.9 0 0 0 4.7 1.2h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.03c-.24.68-1.4 1.3-1.93 1.35-.5.05-1 .24-3.34-.7-2.82-1.13-4.63-4.02-4.77-4.2-.14-.19-1.14-1.52-1.14-2.9 0-1.37.72-2.05.97-2.33.26-.28.56-.35.75-.35h.53c.17 0 .4-.03.62.47.24.55.8 1.9.87 2.04.07.14.12.3.02.49-.1.19-.15.3-.3.47-.14.16-.3.36-.43.49-.14.14-.29.29-.13.57.17.28.75 1.24 1.62 2.01 1.12.99 2.06 1.3 2.34 1.45.28.14.44.12.6-.07.17-.19.72-.84.91-1.13.19-.28.38-.24.63-.14.26.09 1.63.77 1.91.91.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>
 </a>
-<!-- TESTE DE DESEMPENHO: VLibras desativado temporariamente.
-     Para reativar, remova este comentario de abertura e o de fechamento.
-<!- - ============ VLIBRAS (Tradutor de Libras do Governo Federal) ============ - ->
+<!-- ============ VLIBRAS (Tradutor de Libras do Governo Federal) ============
+     O plugin do governo custa ~19 pontos de desempenho quando carregado sempre:
+     nao pelo peso (27 KB), mas por bloquear a thread principal enquanto inicia.
+     Aqui ele so e baixado quando alguem realmente pede a traducao em Libras. -->
 <div vw class="enabled">
   <div vw-access-button class="active"></div>
   <div vw-plugin-wrapper>
     <div class="vw-plugin-top-wrapper"></div>
   </div>
 </div>
-<script id="vlibras-plugin" src="https://vlibras.gov.br/app/vlibras-plugin.js" defer></script>
+<button type="button" id="libras-abrir" aria-label="Ativar tradução em Libras (VLibras)" title="Tradução em Libras">
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M7 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M10 10.5V4a1.5 1.5 0 0 1 3 0v6.5"/>
+    <path d="M13 10.5V6a1.5 1.5 0 0 1 3 0v6"/><path d="M16 9.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7h-1a7 7 0 0 1-7-7v-1.5a1.5 1.5 0 0 1 3 0V14"/>
+  </svg>
+</button>
 <script>
-  // O VLibras.Widget so se inicializa dentro de window.onload (ele sobrescreve
-  // window.onload no construtor). Portanto precisa ser instanciado ANTES do
-  // evento load da janela - escutar 'load' da janela chega tarde demais e o
-  // widget nunca aparece. O evento 'load' do proprio <script defer> dispara
-  // depois do plugin executar e antes do load da janela: e o momento certo.
   (function () {
-    var s = document.getElementById('vlibras-plugin');
-    function iniciar() {
-      if (window.VLibras && window.VLibras.Widget) {
-        new window.VLibras.Widget('https://vlibras.gov.br/app');
-      }
-    }
-    if (window.VLibras && window.VLibras.Widget) {
-      iniciar();
-    } else {
-      s.addEventListener('load', iniciar);
-    }
+    var botao = document.getElementById('libras-abrir');
+    if (!botao) return;
+    var carregando = false;
+    botao.addEventListener('click', function () {
+      if (carregando) return;
+      carregando = true;
+      botao.setAttribute('aria-busy', 'true');
+      var s = document.createElement('script');
+      s.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
+      s.onload = function () {
+        // O construtor do Widget se registra em window.onload — evento que ja
+        // ocorreu. Guardamos o que havia, deixamos ele registrar, recuperamos a
+        // funcao e chamamos na mao.
+        var anterior = window.onload;
+        window.onload = null;
+        try { new window.VLibras.Widget('https://vlibras.gov.br/app'); } catch (e) {}
+        var doWidget = window.onload;
+        window.onload = anterior;
+        if (typeof doWidget === 'function') doWidget();
+        botao.remove();
+        // abre o tradutor direto, para o clique do usuario nao se perder
+        setTimeout(function () {
+          var real = document.querySelector('[vw-access-button]');
+          if (real) real.click();
+        }, 400);
+      };
+      s.onerror = function () {
+        carregando = false;
+        botao.removeAttribute('aria-busy');
+      };
+      document.head.appendChild(s);
+    });
   })();
 </script>
--->
 
-<script src="assets/js/main.js?v=1.9.40-sem-libras"></script>
+<script src="assets/js/main.js?v=1.9.41"></script>
 </body>
 </html>

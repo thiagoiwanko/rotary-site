@@ -1145,3 +1145,32 @@ body.no-scroll { overflow: hidden; }
   .ata-lightbox { flex-wrap: wrap; }
   .ata-lightbox-nav { width: 38px; height: 38px; }
 }
+
+/* ===================================================================
+   BOTAO DE LIBRAS (placeholder ate o plugin ser carregado sob demanda)
+   Reproduz posicao e aparencia do botao do VLibras para nao haver salto
+   visual quando o plugin real assume o lugar.
+   =================================================================== */
+#libras-abrir {
+  position: fixed;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: var(--rotary-azure);
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(15, 27, 45, 0.28);
+  z-index: 2147483644;
+  transition: background var(--transition), transform var(--transition);
+}
+#libras-abrir:hover { background: var(--rotary-blue); transform: translateY(-50%) scale(1.06); }
+#libras-abrir:focus-visible { outline: 3px solid var(--rotary-gold); outline-offset: 2px; }
+#libras-abrir[aria-busy="true"] { opacity: 0.6; cursor: progress; }
