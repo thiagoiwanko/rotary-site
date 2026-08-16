@@ -286,7 +286,9 @@ header.site-header.scrolled {
   align-items: center;
   justify-content: center;
   gap: clamp(1.5rem, 4vw, 3.5rem);
-  padding: 1.1rem 0;
+  /* o mesmo recuo lateral do .container: antes o "0" aqui anulava o padding
+     da classe .container do mesmo elemento e a logo colava na borda */
+  padding: 1.1rem clamp(1.25rem, 4vw, 2.5rem);
   transition: padding var(--transition);
 }
 header.site-header.scrolled .nav-wrap { padding: 0.7rem 0; }
