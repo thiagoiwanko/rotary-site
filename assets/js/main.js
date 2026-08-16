@@ -194,8 +194,13 @@ function renderSiteData(siteData, lang) {
     };
     const waMsgTxt = waMsgMap[lang] || waMsgMap.pt;
     const waMsg = encodeURIComponent(waMsgTxt);
+    // No celular, target="_blank" abre o wa.me numa aba nova; sem o gesto do
+    // usuario nessa aba, o redirecionamento para o app costuma falhar e o
+    // WhatsApp Web aparece no lugar. Na mesma aba, o app abre normalmente.
+    const noCelular = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     document.querySelectorAll('[data-whatsapp-link]').forEach(el => {
       el.href = `https://wa.me/${wa}?text=${waMsg}`;
+      if (noCelular) el.removeAttribute('target');
     });
   }
 
