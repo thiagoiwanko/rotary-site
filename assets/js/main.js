@@ -378,6 +378,15 @@ async function setLanguage(lang) {
 async function init() {
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  // A versao do rodape sai do proprio ?v= deste arquivo, nao de um campo digitado
+  // a mao. Se o navegador estiver com o HTML antigo em cache, aparece o numero
+  // antigo — e esse e justamente o sinal de que a publicacao ainda nao chegou.
+  const alvoVersao = document.getElementById('siteVersion');
+  if (alvoVersao) {
+    const src = (document.currentScript || document.querySelector('script[src*="main.js"]'))?.src || '';
+    alvoVersao.textContent = new URL(src, location.href).searchParams.get('v') || '—';
+  }
+
   const lang = getLang();
   await carregarI18n(lang);
   applyI18n(lang);
