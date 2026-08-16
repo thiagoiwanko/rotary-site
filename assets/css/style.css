@@ -438,7 +438,11 @@ nav.main-nav a:hover::after { width: 100%; }
   display: grid;
   grid-template-columns: repeat(4, auto);
   gap: clamp(1.5rem, 4vw, 3rem);
+  /* o bloco continua encostado a esquerda; dentro de cada item, o numero fica
+     centralizado sobre o rotulo em vez de alinhado pela borda esquerda */
+  justify-items: start;
 }
+.hero-stats .stat { text-align: center; }
 .hero-stats .stat-num {
   font-family: var(--font-display);
   font-weight: 700;
