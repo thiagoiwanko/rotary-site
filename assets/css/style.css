@@ -24,6 +24,16 @@
   descent-override: 27.3%;
   line-gap-override: 0%;
 }
+@font-face {
+  font-family: 'Open Sans Fallback';
+  src: local('Arial Bold Italic'), local('Arial-BoldItalicMT'), local('Arial Italic'), local('Liberation Sans Bold Italic');
+  font-weight: 600 800;
+  font-style: italic;
+  size-adjust: 95.3%;
+  ascent-override: 112.3%;
+  descent-override: 30.4%;
+  line-gap-override: 0%;
+}
 
 /* ===================================================================
    ROTARY CLUB PORTO UNIÃO – UNIÃO DA VITÓRIA
@@ -399,8 +409,12 @@ nav.main-nav a:hover::after { width: 100%; }
   top: 50%;
   transform: translateY(-50%);
   width: min(46vw, 620px);
-  height: min(46vw, 620px);
-  aspect-ratio: 1;
+  /* altura derivada da largura pela proporcao real do SVG (84,21 / 83,66):
+     antes o aspect-ratio 1 divergia do viewBox e a roda se reposicionava
+     quando o hero mudava de altura, contando como salto de layout. */
+  height: auto;
+  aspect-ratio: 84.20572 / 83.655936;
+  contain: layout paint;
   opacity: 0.16;
   animation: spin 90s linear infinite;
 }
