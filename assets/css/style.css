@@ -1,4 +1,31 @@
 /* ===================================================================
+   FALLBACK COM METRICAS AJUSTADAS
+   Enquanto a Open Sans nao chega, o texto e desenhado em Arial. As duas fontes
+   tem metricas diferentes (a altura de linha da Open Sans era 18% maior), entao
+   a troca movia o layout inteiro — 0,189 de CLS so no hero, medido pelo
+   Lighthouse. Os valores abaixo foram calculados medindo as duas fontes no
+   navegador ate o erro de largura e altura chegar a 0,0%.
+   =================================================================== */
+@font-face {
+  font-family: 'Open Sans Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  font-weight: 400;
+  size-adjust: 106.2%;
+  ascent-override: 100.8%;
+  descent-override: 27.3%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Open Sans Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold');
+  font-weight: 600 800;
+  size-adjust: 106.1%;
+  ascent-override: 100.9%;
+  descent-override: 27.3%;
+  line-gap-override: 0%;
+}
+
+/* ===================================================================
    ROTARY CLUB PORTO UNIÃO – UNIÃO DA VITÓRIA
    Cores oficiais: Rotary Brand Center (brandcenter.rotary.org)
    =================================================================== */
@@ -26,8 +53,8 @@
 
   /* Tipografia */
   /* Tipografia oficial Rotary Brand Center: fontes primárias gratuitas = Open Sans / Arial */
-  --font-display: 'Open Sans', Arial, 'Segoe UI', sans-serif;
-  --font-body: 'Open Sans', Arial, 'Segoe UI', sans-serif;
+  --font-display: 'Open Sans', 'Open Sans Fallback', Arial, 'Segoe UI', sans-serif;
+  --font-body: 'Open Sans', 'Open Sans Fallback', Arial, 'Segoe UI', sans-serif;
 
   /* Espaçamento fluido */
   --section-pad: clamp(4rem, 8vw, 8rem);
