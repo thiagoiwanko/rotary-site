@@ -100,17 +100,24 @@ function applyI18n(lang) {
   if (!i18nDict) return;
   document.documentElement.lang = (LANG_META[lang] || LANG_META.pt).htmlLang;
 
+  // So escreve quando o valor muda de fato. O HTML ja vem com o texto em
+  // portugues; reescrever com o mesmo conteudo obrigava o navegador a repintar
+  // e empurrava o LCP (o titulo do hero) para depois do JS + JSON carregarem.
   document.querySelectorAll('[data-i18n]').forEach(el => {
-    el.textContent = t(el.getAttribute('data-i18n'), lang);
+    const v = t(el.getAttribute('data-i18n'), lang);
+    if (el.textContent !== v) el.textContent = v;
   });
   document.querySelectorAll('[data-i18n-html]').forEach(el => {
-    el.innerHTML = t(el.getAttribute('data-i18n-html'), lang);
+    const v = t(el.getAttribute('data-i18n-html'), lang);
+    if (el.innerHTML !== v) el.innerHTML = v;
   });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-    el.placeholder = t(el.getAttribute('data-i18n-placeholder'), lang);
+    const v = t(el.getAttribute('data-i18n-placeholder'), lang);
+    if (el.placeholder !== v) el.placeholder = v;
   });
   document.querySelectorAll('[data-i18n-aria]').forEach(el => {
-    el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'), lang));
+    const v = t(el.getAttribute('data-i18n-aria'), lang);
+    if (el.getAttribute('aria-label') !== v) el.setAttribute('aria-label', v);
   });
 
   document.querySelectorAll('[data-lang-flag]').forEach(el => {
@@ -142,7 +149,7 @@ function renderSiteData(siteData, lang) {
 
   document.querySelectorAll('[data-field]').forEach(el => {
     const val = getField(siteData, el.getAttribute('data-field'));
-    if (val) el.textContent = val;
+    if (val && el.textContent !== val) el.textContent = val;
   });
 
   const statsWrap = document.querySelector('[data-stats]');
