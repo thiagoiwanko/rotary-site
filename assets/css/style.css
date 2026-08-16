@@ -194,7 +194,11 @@ section { padding: var(--section-pad) 0; position: relative; }
 .topbar-btn svg { flex-shrink: 0; }
 
 @media (max-width: 640px) {
+  /* Sem os textos, o grid de 3 colunas jogava tudo na 3a e o seletor de idioma
+     quebrava para a linha de baixo. Uma coluna so, numa unica linha. */
   .topbar-items { display: none; }
+  .topbar .container { grid-template-columns: 1fr; }
+  .topbar-right { grid-column: 1; flex-wrap: nowrap; }
 }
 @media (max-width: 480px) {
   .topbar-btn span { display: none; }
@@ -995,6 +999,8 @@ footer ul a:hover { color: var(--rotary-gold); }
 @media (max-width: 860px) {
   nav.main-nav, .nav-cta .btn-dark { display: none; }
   .burger { display: flex; }
+  /* sem o menu e o botao, o "center" deixava logo e hamburguer colados no meio */
+  .nav-wrap { justify-content: space-between; }
   .topbar-items span:nth-child(n+3) { display: none; }
   .hero-stats { grid-template-columns: repeat(2, auto); row-gap: 1.6rem; }
   .hero-wheel { opacity: 0.1; }
@@ -1007,7 +1013,9 @@ footer ul a:hover { color: var(--rotary-gold); }
 }
 
 @media (max-width: 560px) {
-  .hero { min-height: auto; padding-top: 7rem; padding-bottom: 3.5rem; }
+  /* padding-bottom precisa continuar acompanhando a altura do skyline;
+     antes um valor fixo aqui anulava a regra de 860px e a silhueta cobria os numeros */
+  .hero { min-height: auto; padding-top: 3.2rem; padding-bottom: calc(clamp(90px, 20vh, 200px) + 2.2rem); }
   .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions .btn { justify-content: center; }
   .news-tabs { width: 100%; }
