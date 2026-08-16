@@ -4,17 +4,6 @@
    Para atualizar conteúdo, edite os arquivos JSON — não é preciso mexer aqui.
    Idioma: pt (padrão) / en / es — ver LANG_KEY / assets/data/i18n.{pt,en,es}.json.
    =================================================================== */
-
-const ICONS = {
-  peace: '<path d="M12 3v10M12 13l-5 6M12 13l5 6M7 19h10"/><circle cx="12" cy="8" r="1.2" fill="currentColor" stroke="none"/>',
-  health: '<path d="M20.8 8.6c0 5-8.8 10-8.8 10S3.2 13.6 3.2 8.6a4.6 4.6 0 0 1 8.8-2 4.6 4.6 0 0 1 8.8 2z"/><path d="M8 12h2l1.5-3L13 15l1.5-3H16"/>',
-  water: '<path d="M12 2s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12z"/>',
-  mother: '<circle cx="9" cy="7" r="2.5"/><path d="M4 20c0-3 2.5-5 5-5s5 2 5 5"/><circle cx="17" cy="9" r="1.8"/><path d="M14 20c0-2.2 1.5-3.8 3-3.8s3 1.6 3 3.8"/>',
-  education: '<path d="M2 8l10-4 10 4-10 4-10-4z"/><path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5"/><path d="M22 8v6"/>',
-  growth: '<path d="M4 19h16"/><path d="M4 15l5-5 4 4 7-8"/><path d="M15 6h5v5"/>',
-  environment: '<path d="M12 3C7 3 4 7 4 11c0 5 4 9 8 10 4-1 8-5 8-10 0-4-3-8-8-8z"/><path d="M12 21V11"/><path d="M12 11c0-3 2-5 5-5"/>'
-};
-
 const LANG_KEY = 'rcpu-lang';
 const LANG_META = {
   pt: { flag: 'assets/img/flags/br.png', code: 'PT-BR', htmlLang: 'pt-BR' },
@@ -194,12 +183,6 @@ function renderSiteData(siteData, lang) {
         <div class="role">${escapeHTML(m.cargo)}</div>
       </div>`;
     }).join('');
-  }
-
-  const footerFocus = document.querySelector('[data-footer-focus]');
-  if (footerFocus && siteData.areasDeFoco) {
-    footerFocus.innerHTML = siteData.areasDeFoco.map(a => `
-      <span title="${escapeHTML(a.titulo)}"><svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[a.icone] || ''}</svg></span>`).join('');
   }
 
   const wa = (siteData.contato || {}).whatsapp;

@@ -907,9 +907,6 @@ footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.65re
 footer ul a { font-size: 0.9rem; color: rgba(255,255,255,0.6); transition: color var(--transition); }
 footer ul a:hover { color: var(--rotary-gold); }
 .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding: 1.6rem 0; font-size: 0.8rem; }
-.footer-focus { display: flex; gap: 0.7rem; flex-wrap: wrap; }
-.footer-focus span { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; }
-.footer-focus svg { width: 16px; height: 16px; stroke: var(--rotary-sky); fill: none; }
 .site-version { opacity: 0.55; font-size: 0.85em; }
 
 /* ===================================================================
