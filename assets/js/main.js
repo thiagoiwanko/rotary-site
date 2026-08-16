@@ -49,6 +49,18 @@ function t(key, lang) {
   return dict[key] !== undefined ? dict[key] : key;
 }
 
+// Cada idioma vive em seu proprio arquivo (i18n.pt.json / .en / .es). Antes os
+// tres vinham juntos em i18n.json (21 KB) e 2/3 do download era descartado.
+// Carrega sob demanda e guarda em cache para a troca de idioma nao repetir.
+const i18nCache = {};
+async function carregarI18n(lang) {
+  if (!i18nCache[lang]) {
+    i18nCache[lang] = await loadJSON(`assets/data/i18n.${lang}.json`) || {};
+  }
+  i18nDict = { [lang]: i18nCache[lang] };
+  return i18nDict;
+}
+
 function getField(obj, path) {
   return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : ''), obj);
 }
@@ -370,6 +382,7 @@ function initNewsMore() {
 
 async function setLanguage(lang) {
   setLang(lang);
+  await carregarI18n(lang);
   applyI18n(lang);
   await loadContent(lang);
 }
@@ -377,9 +390,8 @@ async function setLanguage(lang) {
 async function init() {
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  i18nDict = await loadJSON('assets/data/i18n.json');
-
   const lang = getLang();
+  await carregarI18n(lang);
   applyI18n(lang);
   await loadContent(lang);
 
